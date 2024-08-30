@@ -79,7 +79,7 @@
             }
 
             .chatbot-header {
-                background-color: #0056b3; /* Blue header */
+                background-color: #203878; /* Blue header */
                 color: white;
                 padding: 10px;
                 display: flex;
@@ -172,7 +172,7 @@
             }
 
             .chatbot-footer button {
-                background-color: #0056b3; /* Send button color */
+                background-color: #203878; /* Send button color */
                 border: none;
                 color: white;
                 padding: 10px;
@@ -209,12 +209,12 @@
             }
 
             .message-sent .message {
-                background-color: #0056b3; /* Sent message bubble */
+                background-color: #203878; /* Sent message bubble */
                 color: white;
             }
 
             .message-received .message {
-                background-color: #eee; /* Received message bubble */
+                background-color: #eef6fa; /* Received message bubble */
                 color: #333;
             }
 
@@ -222,7 +222,7 @@
                 position: fixed;
                 bottom: 20px;
                 right: 20px;
-                background-color: #0056b3;
+                background-color: #203878;
                 color: white;
                 border: none;
                 width: 60px;
@@ -275,215 +275,213 @@
                 cursor: pointer;
             }
 
-            .burger-menu-dropdown {
-                display: none;
-                position: absolute;
-                top: 35px;
-                right: 0;
-                background-color: white;
-                border: 1px solid #ddd;
-                border-radius: 5px;
-                box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-                z-index: 1003;
-            }
+          .burger-menu-dropdown {
+    display: none; /* Hidden by default */
+    position: absolute;
+    top: 35px;
+    right: 0;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    z-index: 1003;
+}
 
-            .burger-menu-dropdown button {
-                display: block;
-                width: 100%;
-                border: none;
-                background: none;
-                padding: 10px;
-                text-align: left;
-                cursor: pointer;
-            }
+.burger-menu-dropdown button {
+    display: block;
+    width: 100%;
+    border: none;
+    background: none;
+    padding: 10px;
+    text-align: left;
+    cursor: pointer;
+    font-size: 14px; /* Smaller font size */
+    border-bottom: 1px solid #ddd; /* Line between items */
+}
 
-            .burger-menu-dropdown button:hover {
-                background-color: #f4f4f4;
-            }
+.burger-menu-dropdown button:hover {
+    background-color: #f4f4f4;
+}
 
-            .burger-menu:hover .burger-menu-dropdown {
-                display: block;
-            }
+/* Remove the border from the last item */
+.burger-menu-dropdown button:last-child {
+    border-bottom: none;
+}
 
-            }
         `;
         document.head.appendChild(style);
     }
-
     function addFunctionality() {
-        var botParameters = {
-            "botname": "ChameleonI Bot",
-            "welcome": "I am Kitti Kovács, your chameleoni assistant!",
-            "widgetName": "Kitti Kovács",
-            "autoPop": 15,
-        };
+    var botParameters = {
+        "botname": "ChameleonI Bot",
+        "welcome": "I am Kitti Kovács, your chameleoni assistant!",
+        "widgetName": "Kitti Kovács",
+        "autoPop": 15,
+    };
 
-        function initializeChat() {
-            document.getElementById('widgetName').textContent = botParameters.widgetName;
-            populateChatHistory();
+    function initializeChat() {
+        document.getElementById('widgetName').textContent = botParameters.widgetName;
+        populateChatHistory();
 
-            if (botParameters.autoPop === 0) {
-                // No auto-pop behavior
-            } else if (botParameters.autoPop === 1) {
-                setTimeout(function() {
-                    document.querySelector('.chatbot-container').style.display = 'block';
-                    toggleChatIcon();
-                }, 1000);
-            } else if (botParameters.autoPop > 1) {
-                setTimeout(function() {
-                    document.querySelector('.chatbot-container').style.display = 'block';
-                    toggleChatIcon();
-                }, botParameters.autoPop * 1000);
+        if (botParameters.autoPop === 0) {
+            // No auto-pop behavior
+        } else if (botParameters.autoPop === 1) {
+            setTimeout(function() {
+                document.querySelector('.chatbot-container').style.display = 'block';
+                toggleChatIcon();
+            }, 1000);
+        } else if (botParameters.autoPop > 1) {
+            setTimeout(function() {
+                document.querySelector('.chatbot-container').style.display = 'block';
+                toggleChatIcon();
+            }, botParameters.autoPop * 1000);
+        }
+    }
+
+    function toggleChatIcon() {
+        var chatIcon = document.querySelector('.chat-icon-button');
+        chatIcon.classList.remove('envelope-icon');
+        chatIcon.classList.add('close-icon');
+    }
+
+    function populateChatHistory() {
+        var chatBody = document.getElementById('chatBody');
+        var history = JSON.parse(localStorage.getItem('chatHistory')) || [];
+
+        history.forEach(function(chat) {
+            var messageDiv = document.createElement('div');
+            messageDiv.className = chat.type === 'sent' ? 'message-sent' : 'message-received';
+
+            var messageContent = document.createElement('div');
+            messageContent.className = 'message';
+            messageContent.textContent = chat.message;
+
+            messageDiv.appendChild(messageContent);
+            chatBody.appendChild(messageDiv);
+        });
+        chatBody.scrollTop = chatBody.scrollHeight;
+    }
+
+    function saveChatHistory(message, type) {
+        var history = JSON.parse(localStorage.getItem('chatHistory')) || [];
+        history.push({ message: message, type: type });
+        localStorage.setItem('chatHistory', JSON.stringify(history));
+    }
+
+    function sendMessage() {
+        var inputField = document.getElementById('chatInput');
+        var userMessage = inputField.value;
+        if (userMessage.trim() === '') return;
+
+        var newMessageDiv = document.createElement('div');
+        newMessageDiv.className = 'message-sent';
+        var newMessageContent = document.createElement('div');
+        newMessageContent.className = 'message';
+        newMessageContent.textContent = userMessage;
+        newMessageDiv.appendChild(newMessageContent);
+        document.getElementById('chatBody').appendChild(newMessageDiv);
+
+        saveChatHistory(userMessage, 'sent');
+
+        inputField.value = '';
+        document.getElementById('sendButton').disabled = true;
+
+        setTimeout(() => {
+            var botMessageDiv = document.createElement('div');
+            botMessageDiv.className = 'message-received';
+            var botMessageContent = document.createElement('div');
+            botMessageContent.className = 'message';
+            botMessageContent.textContent = userMessage;
+            botMessageDiv.appendChild(botMessageContent);
+            document.getElementById('chatBody').appendChild(botMessageDiv);
+
+            saveChatHistory(userMessage, 'received');
+
+            document.getElementById('chatBody').scrollTop = document.getElementById('chatBody').scrollHeight;
+        }, 500);
+    }
+
+    document.getElementById('sendButton').addEventListener('click', sendMessage);
+
+    document.getElementById('chatInput').addEventListener('input', function() {
+        document.getElementById('sendButton').disabled = this.value.trim() === '';
+    });
+
+    document.getElementById('chatInput').addEventListener('keydown', function(event) {
+        if (event.key === 'Enter') {
+            event.preventDefault(); 
+            if (!document.getElementById('sendButton').disabled) {
+                sendMessage();
             }
         }
+    });
 
-        function toggleChatIcon() {
-            var chatIcon = document.querySelector('.chat-icon-button');
-            chatIcon.classList.remove('envelope-icon');
-            chatIcon.classList.add('close-icon');
+    document.querySelector('.chat-icon-button').addEventListener('click', function() {
+        var chatbotContainer = document.querySelector('.chatbot-container');
+        if (chatbotContainer.style.display === 'block') {
+            chatbotContainer.style.display = 'none';
+            this.classList.remove('close-icon');
+            this.classList.add('envelope-icon');
+        } else {
+            chatbotContainer.style.display = 'block';
+            this.classList.remove('envelope-icon');
+            this.classList.add('close-icon');
         }
+    });
 
-        function populateChatHistory() {
-            var chatBody = document.getElementById('chatBody');
-            var history = JSON.parse(localStorage.getItem('chatHistory')) || [];
-
-            history.forEach(function(chat) {
-                var messageDiv = document.createElement('div');
-                messageDiv.className = chat.type === 'sent' ? 'message-sent' : 'message-received';
-
-                var messageContent = document.createElement('div');
-                messageContent.className = 'message';
-                messageContent.textContent = chat.message;
-
-                messageDiv.appendChild(messageContent);
-                chatBody.appendChild(messageDiv);
-            });
-            chatBody.scrollTop = chatBody.scrollHeight;
-        }
-
-        function saveChatHistory(message, type) {
-            var history = JSON.parse(localStorage.getItem('chatHistory')) || [];
-            history.push({ message: message, type: type });
-            localStorage.setItem('chatHistory', JSON.stringify(history));
-        }
-
-        function sendMessage() {
-            var inputField = document.getElementById('chatInput');
-            var userMessage = inputField.value;
-            if (userMessage.trim() === '') return;
-
-            var newMessageDiv = document.createElement('div');
-            newMessageDiv.className = 'message-sent';
-            var newMessageContent = document.createElement('div');
-            newMessageContent.className = 'message';
-            newMessageContent.textContent = userMessage;
-            newMessageDiv.appendChild(newMessageContent);
-            document.getElementById('chatBody').appendChild(newMessageDiv);
-
-            saveChatHistory(userMessage, 'sent');
-
-            inputField.value = '';
-            document.getElementById('sendButton').disabled = true;
-
-            setTimeout(() => {
-                var botMessageDiv = document.createElement('div');
-                botMessageDiv.className = 'message-received';
-                var botMessageContent = document.createElement('div');
-                botMessageContent.className = 'message';
-                botMessageContent.textContent = userMessage;
-                botMessageDiv.appendChild(botMessageContent);
-                document.getElementById('chatBody').appendChild(botMessageDiv);
-
-                saveChatHistory(userMessage, 'received');
-
-                document.getElementById('chatBody').scrollTop = document.getElementById('chatBody').scrollHeight;
-            }, 500);
-        }
-
-        document.getElementById('sendButton').addEventListener('click', sendMessage);
-
-        document.getElementById('chatInput').addEventListener('input', function() {
-            document.getElementById('sendButton').disabled = this.value.trim() === '';
-        });
-
-        document.getElementById('chatInput').addEventListener('keydown', function(event) {
-            if (event.key === 'Enter') {
-                event.preventDefault(); 
-                if (!document.getElementById('sendButton').disabled) {
-                    sendMessage();
-                }
-            }
-        });
-
-        document.querySelector('.chat-icon-button').addEventListener('click', function() {
-            var chatbotContainer = document.querySelector('.chatbot-container');
-            if (chatbotContainer.style.display === 'block') {
-                chatbotContainer.style.display = 'none';
-                this.classList.remove('close-icon');
-                this.classList.add('envelope-icon');
-            } else {
-                chatbotContainer.style.display = 'block';
-                this.classList.remove('envelope-icon');
-                this.classList.add('close-icon');
-            }
-        });
-
-        document.getElementById('chatBody').addEventListener('scroll', function() {
-            const chatIntro = document.getElementById('chatIntro');
-            if (this.scrollTop > 20) {
-                chatIntro.style.opacity = '0';
-            } else {
-                chatIntro.style.opacity = '1';
-            }
-        });
-
-        // Burger menu functionality
-        document.querySelector('.burger-menu-icon').addEventListener('click', function() {
-            const dropdown = document.querySelector('.burger-menu-dropdown');
-            dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
-        });
-
-        document.getElementById('clearChat').addEventListener('click', function() {
-    // Show confirmation dialog
-    const confirmClear = window.confirm("Clear all messages? This can't be undone.");
-
-    if (confirmClear) {
-        // User confirmed, clear all messages but keep the intro
-        const chatBody = document.getElementById('chatBody');
+    document.getElementById('chatBody').addEventListener('scroll', function() {
         const chatIntro = document.getElementById('chatIntro');
-        chatBody.innerHTML = ''; // Clear only the chat messages
-        chatBody.appendChild(chatIntro); // Re-add the chat intro
-        localStorage.removeItem('chatHistory'); // Clear chat history from localStorage
-    }
-    // If the user clicked Cancel, do nothing
-});
+        if (this.scrollTop > 20) {
+            chatIntro.style.opacity = '0';
+        } else {
+            chatIntro.style.opacity = '1';
+        }
+    });
 
+    // Burger menu functionality
+    document.querySelector('.burger-menu-icon').addEventListener('click', function() {
+        const dropdown = document.querySelector('.burger-menu-dropdown');
+        dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+    });
 
+    document.getElementById('clearChat').addEventListener('click', function() {
+        const confirmClear = window.confirm("Clear all messages? This can't be undone.");
 
-        document.getElementById('closeSupport').addEventListener('click', function() {
-            document.querySelector('.chatbot-container').style.display = 'none';
-            document.querySelector('.chat-icon-button').classList.remove('close-icon');
-            document.querySelector('.chat-icon-button').classList.add('envelope-icon');
-        });
-
-        document.getElementById('saveTranscript').addEventListener('click', function() {
+        if (confirmClear) {
             const chatBody = document.getElementById('chatBody');
-            const transcript = chatBody.innerText;
-            const blob = new Blob([transcript], { type: 'text/plain' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'transcript.txt';
-            a.click();
-            URL.revokeObjectURL(url);
-        });
+            const chatIntro = document.getElementById('chatIntro');
+            chatBody.innerHTML = '';
+            chatBody.appendChild(chatIntro);
+            localStorage.removeItem('chatHistory');
+        }
+        document.querySelector('.burger-menu-dropdown').style.display = 'none';
+    });
 
-        initializeChat();
-    }
+    document.getElementById('closeSupport').addEventListener('click', function() {
+        document.querySelector('.chatbot-container').style.display = 'none';
+        document.querySelector('.chat-icon-button').classList.remove('close-icon');
+        document.querySelector('.chat-icon-button').classList.add('envelope-icon');
+        document.querySelector('.burger-menu-dropdown').style.display = 'none';
+    });
+
+    document.getElementById('saveTranscript').addEventListener('click', function() {
+        const transcript = document.getElementById('chatBody').innerText;
+        const blob = new Blob([transcript], { type: 'text/plain' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'chat-transcript.txt';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        document.querySelector('.burger-menu-dropdown').style.display = 'none';
+    });
+
+    initializeChat();
+}
 
     createHtml();
     createCss();
     addFunctionality();
 </script>
 </html>
-
