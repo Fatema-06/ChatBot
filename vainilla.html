@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -446,13 +444,20 @@
         });
 
         document.getElementById('clearChat').addEventListener('click', function() {
-    // Remove only chat messages, keeping the chat intro intact
-    const chatBody = document.getElementById('chatBody');
-    const chatIntro = document.getElementById('chatIntro');
-    chatBody.innerHTML = ''; // Clear only the chat messages
-    chatBody.appendChild(chatIntro); // Re-add the chat intro
-    localStorage.removeItem('chatHistory'); // Clear chat history from localStorage
+    // Show confirmation dialog
+    const confirmClear = window.confirm("Clear all messages? This can't be undone.");
+
+    if (confirmClear) {
+        // User confirmed, clear all messages but keep the intro
+        const chatBody = document.getElementById('chatBody');
+        const chatIntro = document.getElementById('chatIntro');
+        chatBody.innerHTML = ''; // Clear only the chat messages
+        chatBody.appendChild(chatIntro); // Re-add the chat intro
+        localStorage.removeItem('chatHistory'); // Clear chat history from localStorage
+    }
+    // If the user clicked Cancel, do nothing
 });
+
 
 
         document.getElementById('closeSupport').addEventListener('click', function() {
