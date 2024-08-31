@@ -211,24 +211,25 @@ function createHtml() {
             text-align: left;
         }
 
-        .message-sent .message,
-        .message-received .message {
-            display: inline-block;
-            padding: 10px 15px;
-            border-radius: 20px;
-            max-width: 70%;
-        }
+     .message-sent .message,
+.message-received .message {
+    display: inline-block;
+    padding: 10px 15px;
+    border-radius: 5px; /* Change this value to 0 for perfectly square corners */
+    max-width: 70%;
+}
 
-        .message-sent .message {
-            background-color: #203878; /* Sent message bubble */
-            color: white;
-        }
+.message-sent .message {
+    background-color: #203878; /* Sent message bubble */
+    color: white;
+}
 
-        .message-received .message {
-            background-color: #eef6fa; /* Received message bubble */
-            color: #333;
-        }
+.message-received .message {
+    background-color: #eef6fa; /* Received message bubble */
+    color: #333;
+}
 
+    
         .chat-icon-container {
             position: fixed;
             bottom: 20px;
@@ -352,9 +353,9 @@ function createHtml() {
     background-color: #eef6fa; /* Match received message background */
     color: #333; /* Match received message text color */
     padding: 15px 15px;
-    border-radius: 20px;
+    border-radius: 5px; /* Set to 0 for square corners */
     max-width: 70%;
-    margin-left: 5px; /* Add some spacing from the left */
+    margin-left: 0; /* Add some spacing from the left */
 }
 
 .typing-indicator span {
