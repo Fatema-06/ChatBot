@@ -9,45 +9,57 @@
 </body>
 
 <script>
-function createHtml() {
-    const chatbotContainer = document.createElement('div');
-    chatbotContainer.className = 'chatbot-container';
-    chatbotContainer.innerHTML = `
-        <div class="chatbot-header">
-            <div class="header-left">
-                <span id="widgetName"></span>
-                <span class="online-status"></span>
-            </div>
-            <div class="header-right">
-                <!-- Burger menu moved here -->
-                <div class="burger-menu">
-                    <button class="burger-menu-icon">&#9776;</button>
-                    <div class="burger-menu-dropdown">
-                        <button id="clearChat">Clear Chat</button>
-                        <button id="closeSupport">Close Support</button>
-                        <button id="saveTranscript">Save Transcript</button>
+    const botParameters = {
+        "botname": "Kitti Kovács",
+        "imgUrl": "https://i.imgur.com/Iqf1qVH.jpg",
+        "welcome": "I am Kitti Kovács, your chameleoni assistant!",
+        "widgetName": "ChameleonI Bot",
+        "autoPop": 15,
+        "history": [
+            {"message": "hello", "type": "sent"},
+            {"message": "Hello! How can I assist you today? Are you looking for a recruitment solution to streamline your hiring process?", "type": "received"},
+            {"message": "yes, tell me about your solution", "type": "sent"},
+            {"message": "Absolutely! Chameleoni is a cutting-edge recruitment software designed to streamline and enhance your hiring process. Here are some key features that set us apart:\n\n1. User-Friendly Interface: Our platform is intuitive and easy to navigate, making it simple for your team to adopt and use effectively.\n\n2. Automated Workflows: Save time with automated tasks such as resume screening, interview scheduling, and candidate follow-ups, allowing your team to focus on what really matters—finding the right talent.\n\n3. Customizable Job Listings: Create and manage job postings across multiple platforms with ease. Our software allows you to tailor listings to attract the best candidates.\n\n4. Collaboration Tools: Enhance teamwork with built-in communication features that", "type": "received"}
+        ]
+    };
+
+    function createHtml() {
+        const chatbotContainer = document.createElement('div');
+        chatbotContainer.className = 'chatbot-container';
+        chatbotContainer.innerHTML = `
+            <div class="chatbot-header">
+                <div class="header-left">
+                    <span id="widgetName">${botParameters.widgetName}</span>
+                    <span class="online-status"></span>
+                </div>
+                <div class="header-right">
+                    <div class="burger-menu">
+                        <button class="burger-menu-icon">&#9776;</button>
+                        <div class="burger-menu-dropdown">
+                            <button id="clearChat">Clear Chat</button>
+                            <button id="closeSupport">Close Support</button>
+                            <button id="saveTranscript">Save Transcript</button>
+                        </div>
                     </div>
                 </div>
-                <!-- Close button removed -->
             </div>
-        </div>
-        <div class="chatbot-body" id="chatBody">
-            <div class="chat-intro" id="chatIntro">
-                <div class="image-container">
-                    <img src="https://i.imgur.com/Iqf1qVH.jpg" alt="Kitti Kovács" class="intro-image"/>
-                    <span class="online-dot"></span>
+            <div class="chatbot-body" id="chatBody">
+                <div class="chat-intro" id="chatIntro">
+                    <div class="image-container">
+                        <img src="${botParameters.imgUrl}" alt="${botParameters.botname}" class="intro-image"/>
+                        <span class="online-dot"></span>
+                    </div>
+                    <h2 class="intro-name">${botParameters.botname}</h2>
+                    <p class="intro-description">${botParameters.welcome}</p>
                 </div>
-                <h2 class="intro-name">Kitti Kovács</h2>
-                <p class="intro-description">I am Kitti Kovács, your chameleoni assistant!</p>
+                <!-- Chat messages will appear here -->
             </div>
-            <!-- Chat messages will appear here -->
-        </div>
-        <div class="chatbot-footer">
-            <input type="text" id="chatInput" placeholder="Write a reply..." />
-            <button id="sendButton" disabled>&#9658;</button>
-        </div>
-    `;
-    document.body.appendChild(chatbotContainer);
+            <div class="chatbot-footer">
+                <input type="text" id="chatInput" placeholder="Write a reply..." />
+                <button id="sendButton" disabled>&#9658;</button>
+            </div>
+        `;
+        document.body.appendChild(chatbotContainer);
 
     const chatIconContainer = document.createElement('div');
     chatIconContainer.className = 'chat-icon-container';
@@ -391,12 +403,21 @@ function createHtml() {
         document.head.appendChild(style);
     }
     function addFunctionality() {
-    var botParameters = {
-        "botname": "ChameleonI Bot",
-        "welcome": "I am Kitti Kovács, your chameleoni assistant!",
-        "widgetName": "Kitti Kovács",
-        "autoPop": 15,
-    };
+        document.querySelector('#sendButton').addEventListener('click', function() {
+            const input = document.querySelector('#chatInput');
+            const message = input.value.trim();
+            if (message) {
+                // Append message to chat body
+                const chatBody = document.querySelector('#chatBody');
+                const messageElement = document.createElement('div');
+                messageElement.className = 'message-sent';
+                messageElement.innerHTML = `<div class="message">${message}</div>`;
+                chatBody.appendChild(messageElement);
+                input.value = '';
+                chatBody.scrollTop = chatBody.scrollHeight; // Scroll to bottom
+            }
+        });
+
 
     function initializeChat() {
         document.getElementById('widgetName').textContent = botParameters.widgetName;
