@@ -55,11 +55,17 @@
                 <!-- Chat messages will appear here -->
             </div>
             <div class="chatbot-footer">
+                <button id="mediaButton" class="media-button">
+                    <img width="30" height="30" src="https://img.icons8.com/?size=100&id=i1PiQepbTYbk&format=png&color=203878" alt="thumb-up"/>
+                </button>
+                <input type="file" id="mediaInput" style="display: none;" />
                 <input type="text" id="chatInput" placeholder="Write a reply..." />
                 <button id="likeButton" class="like-button">
                     <img width="35" height="35" src="https://img.icons8.com/?size=100&id=83997&format=png&color=203878" alt="thumb-up"/>
                 </button>
-             <button id="sendButton" disabled>&#9658;</button>
+                <button id="sendButton" class="send-button">
+                    <img width="20" height="20" src="https://img.icons8.com/?size=100&id=12628&format=png&color=FFFFFF" alt="Send"/>
+                </button>
             </div>
         `;
         document.body.appendChild(chatbotContainer);
@@ -121,6 +127,25 @@
                 display: flex;
                 align-items: center;
             }
+            /* Style for the send button */
+.chatbot-footer button.send-button {
+    border-radius: 50%;
+    border: none;
+    background-color: #203878; /* Circle color */
+    padding: 5px;
+    margin-left: 10px;
+    cursor: pointer;
+    width: 35px; /* Adjust size as needed */
+    height: 35px; /* Adjust size as needed */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.chatbot-footer button.send-button img {
+    width: 20px; /* Icon size */
+    height: 20px; /* Icon size */
+}
 
             .online-status {
                 display: inline-block;
@@ -201,8 +226,8 @@
     border-radius: 50%;
     border: none;
     background: none;
-    padding: 0;
-    margin-left: 10px;
+    padding: 0px;
+    margin-left: 5px;
     cursor: pointer;
     background-color: transparent; /* Ensure the button is transparent */
 }
@@ -213,7 +238,22 @@
     /* Additional styles if needed */
 }
 
+         /* CSS for the media button */
+.chatbot-footer button#mediaButton {
+    border-radius: 50%;
+    border: none;
+    background: none;
+    padding: 0;
+    margin-left: -10px;
+    cursor: pointer;
+    background-color: transparent; /* Ensure the button is transparent */
+}
 
+.chatbot-footer button#mediaButton img {
+    width: 30px;
+    height: 30px;
+    /* Additional styles if needed */
+}
 
             .chatbot-footer button {
                 background-color: #203878; /* Send button color */
@@ -439,14 +479,19 @@
     // Save the like icon message to chat history
     saveChatHistory(likeIcon, 'sent');
 
-    // Scroll to the bottom to show new messages
-    chatBody.scrollTop = chatBody.scrollHeight;
+    // Scroll to the bottom to show new messages with a slight delay
+    setTimeout(() => {
+        chatBody.scrollTop = chatBody.scrollHeight;
+    }, 100); // Adjust delay as needed
 }
 
 
     function addFunctionality() {
         document.querySelector('#sendButton').addEventListener('click', sendMessage);
-
+        document.querySelector('#mediaButton').addEventListener('click', () => {
+        document.querySelector('#mediaInput').click();
+    });
+    document.querySelector('#mediaInput').addEventListener('change', handleMediaUpload);
         function initializeChat() {
             document.getElementById('botName').textContent = botParameters.botname;
             populateChatHistory();
@@ -551,11 +596,51 @@
             }, 1500); // Adjust delay to simulate typing duration
         }
 
-        
+        function handleMediaUpload(event) {
+    const file = event.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const mediaUrl = e.target.result;
+            const chatBody = document.getElementById('chatBody');
+
+            if (file.type.startsWith('image/')) {
+                // Handle images
+                const mediaImg = document.createElement('img');
+                mediaImg.src = mediaUrl;
+                mediaImg.style.maxWidth = '100%'; // Adjust size as needed
+                mediaImg.style.borderRadius = '5px'; // Adjust corners as needed
+                mediaImg.style.display = 'block'; // Ensures the image is displayed correctly
+                chatBody.appendChild(mediaImg);
+            } else if (file.type.startsWith('application/')) {
+                // Handle documents
+                const mediaLink = document.createElement('a');
+                mediaLink.href = mediaUrl;
+                mediaLink.download = file.name;
+                mediaLink.textContent = 'Download ' + file.name;
+                mediaLink.style.display = 'block'; // Ensures the link is displayed correctly
+                chatBody.appendChild(mediaLink);
+            } else {
+                alert('Unsupported file type.');
+            }
+
+            // Optionally save chat history here
+            saveChatHistory(mediaUrl, 'sent');
+
+            // Scroll to the bottom of the chat
+            chatBody.scrollTop = chatBody.scrollHeight;
+        };
+        reader.readAsDataURL(file);
+    }
+}
+
+
 
         // Attach event listeners after DOM is ready
         document.addEventListener('DOMContentLoaded', function() {
             // Send button
+            document.addEventListener('DOMContentLoaded', initializeChat);
+
             document.getElementById('sendButton').addEventListener('click', sendMessage);
 
             document.getElementById('likeButton').addEventListener('click', handleLikeButton);
@@ -573,7 +658,8 @@
                         sendMessage();
                     }
                 }
-            });
+            }
+        );
 
             // Chat icon button to toggle chatbot
             document.querySelector('.chat-icon-button').addEventListener('click', function() {
@@ -598,6 +684,7 @@
                     chatIntro.style.opacity = '1';
                 }
             });
+            
 
             // Burger menu toggle
             document.querySelector('.burger-menu-icon').addEventListener('click', function() {
