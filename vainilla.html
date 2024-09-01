@@ -1,33 +1,43 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chatbot</title>
-</head>
-<body>
-</body>
+<!DOCTYPE html >
+	<html lang = "en" >
+	<head >
+	<meta charset = "UTF-8" >
+	<meta name = "viewport" content = "width=device-width, initial-scale=1.0" >
+	<title > Chatbot </title> 
+	</head>
+    <body >
+	</body>
 
-<script>
-    const botParameters = {
-        "botname": "Kitti Kovács",
-        "imgUrl": "https://i.imgur.com/Iqf1qVH.jpg",
-        "welcome": "I am Kitti Kovács, your chameleoni assistant!",
-        "widgetName": "ChameleonI Bot",
-        "autoPop": 10,
-        "history": [
-            {"message": "hello", "type": "sent"},
-            {"message": "Hello! How can I assist you today? Are you looking for a recruitment solution to streamline your hiring process?", "type": "received"},
-            {"message": "yes, tell me about your solution", "type": "sent"},
-            {"message": "Absolutely! Chameleoni is a cutting-edge recruitment software designed to streamline and enhance your hiring process. Here are some key features that set us apart:\n\n1. User-Friendly Interface: Our platform is intuitive and easy to navigate, making it simple for your team to adopt and use effectively.\n\n2. Automated Workflows: Save time with automated tasks such as resume screening, interview scheduling, and candidate follow-ups, allowing your team to focus on what really matters—finding the right talent.\n\n3. Customizable Job Listings: Create and manage job postings across multiple platforms with ease. Our software allows you to tailor listings to attract the best candidates.\n\n4. Collaboration Tools: Enhance teamwork with built-in communication features that", "type": "received"}
-        ]
-    };
+	<script >
+	const botParameters = {
+		"botname": "Kitti Kovács",
+		"imgUrl": "https://i.imgur.com/Iqf1qVH.jpg",
+		"welcome": "I am Kitti Kovács, your chameleoni assistant!",
+		"widgetName": "ChameleonI Bot",
+		"autoPop": 10,
+		"history": [{
+				"message": "hello",
+				"type": "sent"
+			},
+			{
+				"message": "Hello! How can I assist you today? Are you looking for a recruitment solution to streamline your hiring process?",
+				"type": "received"
+			},
+			{
+				"message": "yes, tell me about your solution",
+				"type": "sent"
+			},
+			{
+				"message": "Absolutely! Chameleoni is a cutting-edge recruitment software designed to streamline and enhance your hiring process. Here are some key features that set us apart:\n\n1. User-Friendly Interface: Our platform is intuitive and easy to navigate, making it simple for your team to adopt and use effectively.\n\n2. Automated Workflows: Save time with automated tasks such as resume screening, interview scheduling, and candidate follow-ups, allowing your team to focus on what really matters—finding the right talent.\n\n3. Customizable Job Listings: Create and manage job postings across multiple platforms with ease. Our software allows you to tailor listings to attract the best candidates.\n\n4. Collaboration Tools: Enhance teamwork with built-in communication features that",
+				"type": "received"
+			}
+		]
+	};
 
-    function createHtml() {
-        const chatbotContainer = document.createElement('div');
-        chatbotContainer.className = 'chatbot-container';
-        chatbotContainer.innerHTML = `
-        <!-- Notification element -->
+function createHtml() {
+	const chatbotContainer = document.createElement('div');
+	chatbotContainer.className = 'chatbot-container';
+	chatbotContainer.innerHTML = `
 <div id="notification" class="notification">Message copied to clipboard successfully!</div>
 <div id="recordingNotification" class="notification">Tap here when you're done recording</div>
             <div class="chatbot-header">
@@ -55,9 +65,8 @@
                     <h2 class="intro-name">${botParameters.botname}</h2>
                     <p class="intro-description">${botParameters.welcome}</p>
                 </div>
-                <!-- Chat messages will appear here -->
             </div>
-        
+
             <div class="chatbot-footer">
                 <button id="mediaButton" class="media-button">
                     <img width="30" height="30" src="https://img.icons8.com/?size=100&id=i1PiQepbTYbk&format=png&color=203878" alt="thumb-up"/>
@@ -75,1072 +84,1042 @@
                 </button>
             </div>
         `;
-        document.body.appendChild(chatbotContainer);
+	document.body.appendChild(chatbotContainer);
 
-        const chatIconContainer = document.createElement('div');
-        chatIconContainer.className = 'chat-icon-container';
+	const chatIconContainer = document.createElement('div');
+	chatIconContainer.className = 'chat-icon-container';
 
-        const chatIcon = document.createElement('button');
-        chatIcon.className = 'chat-icon-button envelope-icon';
+	const chatIcon = document.createElement('button');
+	chatIcon.className = 'chat-icon-button envelope-icon';
 
-        const chatText = document.createElement('span');
-        chatText.className = 'chat-text';
-        chatText.textContent = 'Chat with us!';
+	const chatText = document.createElement('span');
+	chatText.className = 'chat-text';
+	chatText.textContent = 'Chat with us!';
 
-        chatIconContainer.appendChild(chatText);
-        chatIconContainer.appendChild(chatIcon);
-        document.body.appendChild(chatIconContainer);
-    }
+	chatIconContainer.appendChild(chatText);
+	chatIconContainer.appendChild(chatIcon);
+	document.body.appendChild(chatIconContainer);
+}
 
-    function createCss() {
-        const style = document.createElement('style');
-        style.textContent = `
-            body {
-                font-family: Arial, sans-serif;
-                margin: 0;
-                padding: 0;
-                background-color: #f4f4f4;
-            }
+function createCss() {
+	const style = document.createElement('style');
+	style.textContent = `
+           body {
+	font-family: Arial, sans-serif;
+	margin: 0;
+	padding: 0;
+	background-color: #f4f4f4;
+}
 
-            .chatbot-container {
-                width: 300px;
-                max-width: 100%;
-                position: fixed;
-                bottom: 100px;
-                right: 40px;
-                border-radius: 10px;
-                overflow: hidden;
-                box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-                background-color: white;
-                display: none;
-                z-index: 1000;
-            }
+.chatbot-container {
+	width: 300px;
+	max-width: 100%;
+	position: fixed;
+	bottom: 100px;
+	right: 40px;
+	border-radius: 10px;
+	overflow: hidden;
+	box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+	background-color: white;
+	display: none;
+	z-index: 1000;
+}
 
-            .chatbot-header {
-                background-color: #203878; /* Blue header */
-                color: white;
-                padding: 10px;
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-            }
+.chatbot-header {
+	background-color: #203878;
+	color: white;
+	padding: 10px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
 
-            .header-left {
-                display: flex;
-                align-items: center;
-            }
+.header-left {
+	display: flex;
+	align-items: center;
+}
 
-            .header-right {
-                display: flex;
-                align-items: center;
-            }
-            /* Style for the send button */
+.header-right {
+	display: flex;
+	align-items: center;
+}
+
 .chatbot-footer button.send-button {
-    border-radius: 50%;
-    border: none;
-    background-color: #203878; /* Circle color */
-    padding: 10px;
-    margin-left: 5px;
-    cursor: pointer;
-    width: 30px; /* Adjust size as needed */
-    height: 30x; /* Adjust size as needed */
-    display: flex;
-    align-items: center;
-    justify-content: center;
+	border-radius: 50%;
+	border: none;
+	background-color: #203878;
+	padding: 10px;
+	margin-left: 5px;
+	cursor: pointer;
+	width: 30px;
+	height: 30x;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 
 .chatbot-footer button.send-button img {
-    width: 17px; /* Icon size */
-    height: 17px; /* Icon size */
+	width: 17px;
+	height: 17px;
 }
 
-            .online-status {
-                display: inline-block;
-                width: 10px;
-                height: 10px;
-                background-color: #28a745;
-                border-radius: 50%;
-                margin-left: 5px;
-            }
-
-            .chatbot-body {
-                padding: 10px;
-                height: 300px;
-                overflow-y: auto;
-                position: relative;
-            }
-
-            .chat-intro {
-                position: sticky;
-                top: 0;
-                background-color: white;
-                padding: 10px 0;
-                text-align: center;
-                z-index: 10;
-                transition: opacity 0.3s ease-in-out;
-            }
-
-            .image-container {
-                position: relative;
-                display: inline-block;
-                margin-bottom: 5px;
-            }
-
-            .intro-image {
-                width: 50px;
-                height: 50px;
-                border-radius: 50%;
-            }
-
-            .online-dot {
-                position: absolute;
-                bottom: 5px;
-                right: 5px;
-                width: 10px;
-                height: 10px;
-                background-color: #28a745;
-                border-radius: 50%;
-                border: 2px solid white; /* adds a white border around the green dot */
-            }
-
-            .intro-name {
-                margin: 5px 0 0 0;
-                font-size: 16px; /* Smaller font size */
-            }
-
-            .intro-description {
-                font-size: 14px; /* Smaller font size */
-                margin: 5px 0 0 0;
-            }
-
-            .chatbot-footer {
-                padding: 10px;
-                border-top: 1px solid #ddd;
-                display: flex;
-                align-items: center;
-            }
-
-            .chatbot-footer input[type="text"] {
-    width: 80%; /* Adjusts the width of the input field */
-    padding: 8px; /* Reduces the padding inside the input field */
-    border-radius: 15px; /* Adjusts the border radius to make it less rounded */
-    border: 1px solid #ddd; /* Keeps the border style */
-    outline: none; /* Removes the default outline */
-    font-size: 14px; /* Adjusts font size to fit the smaller input */
+.online-status {
+	display: inline-block;
+	width: 10px;
+	height: 10px;
+	background-color: #28a745;
+	border-radius: 50%;
+	margin-left: 5px;
 }
 
+.chatbot-body {
+	padding: 10px;
+	height: 300px;
+	overflow-y: auto;
+	position: relative;
+}
 
-         /* CSS for the like button */
+.chat-intro {
+	position: sticky;
+	top: 0;
+	background-color: white;
+	padding: 10px 0;
+	text-align: center;
+	z-index: 10;
+	transition: opacity 0.3s ease-in-out;
+}
+
+.image-container {
+	position: relative;
+	display: inline-block;
+	margin-bottom: 5px;
+}
+
+.intro-image {
+	width: 50px;
+	height: 50px;
+	border-radius: 50%;
+}
+
+.online-dot {
+	position: absolute;
+	bottom: 5px;
+	right: 5px;
+	width: 10px;
+	height: 10px;
+	background-color: #28a745;
+	border-radius: 50%;
+	border: 2px solid white;
+}
+
+.intro-name {
+	margin: 5px 0 0 0;
+	font-size: 16px;
+}
+
+.intro-description {
+	font-size: 14px;
+	margin: 5px 0 0 0;
+}
+
+.chatbot-footer {
+	padding: 10px;
+	border-top: 1px solid #ddd;
+	display: flex;
+	align-items: center;
+}
+
+.chatbot-footer input[type="text"] {
+	width: 80%;
+	padding: 8px;
+	border-radius: 15px;
+	border: 1px solid #ddd;
+	outline: none;
+	font-size: 14px;
+}
+
 .chatbot-footer button#likeButton {
-    border-radius: 50%;
-    border: none;
-    background: none;
-    padding: 0px;
-    margin-left: 5px;
-    cursor: pointer;
-    background-color: transparent; /* Ensure the button is transparent */
+	border-radius: 50%;
+	border: none;
+	background: none;
+	padding: 0px;
+	margin-left: 5px;
+	cursor: pointer;
+	background-color: transparent;
 }
 
 .chatbot-footer button#likeButton img {
-    width: 30px;
-    height: 30px;
-    /* Additional styles if needed */
+	width: 30px;
+	height: 30px;
+
 }
 
-         /* CSS for the media button */
 .chatbot-footer button#mediaButton {
-    border-radius: 50%;
-    border: none;
-    background: none;
-    padding: 15px;
-    margin-left: -10px;
-    cursor: pointer;
-    background-color: transparent; /* Ensure the button is transparent */
+	border-radius: 50%;
+	border: none;
+	background: none;
+	padding: 15px;
+	margin-left: -10px;
+	cursor: pointer;
+	background-color: transparent;
 }
 
 .chatbot-footer button#mediaButton img {
-    width: 30px;
-    height: 30px;
-    /* Additional styles if needed */
+	width: 30px;
+	height: 30px;
+
 }
-    .chatbot-footer button#voiceButton {
-    border-radius: 50%;
-    border: none;
-    background: none;
-    padding: 10px;
-    margin-left: -10px;
-    cursor: pointer;
-    background-color: transparent; /* Ensure the button is transparent */
+
+.chatbot-footer button#voiceButton {
+	border-radius: 50%;
+	border: none;
+	background: none;
+	padding: 10px;
+	margin-left: -10px;
+	cursor: pointer;
+	background-color: transparent;
 }
 
 .chatbot-footer button#voiceButton img {
-    width: 30px;
-    height: 30px;
-    /* Additional styles if needed */
+	width: 30px;
+	height: 30px;
+
 }
 
-            .chatbot-footer button {
-                background-color: #203878; /* Send button color */
-                border: none;
-                color: white;
-                padding: 5px;
-                border-radius: 50%;
-                margin-left: 10px;
-                cursor: pointer;
-                width: 35px;
-                height: 35px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                font-size: 20px;
-            }
+.chatbot-footer button {
+	background-color: #203878;
+	border: none;
+	color: white;
+	padding: 5px;
+	border-radius: 50%;
+	margin-left: 10px;
+	cursor: pointer;
+	width: 35px;
+	height: 35px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 20px;
+}
 
-            .chatbot-footer button:disabled {
-                background-color: #203878;
-                cursor: not-allowed;
-            }
+.chatbot-footer button:disabled {
+	background-color: #203878;
+	cursor: not-allowed;
+}
 
-            .message-sent,
-            .message-received {
-                margin-bottom: 10px;
-                clear: both;
-            }
+.message-sent,
+.message-received {
+	margin-bottom: 10px;
+	clear: both;
+}
 
-            .message-sent {
-                text-align: right;
-            }
+.message-sent {
+	text-align: right;
+}
 
-            .message-received {
-                text-align: left;
-            }
+.message-received {
+	text-align: left;
+}
 
-            .message-sent .message,
-            .message-received .message {
-                display: inline-block;
-                padding: 10px 15px;
-                border-radius: 5px; /* Change this value to 0 for perfectly square corners */
-                max-width: 70%;
-            }
+.message-sent .message,
+.message-received .message {
+	display: inline-block;
+	padding: 10px 15px;
+	border-radius: 5px;
+	max-width: 70%;
+}
 
-            .message-sent .message {
-                background-color: #203878; /* Sent message bubble */
-                color: white;
-            }
+.message-sent .message {
+	background-color: #203878;
+	color: white;
+}
 
-            .message-received .message {
-                background-color: #eef6fa; /* Received message bubble */
-                color: #333;
-            }
+.message-received .message {
+	background-color: #eef6fa;
+	color: #333;
+}
 
-            .chat-icon-container {
-                position: fixed;
-                bottom: 20px;
-                right: 20px;
-                display: flex;
-                align-items: center;
-                z-index: 1001;
-            }
+.chat-icon-container {
+	position: fixed;
+	bottom: 20px;
+	right: 20px;
+	display: flex;
+	align-items: center;
+	z-index: 1001;
+}
 
-            .chat-icon-button {
-                background-color: #203878;
-                color: white;
-                border: none;
-                width: 60px;
-                height: 60px;
-                border-radius: 50%;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                font-size: 30px;
-                cursor: pointer;
-                box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-                text-align: center;
-                transition: background-color 0.3s;
-            }
+.chat-icon-button {
+	background-color: #203878;
+	color: white;
+	border: none;
+	width: 60px;
+	height: 60px;
+	border-radius: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 30px;
+	cursor: pointer;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+	text-align: center;
+	transition: background-color 0.3s;
+}
 
-            .chat-icon-button.envelope-icon::before {
-                content: '\\2709'; /* Unicode for envelope icon */
-                font-size: 30px;
-                line-height: 60px; /* Center vertically */
-                text-align: center; /* Center horizontally */
-            }
+.chat-icon-button.envelope-icon::before {
+	content: '\\2709';
+	font-size: 30px;
+	line-height: 60px;
+	text-align: center;
+}
 
-            .chat-icon-button.close-icon::before {
-                content: '\\2716'; /* Unicode for 'X' icon */
-                font-size: 30px;
-                line-height: 60px; /* Center vertically */
-                text-align: center; /* Center horizontally */
-            }
+.chat-icon-button.close-icon::before {
+	content: '\\2716';
+	font-size: 30px;
+	line-height: 60px;
+	text-align: center;
+}
 
-            .burger-menu {
-                position: absolute;
-                top: 0;
-                right: 0;
-                margin: 0px;
-                z-index: 1002;
-            }
+.burger-menu {
+	position: absolute;
+	top: 0;
+	right: 0;
+	margin: 0px;
+	z-index: 1002;
+}
 
-            .burger-menu-icon {
-                background-color: transparent;
-                color: white;
-                border: none;
-                width: 40px;
-                height: 40px;
-                border-radius: 50%;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                font-size: 20px;
-                cursor: pointer;
-            }
+.burger-menu-icon {
+	background-color: transparent;
+	color: white;
+	border: none;
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 20px;
+	cursor: pointer;
+}
 
-            .burger-menu-dropdown {
-                display: none; /* Hidden by default */
-                position: absolute;
-                top: 45px;
-                right: 0;
-                background-color: white;
-                border: 1px solid #ddd;
-                border-radius: 5px;
-                box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-                z-index: 1003;
-            }
+.burger-menu-dropdown {
+	display: none;
+	position: absolute;
+	top: 45px;
+	right: 0;
+	background-color: white;
+	border: 1px solid #ddd;
+	border-radius: 5px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+	z-index: 1003;
+}
 
-            .burger-menu-dropdown button {
-                display: block;
-                width: 100%;
-                padding: 10px;
-                border: none;
-                background-color: white;
-                color: black;
-                text-align: left;
-                cursor: pointer;
-            }
+.burger-menu-dropdown button {
+	display: block;
+	width: 100%;
+	padding: 10px;
+	border: none;
+	background-color: white;
+	color: black;
+	text-align: left;
+	cursor: pointer;
+}
 
-            .burger-menu-dropdown button:hover {
-                background-color: #f0f0f0;
-            }
+.burger-menu-dropdown button:hover {
+	background-color: #f0f0f0;
+}
 
-            .chat-text {
-                font-size: 22px;
-                color: #203878; /* Text color */
-                margin-right: 10px;
-                display: inline-block;
-                animation: bounce 1.5s infinite; /* Bouncing animation */
-            }
+.chat-text {
+	font-size: 22px;
+	color: #203878;
+	margin-right: 10px;
+	display: inline-block;
+	animation: bounce 1.5s infinite;
+}
 
-            @keyframes bounce {
-                0%, 20%, 50%, 80%, 100% {
-                    transform: translateY(0);
-                }
-                40% {
-                    transform: translateY(-20px);
-                }
-                60% {
-                    transform: translateY(-10px);
-                }
-            }
+@keyframes bounce {
 
-            .typing-indicator-container {
-                display: flex;
-                align-items: center;
-                justify-content: flex-start;
-                margin-bottom: 10px;
-                clear: both;
-            }
+	0%,
+	20%,
+	50%,
+	80%,
+	100% {
+		transform: translateY(0);
+	}
 
-            .typing-indicator {
-                display: flex;
-                align-items: center;
-                background-color: #eef6fa; /* Match received message background */
-                color: #333; /* Match received message text color */
-                padding: 15px 15px;
-                border-radius: 5px; /* Set to 0 for square corners */
-                max-width: 70%;
-                margin-left: 0; /* Add some spacing from the left */
-            }
+	40% {
+		transform: translateY(-20px);
+	}
 
-            .typing-indicator span {
-                display: inline-block;
-                width: 8px;
-                height: 8px;
-                margin-right: 3px;
-                background-color: #203878;
-                border-radius: 50%;
-                animation: typing 1.5s infinite ease-in-out;
-            }
+	60% {
+		transform: translateY(-10px);
+	}
+}
 
-            .typing-indicator span:nth-child(2) {
-                animation-delay: 0.2s;
-            }
+.typing-indicator-container {
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+	margin-bottom: 10px;
+	clear: both;
+}
 
-            .typing-indicator span:nth-child(3) {
-                animation-delay: 0.4s;
-            }
+.typing-indicator {
+	display: flex;
+	align-items: center;
+	background-color: #eef6fa;
+	color: #333;
+	padding: 15px 15px;
+	border-radius: 5px;
+	max-width: 70%;
+	margin-left: 0;
+}
 
-            @keyframes typing {
-                0%, 60%, 100% {
-                    transform: translateY(0);
-                }
-                30% {
-                    transform: translateY(-8px);
-                }
-            }
-         .message-time-container {
-    display: flex; /* Align children horizontally */
-    align-items: center; /* Center vertically */
-    margin-top: 4px; /* Space between message content and timestamp */
+.typing-indicator span {
+	display: inline-block;
+	width: 8px;
+	height: 8px;
+	margin-right: 3px;
+	background-color: #203878;
+	border-radius: 50%;
+	animation: typing 1.5s infinite ease-in-out;
+}
+
+.typing-indicator span:nth-child(2) {
+	animation-delay: 0.2s;
+}
+
+.typing-indicator span:nth-child(3) {
+	animation-delay: 0.4s;
+}
+
+@keyframes typing {
+
+	0%,
+	60%,
+	100% {
+		transform: translateY(0);
+	}
+
+	30% {
+		transform: translateY(-8px);
+	}
+}
+
+.message-time-container {
+	display: flex;
+	align-items: center;
+	margin-top: 4px;
 }
 
 .message-time {
-    font-size: 0.75em; /* Smaller font size for timestamp */
-    color: grey; /* Timestamp color */
-    margin-right: 10px; /* Space between timestamp and copy icon */
+	font-size: 0.75em;
+	color: grey;
+	margin-right: 10px;
 }
 
 .copy-icon {
-    cursor: pointer;
-    width: 20px; /* Adjust size if needed */
-    height: 20px;
+	cursor: pointer;
+	width: 20px;
+	height: 20px;
 }
 
-/* Style adjustments for message types */
 .message-sent .message-time-container {
-    justify-content: flex-end; /* Align timestamp and copy icon to the right */
+	justify-content: flex-end;
 }
 
 .message-received .message-time-container {
-    justify-content: flex-start; /* Align timestamp and copy icon to the left */
+	justify-content: flex-start;
 }
 
-
-/* Container for media and timestamp */
 .media-container {
-    display: flex; /* Use flexbox layout */
-    flex-direction: column; /* Stack media and timestamp vertically */
-    align-items: flex-end; /* Align children to the right */
-    margin-bottom: 10px; /* Space between media items */
-    position: relative; /* Allows absolute positioning if needed */
+	display: flex;
+	flex-direction: column;
+	align-items: flex-end;
+	margin-bottom: 10px;
+	position: relative;
 }
 
 .media-timestamp {
-    font-size: 0.75em; /* Smaller font size for timestamp */
-    color: grey; /* Timestamp color */
-    margin-top: 5px; /* Space between media and timestamp */
-    text-align: right; /* Align timestamp to the right */
+	font-size: 0.75em;
+	color: grey;
+	margin-top: 5px;
+	text-align: right;
 }
 
-/* Style for images */
 .media-img {
-    max-width: 60%; /* Adjust size as needed */
-    border-radius: 5px; /* Adjust corners as needed */
-    display: block; /* Ensures the image is displayed correctly */
+	max-width: 60%;
+	border-radius: 5px;
+	display: block;
 }
 
-/* Style for document links */
 .media-link {
-    display: block; /* Ensures the link is displayed correctly */
-    text-align: right;
+	display: block;
+	text-align: right;
 }
 
 .message-container {
-    display: flex; /* Use flexbox for horizontal layout */
-    align-items: center; /* Vertically align items */
-    margin-bottom: 10px; /* Space between messages */
+	display: flex;
+	align-items: center;
+	margin-bottom: 10px;
 }
 
 .message-content {
-    flex: 1; /* Allow message to take available space */
+	flex: 1;
 }
 
 .notification {
-    position: fixed;
-    top: 160px; /* Adjust as needed */
-    right: 60px;  /* Adjust as needed */
-    background-color: #333;
-    color: white;
-    padding: 10px 20px;
-    border-radius: 5px;
-    display: none; /* Hide by default */
-    z-index: 1000; /* Ensure it appears above other elements */
-    opacity: 0; /* Start hidden for fading effect */
-    transition: opacity 0.5s ease-out; /* Smooth fade-out transition */
+	position: fixed;
+	top: 160px;
+	right: 60px;
+	background-color: #333;
+	color: white;
+	padding: 10px 20px;
+	border-radius: 5px;
+	display: none;
+	z-index: 1000;
+	opacity: 0;
+	transition: opacity 0.5s ease-out;
 }
 
         `;
-      
-        document.head.appendChild(style);
-    }
 
-    
-    function handleLikeButton() {
-    const chatBody = document.getElementById('chatBody');
-    const likeIcon = '<img width="35" height="35" src="https://img.icons8.com/?size=100&id=83997&format=png&color=203878" alt="thumb-up"/>';
-
-    // Add the like icon message directly
-    const likeIconDiv = document.createElement('div');
-    likeIconDiv.className = 'message-sent'; // Still use this class for alignment
-    likeIconDiv.innerHTML = likeIcon; // Ensure HTML content is added
-    chatBody.appendChild(likeIconDiv);
-
-    // Save the like icon message to chat history
-    saveChatHistory(likeIcon, 'sent');
-
-    // Scroll to the bottom to show new messages with a slight delay
-    setTimeout(() => {
-        chatBody.scrollTop = chatBody.scrollHeight;
-    }, 100); // Adjust delay as needed
+	document.head.appendChild(style);
 }
 
+function handleLikeButton() {
+	const chatBody = document.getElementById('chatBody');
+	const likeIcon = '<img width="35" height="35" src="https://img.icons8.com/?size=100&id=83997&format=png&color=203878" alt="thumb-up"/>';
 
-    function addFunctionality() {
-        document.querySelector('#sendButton').addEventListener('click', sendMessage);
-        document.querySelector('#mediaButton').addEventListener('click', () => {
-        document.querySelector('#mediaInput').click();
-    });
-    document.querySelector('#mediaInput').addEventListener('change', handleMediaUpload);
-    function initializeChat() {
-    document.getElementById('botName').textContent = botParameters.botname;
-    populateChatHistory();
+	const likeIconDiv = document.createElement('div');
+	likeIconDiv.className = 'message-sent';
+	likeIconDiv.innerHTML = likeIcon;
+	chatBody.appendChild(likeIconDiv);
 
-    if (botParameters.autoPop === 0) {
-        // No auto-pop behavior
-    } else if (botParameters.autoPop === 1) {
-        setTimeout(function() {
-            document.querySelector('.chatbot-container').style.display = 'block';
-            toggleChatIcon();
-        }, 1000);
-    } else if (botParameters.autoPop > 1) {
-        setTimeout(function() {
-            document.querySelector('.chatbot-container').style.display = 'block';
-            toggleChatIcon();
-        }, botParameters.autoPop * 1000);
-    }
-}
-const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+	saveChatHistory(likeIcon, 'sent');
 
-if (SpeechRecognition) {
-    const recognition = new SpeechRecognition();
-    recognition.lang = 'en-US';
-    recognition.interimResults = false;
-    recognition.maxAlternatives = 1;
-    let recognizing = false;
-
-    const voiceButton = document.getElementById('voiceButton');
-    const chatInput = document.getElementById('chatInput');
-    const notification = document.getElementById('recordingNotification');
-    const sendButton = document.getElementById('sendButton');
-
-    // Start or stop voice recognition when button is clicked
-    voiceButton.addEventListener('click', () => {
-        if (recognizing) {
-            recognition.stop();
-        } else {
-            recognition.start();
-        }
-    });
-
-    // Event handler for when speech recognition result is available
-    recognition.addEventListener('result', (event) => {
-        const transcript = event.results[0][0].transcript;
-        console.log('Transcript received:', transcript);
-        chatInput.value = transcript;
-        notification.style.display = 'none'; // Hide the notification when text is converted
-        chatInput.focus(); // Focus back on chatInput
-    });
-
-    // Event handler for errors
-    recognition.addEventListener('error', (event) => {
-        console.error('Speech recognition error:', event.error);
-        if (recognizing) {
-            recognition.stop();
-        }
-    });
-
-    // Event handler for when recognition starts
-    recognition.addEventListener('start', () => {
-        recognizing = true;
-        voiceButton.classList.add('recording');
-        notification.style.display = 'block';
-        notification.style.opacity = '1';
-    });
-
-    // Event handler for when recognition ends
-    recognition.addEventListener('end', () => {
-        recognizing = false;
-        voiceButton.classList.remove('recording');
-    });
-
-    // Event handler for when the notification is clicked
-    notification.addEventListener('click', () => {
-        notification.style.opacity = '0';
-        setTimeout(() => {
-            notification.style.display = 'none';
-        }, 500);
-    });
-    document.addEventListener('DOMContentLoaded', () => {
-    const chatInput = document.getElementById('chatInput');
-    const sendButton = document.getElementById('sendButton');
-
-    function sendMessage() {
-        // Add a short delay to ensure input value is updated
-        setTimeout(() => {
-            const message = chatInput.value.trim();
-            if (message) {
-                console.log('Attempting to send message:', message);
-                // Update chat history and interface here
-                saveChatHistory(message, 'sent');
-                const chatBody = document.getElementById('chatBody');
-                const messageDiv = document.createElement('div');
-                messageDiv.className = 'message-sent';
-                messageDiv.textContent = message;
-                chatBody.appendChild(messageDiv);
-                chatInput.value = ''; // Clear input
-                chatInput.focus(); // Refocus on chatInput
-                chatBody.scrollTop = chatBody.scrollHeight; // Scroll to bottom
-                // Handle bot response here
-                handleBotResponse(message);
-            } else {
-                console.log('No message to send');
-            }
-        }, 100); // 100ms delay
-    }
-
-    // Send button event listener
-    sendButton.addEventListener('click', () => {
-        console.log('Send button clicked');
-        sendMessage();
-    });
-
-    // Enter key event listener
-    chatInput.addEventListener('keydown', (event) => {
-        if (event.key === 'Enter') {
-            event.preventDefault(); // Prevent default Enter key action (e.g., form submission)
-            if (!sendButton.disabled) {
-                console.log('Enter key pressed');
-                sendMessage();
-            }
-        }
-    });
-
-    // Define the bot response function
-    function handleBotResponse(message) {
-        // Simulate bot reply
-        setTimeout(() => {
-            const chatBody = document.getElementById('chatBody');
-            const responseDiv = document.createElement('div');
-            responseDiv.className = 'message-received';
-            responseDiv.textContent = 'Bot response to: ' + message;
-            chatBody.appendChild(responseDiv);
-            chatBody.scrollTop = chatBody.scrollHeight; // Scroll to bottom
-        }, 1000); // Simulated delay for bot response
-    }
-});
-
-
-
-} else {
-    console.error('SpeechRecognition API is not supported in this browser.');
+	setTimeout(() => {
+		chatBody.scrollTop = chatBody.scrollHeight;
+	}, 100);
 }
 
+function addFunctionality() {
+	document.querySelector('#sendButton').addEventListener('click', sendMessage);
+	document.querySelector('#mediaButton').addEventListener('click', () => {
+		document.querySelector('#mediaInput').click();
+	});
+	document.querySelector('#mediaInput').addEventListener('change', handleMediaUpload);
 
-function showNotification() {
-    var notification = document.getElementById('notification');
-    notification.style.display = 'block'; // Show the notification
-    notification.style.opacity = '1'; // Make it visible
+	function initializeChat() {
+		document.getElementById('botName').textContent = botParameters.botname;
+		populateChatHistory();
 
-    setTimeout(function() {
-        notification.style.opacity = '0'; // Start fading out
-        setTimeout(function() {
-            notification.style.display = 'none'; // Hide the notification after fading out
-        }, 500); // Match this time with the CSS transition duration
-    }, 3000); // Display for 3 seconds
+		if (botParameters.autoPop === 0) {
+
+		} else if (botParameters.autoPop === 1) {
+			setTimeout(function() {
+				document.querySelector('.chatbot-container').style.display = 'block';
+				toggleChatIcon();
+			}, 1000);
+		} else if (botParameters.autoPop > 1) {
+			setTimeout(function() {
+				document.querySelector('.chatbot-container').style.display = 'block';
+				toggleChatIcon();
+			}, botParameters.autoPop * 1000);
+		}
+	}
+	const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+	if (SpeechRecognition) {
+		const recognition = new SpeechRecognition();
+		recognition.lang = 'en-US';
+		recognition.interimResults = false;
+		recognition.maxAlternatives = 1;
+		let recognizing = false;
+
+		const voiceButton = document.getElementById('voiceButton');
+		const chatInput = document.getElementById('chatInput');
+		const notification = document.getElementById('recordingNotification');
+		const sendButton = document.getElementById('sendButton');
+
+		voiceButton.addEventListener('click', () => {
+			if (recognizing) {
+				recognition.stop();
+			} else {
+				recognition.start();
+			}
+		});
+
+		recognition.addEventListener('result', (event) => {
+			const transcript = event.results[0][0].transcript;
+			console.log('Transcript received:', transcript);
+			chatInput.value = transcript;
+			notification.style.display = 'none';
+			chatInput.focus();
+		});
+
+		recognition.addEventListener('error', (event) => {
+			console.error('Speech recognition error:', event.error);
+			if (recognizing) {
+				recognition.stop();
+			}
+		});
+
+		recognition.addEventListener('start', () => {
+			recognizing = true;
+			voiceButton.classList.add('recording');
+			notification.style.display = 'block';
+			notification.style.opacity = '1';
+		});
+
+		recognition.addEventListener('end', () => {
+			recognizing = false;
+			voiceButton.classList.remove('recording');
+		});
+
+		notification.addEventListener('click', () => {
+			notification.style.opacity = '0';
+			setTimeout(() => {
+				notification.style.display = 'none';
+			}, 500);
+		});
+		document.addEventListener('DOMContentLoaded', () => {
+			const chatInput = document.getElementById('chatInput');
+			const sendButton = document.getElementById('sendButton');
+
+			function sendMessage() {
+
+				setTimeout(() => {
+					const message = chatInput.value.trim();
+					if (message) {
+						console.log('Attempting to send message:', message);
+
+						saveChatHistory(message, 'sent');
+						const chatBody = document.getElementById('chatBody');
+						const messageDiv = document.createElement('div');
+						messageDiv.className = 'message-sent';
+						messageDiv.textContent = message;
+						chatBody.appendChild(messageDiv);
+						chatInput.value = '';
+						chatInput.focus();
+						chatBody.scrollTop = chatBody.scrollHeight;
+
+						handleBotResponse(message);
+					} else {
+						console.log('No message to send');
+					}
+				}, 100);
+			}
+
+			sendButton.addEventListener('click', () => {
+				console.log('Send button clicked');
+				sendMessage();
+			});
+
+			chatInput.addEventListener('keydown', (event) => {
+				if (event.key === 'Enter') {
+					event.preventDefault();
+					if (!sendButton.disabled) {
+						console.log('Enter key pressed');
+						sendMessage();
+					}
+				}
+			});
+
+			function handleBotResponse(message) {
+
+				setTimeout(() => {
+					const chatBody = document.getElementById('chatBody');
+					const responseDiv = document.createElement('div');
+					responseDiv.className = 'message-received';
+					responseDiv.textContent = 'Bot response to: ' + message;
+					chatBody.appendChild(responseDiv);
+					chatBody.scrollTop = chatBody.scrollHeight;
+				}, 1000);
+			}
+		});
+
+	} else {
+		console.error('SpeechRecognition API is not supported in this browser.');
+	}
+
+	function showNotification() {
+		var notification = document.getElementById('notification');
+		notification.style.display = 'block';
+		notification.style.opacity = '1';
+
+		setTimeout(function() {
+			notification.style.opacity = '0';
+			setTimeout(function() {
+				notification.style.display = 'none';
+			}, 500);
+		}, 3000);
+	}
+
+	function copyMessageToClipboard(message) {
+		navigator.clipboard.writeText(message).then(() => {
+			showNotification();
+		}).catch(err => {
+			console.error('Failed to copy message: ', err);
+		});
+	}
+
+	function toggleChatIcon() {
+		var chatIcon = document.querySelector('.chat-icon-button');
+		chatIcon.classList.remove('envelope-icon');
+		chatIcon.classList.add('close-icon');
+	}
+
+	function populateChatHistory() {
+		const chatBody = document.getElementById('chatBody');
+		const textHistory = JSON.parse(localStorage.getItem('chatHistory')) || [];
+		const mediaHistory = JSON.parse(localStorage.getItem('mediaHistory')) || [];
+
+		const combinedHistory = [...textHistory, ...mediaHistory];
+
+		combinedHistory.sort((a, b) => new Date(a.time || a.timestamp) - new Date(b.time || b.timestamp));
+
+		combinedHistory.forEach(item => {
+			const messageDiv = document.createElement('div');
+
+			if (item.message) {
+
+				messageDiv.className = item.type === 'sent' ? 'message-sent' : 'message-received';
+				const messageContent = document.createElement('div');
+				messageContent.className = 'message';
+				messageContent.textContent = item.message;
+				messageDiv.appendChild(messageContent);
+
+				const messageTime = document.createElement('div');
+				messageTime.className = 'message-time';
+				messageTime.textContent = new Date(item.time).toLocaleTimeString([], {
+					hour: '2-digit',
+					minute: '2-digit'
+				});
+				messageDiv.appendChild(messageTime);
+			} else if (item.data) {
+
+				messageDiv.className = 'media-container';
+
+				if (item.type.startsWith('image/')) {
+					const mediaImg = document.createElement('img');
+					mediaImg.src = item.data;
+					mediaImg.className = 'media-img';
+					messageDiv.appendChild(mediaImg);
+				} else if (item.type.startsWith('application/')) {
+					const mediaLink = document.createElement('a');
+					mediaLink.href = item.data;
+					mediaLink.download = item.name;
+					mediaLink.textContent = 'Download ' + item.name;
+					mediaLink.className = 'media-link';
+					messageDiv.appendChild(mediaLink);
+				}
+
+				const mediaTimestamp = document.createElement('div');
+				mediaTimestamp.className = 'media-timestamp';
+				mediaTimestamp.textContent = new Date(item.timestamp).toLocaleTimeString([], {
+					hour: '2-digit',
+					minute: '2-digit'
+				});
+				messageDiv.appendChild(mediaTimestamp);
+			}
+
+			chatBody.appendChild(messageDiv);
+		});
+
+		chatBody.scrollTop = chatBody.scrollHeight;
+	}
+
+	function sendMessage() {
+		var inputField = document.getElementById('chatInput');
+		var userMessage = inputField.value;
+		if (userMessage.trim() === '') return;
+
+		var now = new Date();
+		var timeString = now.toLocaleTimeString([], {
+			hour: '2-digit',
+			minute: '2-digit'
+		});
+
+		var userMessageDiv = document.createElement('div');
+		userMessageDiv.className = 'message-sent';
+		var userMessageContent = document.createElement('div');
+		userMessageContent.className = 'message';
+		userMessageContent.textContent = userMessage;
+		userMessageDiv.appendChild(userMessageContent);
+
+		var userMessageTime = document.createElement('div');
+		userMessageTime.className = 'message-time';
+		userMessageTime.textContent = timeString;
+
+		var copyIcon = document.createElement('img');
+		copyIcon.src = 'https://img.icons8.com/?size=100&id=15047&format=png&color=737373';
+		copyIcon.alt = 'copy';
+		copyIcon.style.cursor = 'pointer';
+		copyIcon.style.width = '20px';
+		copyIcon.style.height = '20px';
+		copyIcon.className = 'copy-icon';
+		copyIcon.addEventListener('click', () => copyMessageToClipboard(userMessage));
+
+		var timeAndIconDiv = document.createElement('div');
+		timeAndIconDiv.className = 'message-time-container';
+		timeAndIconDiv.appendChild(userMessageTime);
+		timeAndIconDiv.appendChild(copyIcon);
+
+		userMessageDiv.appendChild(timeAndIconDiv);
+
+		document.getElementById('chatBody').appendChild(userMessageDiv);
+
+		saveChatHistory(userMessage, 'sent');
+
+		inputField.value = '';
+		document.getElementById('sendButton').disabled = false;
+
+		var botMessageDiv = document.createElement('div');
+		botMessageDiv.className = 'message-received';
+
+		var typingIndicatorContainer = document.createElement('div');
+		typingIndicatorContainer.className = 'typing-indicator-container';
+		var typingIndicator = document.createElement('div');
+		typingIndicator.className = 'typing-indicator';
+		typingIndicator.innerHTML = '<span></span><span></span><span></span>';
+		typingIndicatorContainer.appendChild(typingIndicator);
+		botMessageDiv.appendChild(typingIndicatorContainer);
+		document.getElementById('chatBody').appendChild(botMessageDiv);
+
+		document.getElementById('chatBody').scrollTop = document.getElementById('chatBody').scrollHeight;
+
+		setTimeout(() => {
+
+			typingIndicatorContainer.remove();
+
+			var botMessageContent = document.createElement('div');
+			botMessageContent.className = 'message';
+			botMessageContent.textContent = userMessage;
+			botMessageDiv.appendChild(botMessageContent);
+			document.getElementById('chatInput').addEventListener('keydown', (event) => {
+
+			});
+
+			var botMessageTime = document.createElement('div');
+			botMessageTime.className = 'message-time';
+			botMessageTime.textContent = timeString;
+
+			var copyIcon = document.createElement('img');
+			copyIcon.src = 'https://img.icons8.com/?size=100&id=15047&format=png&color=737373';
+			copyIcon.alt = 'copy';
+			copyIcon.style.cursor = 'pointer';
+			copyIcon.style.width = '20px';
+			copyIcon.style.height = '20px';
+			copyIcon.className = 'copy-icon';
+			copyIcon.addEventListener('click', () => copyMessageToClipboard(userMessage));
+
+			var timeAndIconDiv = document.createElement('div');
+			timeAndIconDiv.className = 'message-time-container';
+			timeAndIconDiv.appendChild(botMessageTime);
+			timeAndIconDiv.appendChild(copyIcon);
+
+			botMessageDiv.appendChild(timeAndIconDiv);
+
+			saveChatHistory(botMessageContent.textContent, 'received');
+
+			document.getElementById('chatBody').scrollTop = document.getElementById('chatBody').scrollHeight;
+		}, 1500);
+	}
+
+	function handleMediaUpload(event) {
+		const file = event.target.files[0];
+		if (file) {
+			const reader = new FileReader();
+			reader.onload = function(e) {
+				const mediaUrl = e.target.result;
+				const chatBody = document.getElementById('chatBody');
+
+				const mediaContainer = document.createElement('div');
+				mediaContainer.className = 'media-container';
+
+				const now = new Date();
+				const options = {
+					hour: '2-digit',
+					minute: '2-digit'
+				};
+				const timestamp = now.toLocaleTimeString([], options);
+
+				if (file.type.startsWith('image/')) {
+
+					const mediaImg = document.createElement('img');
+					mediaImg.src = mediaUrl;
+					mediaImg.className = 'media-img';
+					mediaContainer.appendChild(mediaImg);
+				} else if (file.type.startsWith('application/')) {
+
+					const mediaLink = document.createElement('a');
+					mediaLink.href = mediaUrl;
+					mediaLink.download = file.name;
+					mediaLink.textContent = 'Download ' + file.name;
+					mediaLink.className = 'media-link';
+					mediaContainer.appendChild(mediaLink);
+				} else {
+					alert('Unsupported file type.');
+					return;
+				}
+
+				const timeStampElement = document.createElement('div');
+				timeStampElement.textContent = `${timestamp}`;
+				timeStampElement.className = 'media-timestamp';
+				mediaContainer.appendChild(timeStampElement);
+
+				chatBody.appendChild(mediaContainer);
+
+				saveMediaToLocalStorage(file, 'sent');
+
+				chatBody.scrollTop = chatBody.scrollHeight;
+			};
+			reader.readAsDataURL(file);
+		}
+	}
+
+	function saveChatHistory(message, type) {
+		var history = JSON.parse(localStorage.getItem('chatHistory')) || [];
+		var now = new Date();
+		var timeString = now.toISOString();
+
+		history.push({
+			message: message,
+			type: type,
+			time: timeString
+		});
+		localStorage.setItem('chatHistory', JSON.stringify(history));
+	}
+
+	function saveMediaToLocalStorage(file, type) {
+		const fileReader = new FileReader();
+		fileReader.onload = function(event) {
+			const fileData = {
+				name: file.name,
+				type: file.type,
+				data: event.target.result,
+				timestamp: new Date().toISOString(),
+				sent: type === 'sent'
+			};
+
+			let mediaHistory = JSON.parse(localStorage.getItem('mediaHistory')) || [];
+			mediaHistory.push(fileData);
+			localStorage.setItem('mediaHistory', JSON.stringify(mediaHistory));
+		};
+		fileReader.readAsDataURL(file);
+	}
+
+	document.addEventListener('DOMContentLoaded', function() {
+
+		document.addEventListener('DOMContentLoaded', initializeChat);
+
+		document.getElementById('sendButton').addEventListener('click', sendMessage);
+
+		document.getElementById('likeButton').addEventListener('click', handleLikeButton);
+
+		document.getElementById('chatInput').addEventListener('input', function() {
+			document.getElementById('sendButton').disabled = this.value.trim() === '';
+		});
+
+		document.getElementById('chatInput').addEventListener('keydown', function(event) {
+			if (event.key === 'Enter') {
+				event.preventDefault();
+				if (!document.getElementById('sendButton').disabled) {
+					sendMessage();
+				}
+			}
+		});
+
+		document.querySelector('.chat-icon-button').addEventListener('click', function() {
+			var chatbotContainer = document.querySelector('.chatbot-container');
+			if (chatbotContainer.style.display === 'block') {
+				chatbotContainer.style.display = 'none';
+				this.classList.remove('close-icon');
+				this.classList.add('envelope-icon');
+			} else {
+				chatbotContainer.style.display = 'block';
+				this.classList.remove('envelope-icon');
+				this.classList.add('close-icon');
+			}
+		});
+
+		document.getElementById('chatBody').addEventListener('scroll', function() {
+			const chatIntro = document.getElementById('chatIntro');
+			if (this.scrollTop > 20) {
+				chatIntro.style.opacity = '0';
+			} else {
+				chatIntro.style.opacity = '1';
+			}
+		});
+
+		document.querySelector('.burger-menu-icon').addEventListener('click', function() {
+			const dropdown = document.querySelector('.burger-menu-dropdown');
+			dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+		});
+
+		document.getElementById('clearChat').addEventListener('click', function() {
+			const confirmClear = window.confirm("Clear all messages? This can't be undone.");
+
+			if (confirmClear) {
+				const chatBody = document.getElementById('chatBody');
+				const chatIntro = document.getElementById('chatIntro');
+				chatBody.innerHTML = '';
+				chatBody.appendChild(chatIntro);
+				localStorage.removeItem('chatHistory');
+				localStorage.removeItem('mediaHistory');
+			}
+			document.querySelector('.burger-menu-dropdown').style.display = 'none';
+		});
+
+		document.getElementById('closeSupport').addEventListener('click', function() {
+			document.querySelector('.chatbot-container').style.display = 'none';
+			document.querySelector('.chat-icon-button').classList.remove('close-icon');
+			document.querySelector('.chat-icon-button').classList.add('envelope-icon');
+			document.querySelector('.burger-menu-dropdown').style.display = 'none';
+		});
+
+		document.getElementById('saveTranscript').addEventListener('click', function() {
+			alert('The transcript will not include media files.');
+
+			const history = JSON.parse(localStorage.getItem('chatHistory')) || [];
+
+			let transcript = '';
+			history.forEach(chat => {
+				let prefix = '';
+				let timeFormatted = new Date(chat.time).toLocaleTimeString([], {
+					hour: '2-digit',
+					minute: '2-digit'
+				});
+
+				if (chat.type === 'sent') {
+					prefix = 'You: ';
+				} else if (chat.type === 'received') {
+					prefix = `${botParameters.widgetName}: `;
+				}
+				transcript += `${prefix}${chat.message} (${timeFormatted})\n`;
+			});
+
+			const blob = new Blob([transcript], {
+				type: 'text/plain'
+			});
+			const url = URL.createObjectURL(blob);
+			const a = document.createElement('a');
+			a.href = url;
+			a.download = 'chat-transcript.txt';
+			document.body.appendChild(a);
+			a.click();
+			document.body.removeChild(a);
+
+			document.querySelector('.burger-menu-dropdown').style.display = 'none';
+		});
+
+	});
+
+	initializeChat();
 }
 
-// Example usage: call this function when the copy action is successful
-
-function copyMessageToClipboard(message) {
-    navigator.clipboard.writeText(message).then(() => {
-        showNotification();
-    }).catch(err => {
-        console.error('Failed to copy message: ', err);
-    });
-}
-
-
-        function toggleChatIcon() {
-            var chatIcon = document.querySelector('.chat-icon-button');
-            chatIcon.classList.remove('envelope-icon');
-            chatIcon.classList.add('close-icon');
-        }
-
-        function populateChatHistory() {
-    const chatBody = document.getElementById('chatBody');
-    const textHistory = JSON.parse(localStorage.getItem('chatHistory')) || [];
-    const mediaHistory = JSON.parse(localStorage.getItem('mediaHistory')) || [];
-
-    // Combine both histories
-    const combinedHistory = [...textHistory, ...mediaHistory];
-
-    // Sort combined history by timestamp
-    combinedHistory.sort((a, b) => new Date(a.time || a.timestamp) - new Date(b.time || b.timestamp));
-
-    combinedHistory.forEach(item => {
-        const messageDiv = document.createElement('div');
-
-        if (item.message) {
-            // Handle text message
-            messageDiv.className = item.type === 'sent' ? 'message-sent' : 'message-received';
-            const messageContent = document.createElement('div');
-            messageContent.className = 'message';
-            messageContent.textContent = item.message;
-            messageDiv.appendChild(messageContent);
-
-            // Add timestamp
-            const messageTime = document.createElement('div');
-            messageTime.className = 'message-time';
-            messageTime.textContent = new Date(item.time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-            messageDiv.appendChild(messageTime);
-        } else if (item.data) {
-            // Handle media
-            messageDiv.className = 'media-container';
-
-            if (item.type.startsWith('image/')) {
-                const mediaImg = document.createElement('img');
-                mediaImg.src = item.data;
-                mediaImg.className = 'media-img';
-                messageDiv.appendChild(mediaImg);
-            } else if (item.type.startsWith('application/')) {
-                const mediaLink = document.createElement('a');
-                mediaLink.href = item.data;
-                mediaLink.download = item.name;
-                mediaLink.textContent = 'Download ' + item.name;
-                mediaLink.className = 'media-link';
-                messageDiv.appendChild(mediaLink);
-            }
-
-            // Add timestamp below the media
-            const mediaTimestamp = document.createElement('div');
-            mediaTimestamp.className = 'media-timestamp';
-            mediaTimestamp.textContent = new Date(item.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-            messageDiv.appendChild(mediaTimestamp);
-        }
-
-        chatBody.appendChild(messageDiv);
-    });
-
-    chatBody.scrollTop = chatBody.scrollHeight;
-}
-
-function sendMessage() {
-    var inputField = document.getElementById('chatInput');
-    var userMessage = inputField.value;
-    if (userMessage.trim() === '') return;
-
-    // Get the current time
-    var now = new Date();
-    var timeString = now.toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'});
-
-    // Add user's message
-    var userMessageDiv = document.createElement('div');
-    userMessageDiv.className = 'message-sent';
-    var userMessageContent = document.createElement('div');
-    userMessageContent.className = 'message';
-    userMessageContent.textContent = userMessage;
-    userMessageDiv.appendChild(userMessageContent);
-
-    // Add timestamp and copy icon
-    var userMessageTime = document.createElement('div');
-    userMessageTime.className = 'message-time';
-    userMessageTime.textContent = timeString;
-
-    var copyIcon = document.createElement('img');
-    copyIcon.src = 'https://img.icons8.com/?size=100&id=15047&format=png&color=737373';
-    copyIcon.alt = 'copy';
-    copyIcon.style.cursor = 'pointer';
-    copyIcon.style.width = '20px';
-    copyIcon.style.height = '20px';
-    copyIcon.className = 'copy-icon';
-    copyIcon.addEventListener('click', () => copyMessageToClipboard(userMessage));
-
-    var timeAndIconDiv = document.createElement('div');
-    timeAndIconDiv.className = 'message-time-container';
-    timeAndIconDiv.appendChild(userMessageTime);
-    timeAndIconDiv.appendChild(copyIcon);
-
-    userMessageDiv.appendChild(timeAndIconDiv);
-
-    document.getElementById('chatBody').appendChild(userMessageDiv);
-
-    // Save user's message to chat history
-    saveChatHistory(userMessage, 'sent');
-
-    inputField.value = '';
-    document.getElementById('sendButton').disabled = false;
-
-    // Create a container for the bot's response
-    var botMessageDiv = document.createElement('div');
-    botMessageDiv.className = 'message-received';
-
-    // Add typing indicator inside bot's response container
-    var typingIndicatorContainer = document.createElement('div');
-    typingIndicatorContainer.className = 'typing-indicator-container';
-    var typingIndicator = document.createElement('div');
-    typingIndicator.className = 'typing-indicator';
-    typingIndicator.innerHTML = '<span></span><span></span><span></span>';
-    typingIndicatorContainer.appendChild(typingIndicator);
-    botMessageDiv.appendChild(typingIndicatorContainer);
-    document.getElementById('chatBody').appendChild(botMessageDiv);
-
-    // Scroll to the bottom to show new messages
-    document.getElementById('chatBody').scrollTop = document.getElementById('chatBody').scrollHeight;
-
-    // Simulate typing delay before bot responds
-    setTimeout(() => {
-        // Remove typing indicator and add bot's response
-        typingIndicatorContainer.remove();
-
-        var botMessageContent = document.createElement('div');
-        botMessageContent.className = 'message';
-        botMessageContent.textContent = userMessage; // Echoing the user message
-        botMessageDiv.appendChild(botMessageContent);
-        document.getElementById('chatInput').addEventListener('keydown', (event) => {
-   
-});
-        // Add timestamp and copy icon
-        var botMessageTime = document.createElement('div');
-        botMessageTime.className = 'message-time';
-        botMessageTime.textContent = timeString;
-
-        var copyIcon = document.createElement('img');
-        copyIcon.src = 'https://img.icons8.com/?size=100&id=15047&format=png&color=737373';
-        copyIcon.alt = 'copy';
-        copyIcon.style.cursor = 'pointer';
-        copyIcon.style.width = '20px';
-        copyIcon.style.height = '20px';
-        copyIcon.className = 'copy-icon';
-        copyIcon.addEventListener('click', () => copyMessageToClipboard(userMessage));
-
-        var timeAndIconDiv = document.createElement('div');
-        timeAndIconDiv.className = 'message-time-container';
-        timeAndIconDiv.appendChild(botMessageTime);
-        timeAndIconDiv.appendChild(copyIcon);
-
-        botMessageDiv.appendChild(timeAndIconDiv);
-
-        // Save bot's message to chat history
-        saveChatHistory(botMessageContent.textContent, 'received');
-
-        // Scroll to the bottom to show the bot's message
-        document.getElementById('chatBody').scrollTop = document.getElementById('chatBody').scrollHeight;
-    }, 1500); // Adjust delay to simulate typing duration
-}
-
-
-function handleMediaUpload(event) {
-    const file = event.target.files[0];
-    if (file) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            const mediaUrl = e.target.result;
-            const chatBody = document.getElementById('chatBody');
-
-            // Create a container for media and timestamp
-            const mediaContainer = document.createElement('div');
-            mediaContainer.className = 'media-container'; // Apply CSS class for container
-
-            // Get the current timestamp in hr:mn format
-            const now = new Date();
-            const options = { hour: '2-digit', minute: '2-digit' };
-            const timestamp = now.toLocaleTimeString([], options);
-
-            if (file.type.startsWith('image/')) {
-                // Handle images
-                const mediaImg = document.createElement('img');
-                mediaImg.src = mediaUrl;
-                mediaImg.className = 'media-img'; // Apply CSS class for image
-                mediaContainer.appendChild(mediaImg);
-            } else if (file.type.startsWith('application/')) {
-                // Handle documents
-                const mediaLink = document.createElement('a');
-                mediaLink.href = mediaUrl;
-                mediaLink.download = file.name;
-                mediaLink.textContent = 'Download ' + file.name;
-                mediaLink.className = 'media-link'; // Apply CSS class for link
-                mediaContainer.appendChild(mediaLink);
-            } else {
-                alert('Unsupported file type.');
-                return; // Exit the function if the file type is unsupported
-            }
-
-            // Create and append the timestamp
-            const timeStampElement = document.createElement('div');
-            timeStampElement.textContent = `${timestamp}`;
-            timeStampElement.className = 'media-timestamp'; // Apply CSS class for timestamp
-            mediaContainer.appendChild(timeStampElement);
-
-            // Append the media container to chatBody
-            chatBody.appendChild(mediaContainer);
-
-            // Save media to local storage
-            saveMediaToLocalStorage(file, 'sent');
-
-            // Scroll to the bottom of the chat
-            chatBody.scrollTop = chatBody.scrollHeight;
-        };
-        reader.readAsDataURL(file);
-    }
-}
-
-function saveChatHistory(message, type) {
-    var history = JSON.parse(localStorage.getItem('chatHistory')) || [];
-    var now = new Date();
-    var timeString = now.toISOString(); // Use ISO string for precise timestamps
-
-    history.push({ message: message, type: type, time: timeString });
-    localStorage.setItem('chatHistory', JSON.stringify(history));
-}
-
-
-function saveMediaToLocalStorage(file, type) {
-    const fileReader = new FileReader();
-    fileReader.onload = function(event) {
-        const fileData = {
-            name: file.name,
-            type: file.type,
-            data: event.target.result,
-            timestamp: new Date().toISOString(), // Use ISO string for sorting
-            sent: type === 'sent'
-        };
-
-        let mediaHistory = JSON.parse(localStorage.getItem('mediaHistory')) || [];
-        mediaHistory.push(fileData);
-        localStorage.setItem('mediaHistory', JSON.stringify(mediaHistory));
-    };
-    fileReader.readAsDataURL(file);
-}
-
-
-
-        // Attach event listeners after DOM is ready
-        document.addEventListener('DOMContentLoaded', function() {
-            // Send button
-            document.addEventListener('DOMContentLoaded', initializeChat);
-
-            document.getElementById('sendButton').addEventListener('click', sendMessage);
-
-            document.getElementById('likeButton').addEventListener('click', handleLikeButton);
-
-            // Input field
-            document.getElementById('chatInput').addEventListener('input', function() {
-                document.getElementById('sendButton').disabled = this.value.trim() === '';
-            });
-
-            // Enter key for sending message
-            document.getElementById('chatInput').addEventListener('keydown', function(event) {
-                if (event.key === 'Enter') {
-                    event.preventDefault(); 
-                    if (!document.getElementById('sendButton').disabled) {
-                        sendMessage();
-                    }
-                }
-            }
-        );
-
-            // Chat icon button to toggle chatbot
-            document.querySelector('.chat-icon-button').addEventListener('click', function() {
-                var chatbotContainer = document.querySelector('.chatbot-container');
-                if (chatbotContainer.style.display === 'block') {
-                    chatbotContainer.style.display = 'none';
-                    this.classList.remove('close-icon');
-                    this.classList.add('envelope-icon');
-                } else {
-                    chatbotContainer.style.display = 'block';
-                    this.classList.remove('envelope-icon');
-                    this.classList.add('close-icon');
-                }
-            });
-
-            // Scroll event to handle intro opacity
-            document.getElementById('chatBody').addEventListener('scroll', function() {
-                const chatIntro = document.getElementById('chatIntro');
-                if (this.scrollTop > 20) {
-                    chatIntro.style.opacity = '0';
-                } else {
-                    chatIntro.style.opacity = '1';
-                }
-            });
-            
-
-            // Burger menu toggle
-            document.querySelector('.burger-menu-icon').addEventListener('click', function() {
-                const dropdown = document.querySelector('.burger-menu-dropdown');
-                dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
-            });
-
-            // Clear Chat
-            document.getElementById('clearChat').addEventListener('click', function() {
-                const confirmClear = window.confirm("Clear all messages? This can't be undone.");
-
-                if (confirmClear) {
-                    const chatBody = document.getElementById('chatBody');
-                    const chatIntro = document.getElementById('chatIntro');
-                    chatBody.innerHTML = '';
-                    chatBody.appendChild(chatIntro);
-                    localStorage.removeItem('chatHistory');
-                    localStorage.removeItem('mediaHistory');
-                }
-                document.querySelector('.burger-menu-dropdown').style.display = 'none';
-            });
-
-            // Close Support
-            document.getElementById('closeSupport').addEventListener('click', function() {
-                document.querySelector('.chatbot-container').style.display = 'none';
-                document.querySelector('.chat-icon-button').classList.remove('close-icon');
-                document.querySelector('.chat-icon-button').classList.add('envelope-icon');
-                document.querySelector('.burger-menu-dropdown').style.display = 'none';
-            });
-
-         document.getElementById('saveTranscript').addEventListener('click', function() {
-    alert('The transcript will not include media files.');
-
-    // Retrieve chat history from local storage
-    const history = JSON.parse(localStorage.getItem('chatHistory')) || [];
-
-    let transcript = '';
-    history.forEach(chat => {
-        let prefix = '';
-        let timeFormatted = new Date(chat.time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-        
-        if (chat.type === 'sent') {
-            prefix = 'You: ';
-        } else if (chat.type === 'received') {
-            prefix = `${botParameters.widgetName}: `;
-        }
-        transcript += `${prefix}${chat.message} (${timeFormatted})\n`;
-    });
-
-    // Create a Blob with the transcript content
-    const blob = new Blob([transcript], { type: 'text/plain' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'chat-transcript.txt';
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-
-    // Hide the burger menu dropdown
-    document.querySelector('.burger-menu-dropdown').style.display = 'none';
-});
-
-        });
-
-        initializeChat();
-    }
-
-    createHtml();
-    createCss();
-    addFunctionality();
-</script>
+createHtml();
+createCss();
+addFunctionality(); 
+</script> 
 </html>
