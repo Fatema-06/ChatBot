@@ -104,1022 +104,935 @@ function createHtml() {
 function createCss() {
 	const style = document.createElement('style');
 	style.textContent = `
-           body {
-	font-family: Arial, sans-serif;
-	margin: 0;
-	padding: 0;
-	background-color: #f4f4f4;
+        body {
+     font-family: Arial, sans-serif;
+     margin: 0;
+     padding: 0;
+     background-color: #f4f4f4;
 }
-
-.chatbot-container {
-	width: 300px;
-	max-width: 100%;
-	position: fixed;
-	bottom: 100px;
-	right: 40px;
-	border-radius: 10px;
-	overflow: hidden;
-	box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-	background-color: white;
-	display: none;
-	z-index: 1000;
+ .chatbot-container {
+     width: 300px;
+     max-width: 100%;
+     position: fixed;
+     bottom: 100px;
+     right: 40px;
+     border-radius: 10px;
+     overflow: hidden;
+     box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+     background-color: white;
+     display: none;
+     z-index: 1000;
 }
-
-.chatbot-header {
-	background-color: #203878;
-	color: white;
-	padding: 10px;
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
+ .chatbot-header {
+     background-color: #203878;
+     color: white;
+     padding: 10px;
+     display: flex;
+     align-items: center;
+     justify-content: space-between;
 }
-
-.header-left {
-	display: flex;
-	align-items: center;
+ .header-left {
+     display: flex;
+     align-items: center;
 }
-
-.header-right {
-	display: flex;
-	align-items: center;
+ .header-right {
+     display: flex;
+     align-items: center;
 }
-
-.chatbot-footer button.send-button {
-	border-radius: 50%;
-	border: none;
-	background-color: #203878;
-	padding: 10px;
-	margin-left: 5px;
-	cursor: pointer;
-	width: 30px;
-	height: 30x;
-	display: flex;
-	align-items: center;
-	justify-content: center;
+ .chatbot-footer button.send-button {
+     border-radius: 50%;
+     border: none;
+     background-color: #203878;
+     padding: 10px;
+     margin-left: 5px;
+     cursor: pointer;
+     width: 30px;
+     height: 30x;
+     display: flex;
+     align-items: center;
+     justify-content: center;
 }
-
-.chatbot-footer button.send-button img {
-	width: 17px;
-	height: 17px;
+ .chatbot-footer button.send-button img {
+     width: 17px;
+     height: 17px;
 }
-
-.online-status {
-	display: inline-block;
-	width: 10px;
-	height: 10px;
-	background-color: #28a745;
-	border-radius: 50%;
-	margin-left: 5px;
+ .online-status {
+     display: inline-block;
+     width: 10px;
+     height: 10px;
+     background-color: #28a745;
+     border-radius: 50%;
+     margin-left: 5px;
 }
-
-.chatbot-body {
-	padding: 10px;
-	height: 300px;
-	overflow-y: auto;
-	position: relative;
+ .chatbot-body {
+     padding: 10px;
+     height: 300px;
+     overflow-y: auto;
+     position: relative;
 }
-
-.chat-intro {
-	position: sticky;
-	top: 0;
-	background-color: white;
-	padding: 10px 0;
-	text-align: center;
-	z-index: 10;
-	transition: opacity 0.3s ease-in-out;
+ .chat-intro {
+     position: sticky;
+     top: 0;
+     background-color: white;
+     padding: 10px 0;
+     text-align: center;
+     z-index: 10;
+     transition: opacity 0.3s ease-in-out;
 }
-
-.image-container {
-	position: relative;
-	display: inline-block;
-	margin-bottom: 5px;
+ .image-container {
+     position: relative;
+     display: inline-block;
+     margin-bottom: 5px;
 }
-
-.intro-image {
-	width: 50px;
-	height: 50px;
-	border-radius: 50%;
+ .intro-image {
+     width: 50px;
+     height: 50px;
+     border-radius: 50%;
 }
-
-.online-dot {
-	position: absolute;
-	bottom: 5px;
-	right: 5px;
-	width: 10px;
-	height: 10px;
-	background-color: #28a745;
-	border-radius: 50%;
-	border: 2px solid white;
+ .online-dot {
+     position: absolute;
+     bottom: 5px;
+     right: 5px;
+     width: 10px;
+     height: 10px;
+     background-color: #28a745;
+     border-radius: 50%;
+     border: 2px solid white;
 }
-
-.intro-name {
-	margin: 5px 0 0 0;
-	font-size: 16px;
+ .intro-name {
+     margin: 5px 0 0 0;
+     font-size: 16px;
 }
-
-.intro-description {
-	font-size: 14px;
-	margin: 5px 0 0 0;
+ .intro-description {
+     font-size: 14px;
+     margin: 5px 0 0 0;
 }
-
-.chatbot-footer {
-	padding: 10px;
-	border-top: 1px solid #ddd;
-	display: flex;
-	align-items: center;
+ .chatbot-footer {
+     padding: 10px;
+     border-top: 1px solid #ddd;
+     display: flex;
+     align-items: center;
 }
-
-.chatbot-footer input[type="text"] {
-	width: 80%;
-	padding: 8px;
-	border-radius: 15px;
-	border: 1px solid #ddd;
-	outline: none;
-	font-size: 14px;
+ .chatbot-footer input[type="text"] {
+     width: 80%;
+     padding: 8px;
+     border-radius: 15px;
+     border: 1px solid #ddd;
+     outline: none;
+     font-size: 14px;
 }
-
-.chatbot-footer button#likeButton {
-	border-radius: 50%;
-	border: none;
-	background: none;
-	padding: 0px;
-	margin-left: 5px;
-	cursor: pointer;
-	background-color: transparent;
+ .chatbot-footer button#likeButton {
+     border-radius: 50%;
+     border: none;
+     background: none;
+     padding: 0px;
+     margin-left: 5px;
+     cursor: pointer;
+     background-color: transparent;
 }
-
-.chatbot-footer button#likeButton img {
-	width: 30px;
-	height: 30px;
-
+ .chatbot-footer button#likeButton img {
+     width: 30px;
+     height: 30px;
 }
-
-.chatbot-footer button#mediaButton {
-	border-radius: 50%;
-	border: none;
-	background: none;
-	padding: 15px;
-	margin-left: -10px;
-	cursor: pointer;
-	background-color: transparent;
+ .chatbot-footer button#mediaButton {
+     border-radius: 50%;
+     border: none;
+     background: none;
+     padding: 15px;
+     margin-left: -10px;
+     cursor: pointer;
+     background-color: transparent;
 }
-
-.chatbot-footer button#mediaButton img {
-	width: 30px;
-	height: 30px;
-
+ .chatbot-footer button#mediaButton img {
+     width: 30px;
+     height: 30px;
 }
-
-.chatbot-footer button#voiceButton {
-	border-radius: 50%;
-	border: none;
-	background: none;
-	padding: 10px;
-	margin-left: -10px;
-	cursor: pointer;
-	background-color: transparent;
+ .chatbot-footer button#voiceButton {
+     border-radius: 50%;
+     border: none;
+     background: none;
+     padding: 10px;
+     margin-left: -10px;
+     cursor: pointer;
+     background-color: transparent;
 }
-
-.chatbot-footer button#voiceButton img {
-	width: 30px;
-	height: 30px;
-
+ .chatbot-footer button#voiceButton img {
+     width: 30px;
+     height: 30px;
 }
-
-.chatbot-footer button {
-	background-color: #203878;
-	border: none;
-	color: white;
-	padding: 5px;
-	border-radius: 50%;
-	margin-left: 10px;
-	cursor: pointer;
-	width: 35px;
-	height: 35px;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	font-size: 20px;
+ .chatbot-footer button {
+     background-color: #203878;
+     border: none;
+     color: white;
+     padding: 5px;
+     border-radius: 50%;
+     margin-left: 10px;
+     cursor: pointer;
+     width: 35px;
+     height: 35px;
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     font-size: 20px;
 }
-
-.chatbot-footer button:disabled {
-	background-color: #203878;
-	cursor: not-allowed;
+ .chatbot-footer button:disabled {
+     background-color: #203878;
+     cursor: not-allowed;
 }
-
-.message-sent,
-.message-received {
-	margin-bottom: 10px;
-	clear: both;
+ .message-sent, .message-received {
+     margin-bottom: 10px;
+     clear: both;
 }
-
-.message-sent {
-	text-align: right;
+ .message-sent {
+     text-align: right;
 }
-
-.message-received {
-	text-align: left;
+ .message-received {
+     text-align: left;
 }
-
-.message-sent .message,
-.message-received .message {
-	display: inline-block;
-	padding: 10px 15px;
-	border-radius: 5px;
-	max-width: 70%;
+ .message-sent .message, .message-received .message {
+     display: inline-block;
+     padding: 10px 15px;
+     border-radius: 5px;
+     max-width: 70%;
 }
-
-.message-sent .message {
-	background-color: #203878;
-	color: white;
+ .message-sent .message {
+     background-color: #203878;
+     color: white;
 }
-
-.message-received .message {
-	background-color: #eef6fa;
-	color: #333;
+ .message-received .message {
+     background-color: #eef6fa;
+     color: #333;
 }
-
-.chat-icon-container {
-	position: fixed;
-	bottom: 20px;
-	right: 20px;
-	display: flex;
-	align-items: center;
-	z-index: 1001;
+ .chat-icon-container {
+     position: fixed;
+     bottom: 20px;
+     right: 20px;
+     display: flex;
+     align-items: center;
+     z-index: 1001;
 }
-
-.chat-icon-button {
-	background-color: #203878;
-	color: white;
-	border: none;
-	width: 60px;
-	height: 60px;
-	border-radius: 50%;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	font-size: 30px;
-	cursor: pointer;
-	box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-	text-align: center;
-	transition: background-color 0.3s;
+ .chat-icon-button {
+     background-color: #203878;
+     color: white;
+     border: none;
+     width: 60px;
+     height: 60px;
+     border-radius: 50%;
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     font-size: 30px;
+     cursor: pointer;
+     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+     text-align: center;
+     transition: background-color 0.3s;
 }
-
-.chat-icon-button.envelope-icon::before {
-	content: '\\2709';
-	font-size: 30px;
-	line-height: 60px;
-	text-align: center;
+ .chat-icon-button.envelope-icon::before {
+     content: '\\2709';
+     font-size: 30px;
+     line-height: 60px;
+     text-align: center;
 }
-
-.chat-icon-button.close-icon::before {
-	content: '\\2716';
-	font-size: 30px;
-	line-height: 60px;
-	text-align: center;
+ .chat-icon-button.close-icon::before {
+     content: '\\2716';
+     font-size: 30px;
+     line-height: 60px;
+     text-align: center;
 }
-
-.burger-menu {
-	position: absolute;
-	top: 0;
-	right: 0;
-	margin: 0px;
-	z-index: 1002;
+ .burger-menu {
+     position: absolute;
+     top: 0;
+     right: 0;
+     margin: 0px;
+     z-index: 1002;
 }
-
-.burger-menu-icon {
-	background-color: transparent;
-	color: white;
-	border: none;
-	width: 40px;
-	height: 40px;
-	border-radius: 50%;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	font-size: 20px;
-	cursor: pointer;
+ .burger-menu-icon {
+     background-color: transparent;
+     color: white;
+     border: none;
+     width: 40px;
+     height: 40px;
+     border-radius: 50%;
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     font-size: 20px;
+     cursor: pointer;
 }
-
-.burger-menu-dropdown {
-	display: none;
-	position: absolute;
-	top: 45px;
-	right: 0;
-	background-color: white;
-	border: 1px solid #ddd;
-	border-radius: 5px;
-	box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-	z-index: 1003;
+ .burger-menu-dropdown {
+     display: none;
+     position: absolute;
+     top: 45px;
+     right: 0;
+     background-color: white;
+     border: 1px solid #ddd;
+     border-radius: 5px;
+     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+     z-index: 1003;
 }
-
-.burger-menu-dropdown button {
-	display: block;
-	width: 100%;
-	padding: 10px;
-	border: none;
-	background-color: white;
-	color: black;
-	text-align: left;
-	cursor: pointer;
+ .burger-menu-dropdown button {
+     display: block;
+     width: 100%;
+     padding: 10px;
+     border: none;
+     background-color: white;
+     color: black;
+     text-align: left;
+     cursor: pointer;
 }
-
-.burger-menu-dropdown button:hover {
-	background-color: #f0f0f0;
+ .burger-menu-dropdown button:hover {
+     background-color: #f0f0f0;
 }
-
-.chat-text {
-	font-size: 22px;
-	color: #203878;
-	margin-right: 10px;
-	display: inline-block;
-	animation: bounce 1.5s infinite;
+ .chat-text {
+     font-size: 22px;
+     color: #203878;
+     margin-right: 10px;
+     display: inline-block;
+     animation: bounce 1.5s infinite;
 }
-
-@keyframes bounce {
-
-	0%,
-	20%,
-	50%,
-	80%,
-	100% {
-		transform: translateY(0);
-	}
-
-	40% {
-		transform: translateY(-20px);
-	}
-
-	60% {
-		transform: translateY(-10px);
-	}
+ @keyframes bounce {
+     0%, 20%, 50%, 80%, 100% {
+         transform: translateY(0);
+    }
+     40% {
+         transform: translateY(-20px);
+    }
+     60% {
+         transform: translateY(-10px);
+    }
 }
-
-.typing-indicator-container {
-	display: flex;
-	align-items: center;
-	justify-content: flex-start;
-	margin-bottom: 10px;
-	clear: both;
+ .typing-indicator-container {
+     display: flex;
+     align-items: center;
+     justify-content: flex-start;
+     margin-bottom: 10px;
+     clear: both;
 }
-
-.typing-indicator {
-	display: flex;
-	align-items: center;
-	background-color: #eef6fa;
-	color: #333;
-	padding: 15px 15px;
-	border-radius: 5px;
-	max-width: 70%;
-	margin-left: 0;
+ .typing-indicator {
+     display: flex;
+     align-items: center;
+     background-color: #eef6fa;
+     color: #333;
+     padding: 15px 15px;
+     border-radius: 5px;
+     max-width: 70%;
+     margin-left: 0;
 }
-
-.typing-indicator span {
-	display: inline-block;
-	width: 8px;
-	height: 8px;
-	margin-right: 3px;
-	background-color: #203878;
-	border-radius: 50%;
-	animation: typing 1.5s infinite ease-in-out;
+ .typing-indicator span {
+     display: inline-block;
+     width: 8px;
+     height: 8px;
+     margin-right: 3px;
+     background-color: #203878;
+     border-radius: 50%;
+     animation: typing 1.5s infinite ease-in-out;
 }
-
-.typing-indicator span:nth-child(2) {
-	animation-delay: 0.2s;
+ .typing-indicator span:nth-child(2) {
+     animation-delay: 0.2s;
 }
-
-.typing-indicator span:nth-child(3) {
-	animation-delay: 0.4s;
+ .typing-indicator span:nth-child(3) {
+     animation-delay: 0.4s;
 }
-
-@keyframes typing {
-
-	0%,
-	60%,
-	100% {
-		transform: translateY(0);
-	}
-
-	30% {
-		transform: translateY(-8px);
-	}
+ @keyframes typing {
+     0%, 60%, 100% {
+         transform: translateY(0);
+    }
+     30% {
+         transform: translateY(-8px);
+    }
 }
-
-.message-time-container {
-	display: flex;
-	align-items: center;
-	margin-top: 4px;
+ .message-time-container {
+     display: flex;
+     align-items: center;
+     margin-top: 4px;
 }
-
-.message-time {
-	font-size: 0.75em;
-	color: grey;
-	margin-right: 10px;
+ .message-time {
+     font-size: 0.75em;
+     color: grey;
+     margin-right: 10px;
 }
-
-.copy-icon {
-	cursor: pointer;
-	width: 20px;
-	height: 20px;
+ .copy-icon {
+     cursor: pointer;
+     width: 20px;
+     height: 20px;
 }
-
-.message-sent .message-time-container {
-	justify-content: flex-end;
+ .message-sent .message-time-container {
+     justify-content: flex-end;
 }
-
-.message-received .message-time-container {
-	justify-content: flex-start;
+ .message-received .message-time-container {
+     justify-content: flex-start;
 }
-
-.media-container {
-	display: flex;
-	flex-direction: column;
-	align-items: flex-end;
-	margin-bottom: 10px;
-	position: relative;
+ .media-container {
+     display: flex;
+     flex-direction: column;
+     align-items: flex-end;
+     margin-bottom: 10px;
+     position: relative;
 }
-
-.media-timestamp {
-	font-size: 0.75em;
-	color: grey;
-	margin-top: 5px;
-	text-align: right;
+ .media-timestamp {
+     font-size: 0.75em;
+     color: grey;
+     margin-top: 5px;
+     text-align: right;
 }
-
-.media-img {
-	max-width: 60%;
-	border-radius: 5px;
-	display: block;
+ .media-img {
+     max-width: 60%;
+     border-radius: 5px;
+     display: block;
 }
-
-.media-link {
-	display: block;
-	text-align: right;
+ .media-link {
+     display: block;
+     text-align: right;
 }
-
-.message-container {
-	display: flex;
-	align-items: center;
-	margin-bottom: 10px;
+ .message-container {
+     display: flex;
+     align-items: center;
+     margin-bottom: 10px;
 }
-
-.message-content {
-	flex: 1;
+ .message-content {
+     flex: 1;
 }
-
-.notification {
-	position: fixed;
-	top: 160px;
-	right: 60px;
-	background-color: #333;
-	color: white;
-	padding: 10px 20px;
-	border-radius: 5px;
-	display: none;
-	z-index: 1000;
-	opacity: 0;
-	transition: opacity 0.5s ease-out;
+ .notification {
+     position: fixed;
+     top: 160px;
+     right: 60px;
+     background-color: #333;
+     color: white;
+     padding: 10px 20px;
+     border-radius: 5px;
+     display: none;
+     z-index: 1000;
+     opacity: 0;
+     transition: opacity 0.5s ease-out;
 }
-
+ 
         `;
 
 	document.head.appendChild(style);
 }
 
 function handleLikeButton() {
-	const chatBody = document.getElementById('chatBody');
-	const likeIcon = '<img width="35" height="35" src="https://img.icons8.com/?size=100&id=83997&format=png&color=203878" alt="thumb-up"/>';
+   const chatBody = document.getElementById('chatBody');
+   const likeIcon = '<img width="35" height="35" src="https://img.icons8.com/?size=100&id=83997&format=png&color=203878" alt="thumb-up"/>';
 
-	const likeIconDiv = document.createElement('div');
-	likeIconDiv.className = 'message-sent';
-	likeIconDiv.innerHTML = likeIcon;
-	chatBody.appendChild(likeIconDiv);
+   const likeIconDiv = document.createElement('div');
+   likeIconDiv.className = 'message-sent';
+   likeIconDiv.innerHTML = likeIcon;
+   chatBody.appendChild(likeIconDiv);
 
-	saveChatHistory(likeIcon, 'sent');
+   saveChatHistory(likeIcon, 'sent');
 
-	setTimeout(() => {
-		chatBody.scrollTop = chatBody.scrollHeight;
-	}, 100);
+   setTimeout(() => {
+      chatBody.scrollTop = chatBody.scrollHeight;
+   }, 100);
 }
 
 function addFunctionality() {
-	document.querySelector('#sendButton').addEventListener('click', sendMessage);
-	document.querySelector('#mediaButton').addEventListener('click', () => {
-		document.querySelector('#mediaInput').click();
-	});
-	document.querySelector('#mediaInput').addEventListener('change', handleMediaUpload);
-
-	function initializeChat() {
-		document.getElementById('botName').textContent = botParameters.botname;
-		populateChatHistory();
-
-		if (botParameters.autoPop === 0) {
-
-		} else if (botParameters.autoPop === 1) {
-			setTimeout(function() {
-				document.querySelector('.chatbot-container').style.display = 'block';
-				toggleChatIcon();
-			}, 1000);
-		} else if (botParameters.autoPop > 1) {
-			setTimeout(function() {
-				document.querySelector('.chatbot-container').style.display = 'block';
-				toggleChatIcon();
-			}, botParameters.autoPop * 1000);
-		}
-	}
-	const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-
-	if (SpeechRecognition) {
-		const recognition = new SpeechRecognition();
-		recognition.lang = 'en-US';
-		recognition.interimResults = false;
-		recognition.maxAlternatives = 1;
-		let recognizing = false;
-
-		const voiceButton = document.getElementById('voiceButton');
-		const chatInput = document.getElementById('chatInput');
-		const notification = document.getElementById('recordingNotification');
-		const sendButton = document.getElementById('sendButton');
-
-		voiceButton.addEventListener('click', () => {
-			if (recognizing) {
-				recognition.stop();
-			} else {
-				recognition.start();
-			}
-		});
-
-		recognition.addEventListener('result', (event) => {
-			const transcript = event.results[0][0].transcript;
-			console.log('Transcript received:', transcript);
-			chatInput.value = transcript;
-			notification.style.display = 'none';
-			chatInput.focus();
-		});
-
-		recognition.addEventListener('error', (event) => {
-			console.error('Speech recognition error:', event.error);
-			if (recognizing) {
-				recognition.stop();
-			}
-		});
-
-		recognition.addEventListener('start', () => {
-			recognizing = true;
-			voiceButton.classList.add('recording');
-			notification.style.display = 'block';
-			notification.style.opacity = '1';
-		});
-
-		recognition.addEventListener('end', () => {
-			recognizing = false;
-			voiceButton.classList.remove('recording');
-		});
-
-		notification.addEventListener('click', () => {
-			notification.style.opacity = '0';
-			setTimeout(() => {
-				notification.style.display = 'none';
-			}, 500);
-		});
-		document.addEventListener('DOMContentLoaded', () => {
-			const chatInput = document.getElementById('chatInput');
-			const sendButton = document.getElementById('sendButton');
-
-			function sendMessage() {
-
-				setTimeout(() => {
-					const message = chatInput.value.trim();
-					if (message) {
-						console.log('Attempting to send message:', message);
-
-						saveChatHistory(message, 'sent');
-						const chatBody = document.getElementById('chatBody');
-						const messageDiv = document.createElement('div');
-						messageDiv.className = 'message-sent';
-						messageDiv.textContent = message;
-						chatBody.appendChild(messageDiv);
-						chatInput.value = '';
-						chatInput.focus();
-						chatBody.scrollTop = chatBody.scrollHeight;
-
-						handleBotResponse(message);
-					} else {
-						console.log('No message to send');
-					}
-				}, 100);
-			}
-
-			sendButton.addEventListener('click', () => {
-				console.log('Send button clicked');
-				sendMessage();
-			});
-
-			chatInput.addEventListener('keydown', (event) => {
-				if (event.key === 'Enter') {
-					event.preventDefault();
-					if (!sendButton.disabled) {
-						console.log('Enter key pressed');
-						sendMessage();
-					}
-				}
-			});
-
-			function handleBotResponse(message) {
-
-				setTimeout(() => {
-					const chatBody = document.getElementById('chatBody');
-					const responseDiv = document.createElement('div');
-					responseDiv.className = 'message-received';
-					responseDiv.textContent = 'Bot response to: ' + message;
-					chatBody.appendChild(responseDiv);
-					chatBody.scrollTop = chatBody.scrollHeight;
-				}, 1000);
-			}
-		});
-
-	} else {
-		console.error('SpeechRecognition API is not supported in this browser.');
-	}
-
-	function showNotification() {
-		var notification = document.getElementById('notification');
-		notification.style.display = 'block';
-		notification.style.opacity = '1';
-
-		setTimeout(function() {
-			notification.style.opacity = '0';
-			setTimeout(function() {
-				notification.style.display = 'none';
-			}, 500);
-		}, 3000);
-	}
-
-	function copyMessageToClipboard(message) {
-		navigator.clipboard.writeText(message).then(() => {
-			showNotification();
-		}).catch(err => {
-			console.error('Failed to copy message: ', err);
-		});
-	}
-
-	function toggleChatIcon() {
-		var chatIcon = document.querySelector('.chat-icon-button');
-		chatIcon.classList.remove('envelope-icon');
-		chatIcon.classList.add('close-icon');
-	}
-
-	function populateChatHistory() {
-		const chatBody = document.getElementById('chatBody');
-		const textHistory = JSON.parse(localStorage.getItem('chatHistory')) || [];
-		const mediaHistory = JSON.parse(localStorage.getItem('mediaHistory')) || [];
-
-		const combinedHistory = [...textHistory, ...mediaHistory];
-
-		combinedHistory.sort((a, b) => new Date(a.time || a.timestamp) - new Date(b.time || b.timestamp));
-
-		combinedHistory.forEach(item => {
-			const messageDiv = document.createElement('div');
-
-			if (item.message) {
-
-				messageDiv.className = item.type === 'sent' ? 'message-sent' : 'message-received';
-				const messageContent = document.createElement('div');
-				messageContent.className = 'message';
-				messageContent.textContent = item.message;
-				messageDiv.appendChild(messageContent);
-
-				const messageTime = document.createElement('div');
-				messageTime.className = 'message-time';
-				messageTime.textContent = new Date(item.time).toLocaleTimeString([], {
-					hour: '2-digit',
-					minute: '2-digit'
-				});
-				messageDiv.appendChild(messageTime);
-			} else if (item.data) {
-
-				messageDiv.className = 'media-container';
-
-				if (item.type.startsWith('image/')) {
-					const mediaImg = document.createElement('img');
-					mediaImg.src = item.data;
-					mediaImg.className = 'media-img';
-					messageDiv.appendChild(mediaImg);
-				} else if (item.type.startsWith('application/')) {
-					const mediaLink = document.createElement('a');
-					mediaLink.href = item.data;
-					mediaLink.download = item.name;
-					mediaLink.textContent = 'Download ' + item.name;
-					mediaLink.className = 'media-link';
-					messageDiv.appendChild(mediaLink);
-				}
-
-				const mediaTimestamp = document.createElement('div');
-				mediaTimestamp.className = 'media-timestamp';
-				mediaTimestamp.textContent = new Date(item.timestamp).toLocaleTimeString([], {
-					hour: '2-digit',
-					minute: '2-digit'
-				});
-				messageDiv.appendChild(mediaTimestamp);
-			}
-
-			chatBody.appendChild(messageDiv);
-		});
-
-		chatBody.scrollTop = chatBody.scrollHeight;
-	}
-
-	function sendMessage() {
-		var inputField = document.getElementById('chatInput');
-		var userMessage = inputField.value;
-		if (userMessage.trim() === '') return;
-
-		var now = new Date();
-		var timeString = now.toLocaleTimeString([], {
-			hour: '2-digit',
-			minute: '2-digit'
-		});
-
-		var userMessageDiv = document.createElement('div');
-		userMessageDiv.className = 'message-sent';
-		var userMessageContent = document.createElement('div');
-		userMessageContent.className = 'message';
-		userMessageContent.textContent = userMessage;
-		userMessageDiv.appendChild(userMessageContent);
-
-		var userMessageTime = document.createElement('div');
-		userMessageTime.className = 'message-time';
-		userMessageTime.textContent = timeString;
-
-		var copyIcon = document.createElement('img');
-		copyIcon.src = 'https://img.icons8.com/?size=100&id=15047&format=png&color=737373';
-		copyIcon.alt = 'copy';
-		copyIcon.style.cursor = 'pointer';
-		copyIcon.style.width = '20px';
-		copyIcon.style.height = '20px';
-		copyIcon.className = 'copy-icon';
-		copyIcon.addEventListener('click', () => copyMessageToClipboard(userMessage));
-
-		var timeAndIconDiv = document.createElement('div');
-		timeAndIconDiv.className = 'message-time-container';
-		timeAndIconDiv.appendChild(userMessageTime);
-		timeAndIconDiv.appendChild(copyIcon);
-
-		userMessageDiv.appendChild(timeAndIconDiv);
-
-		document.getElementById('chatBody').appendChild(userMessageDiv);
-
-		saveChatHistory(userMessage, 'sent');
-
-		inputField.value = '';
-		document.getElementById('sendButton').disabled = false;
-
-		var botMessageDiv = document.createElement('div');
-		botMessageDiv.className = 'message-received';
-
-		var typingIndicatorContainer = document.createElement('div');
-		typingIndicatorContainer.className = 'typing-indicator-container';
-		var typingIndicator = document.createElement('div');
-		typingIndicator.className = 'typing-indicator';
-		typingIndicator.innerHTML = '<span></span><span></span><span></span>';
-		typingIndicatorContainer.appendChild(typingIndicator);
-		botMessageDiv.appendChild(typingIndicatorContainer);
-		document.getElementById('chatBody').appendChild(botMessageDiv);
-
-		document.getElementById('chatBody').scrollTop = document.getElementById('chatBody').scrollHeight;
-
-		setTimeout(() => {
-
-			typingIndicatorContainer.remove();
-
-			var botMessageContent = document.createElement('div');
-			botMessageContent.className = 'message';
-			botMessageContent.textContent = userMessage;
-			botMessageDiv.appendChild(botMessageContent);
-			document.getElementById('chatInput').addEventListener('keydown', (event) => {
-
-			});
-
-			var botMessageTime = document.createElement('div');
-			botMessageTime.className = 'message-time';
-			botMessageTime.textContent = timeString;
-
-			var copyIcon = document.createElement('img');
-			copyIcon.src = 'https://img.icons8.com/?size=100&id=15047&format=png&color=737373';
-			copyIcon.alt = 'copy';
-			copyIcon.style.cursor = 'pointer';
-			copyIcon.style.width = '20px';
-			copyIcon.style.height = '20px';
-			copyIcon.className = 'copy-icon';
-			copyIcon.addEventListener('click', () => copyMessageToClipboard(userMessage));
-
-			var timeAndIconDiv = document.createElement('div');
-			timeAndIconDiv.className = 'message-time-container';
-			timeAndIconDiv.appendChild(botMessageTime);
-			timeAndIconDiv.appendChild(copyIcon);
-
-			botMessageDiv.appendChild(timeAndIconDiv);
-
-			saveChatHistory(botMessageContent.textContent, 'received');
-
-			document.getElementById('chatBody').scrollTop = document.getElementById('chatBody').scrollHeight;
-		}, 1500);
-	}
-
-	function handleMediaUpload(event) {
-		const file = event.target.files[0];
-		if (file) {
-			const reader = new FileReader();
-			reader.onload = function(e) {
-				const mediaUrl = e.target.result;
-				const chatBody = document.getElementById('chatBody');
-
-				const mediaContainer = document.createElement('div');
-				mediaContainer.className = 'media-container';
-
-				const now = new Date();
-				const options = {
-					hour: '2-digit',
-					minute: '2-digit'
-				};
-				const timestamp = now.toLocaleTimeString([], options);
-
-				if (file.type.startsWith('image/')) {
-
-					const mediaImg = document.createElement('img');
-					mediaImg.src = mediaUrl;
-					mediaImg.className = 'media-img';
-					mediaContainer.appendChild(mediaImg);
-				} else if (file.type.startsWith('application/')) {
-
-					const mediaLink = document.createElement('a');
-					mediaLink.href = mediaUrl;
-					mediaLink.download = file.name;
-					mediaLink.textContent = 'Download ' + file.name;
-					mediaLink.className = 'media-link';
-					mediaContainer.appendChild(mediaLink);
-				} else {
-					alert('Unsupported file type.');
-					return;
-				}
-
-				const timeStampElement = document.createElement('div');
-				timeStampElement.textContent = `${timestamp}`;
-				timeStampElement.className = 'media-timestamp';
-				mediaContainer.appendChild(timeStampElement);
-
-				chatBody.appendChild(mediaContainer);
-
-				saveMediaToLocalStorage(file, 'sent');
-
-				chatBody.scrollTop = chatBody.scrollHeight;
-			};
-			reader.readAsDataURL(file);
-		}
-	}
-
-	function saveChatHistory(message, type) {
-		var history = JSON.parse(localStorage.getItem('chatHistory')) || [];
-		var now = new Date();
-		var timeString = now.toISOString();
-
-		history.push({
-			message: message,
-			type: type,
-			time: timeString
-		});
-		localStorage.setItem('chatHistory', JSON.stringify(history));
-	}
-
-	function saveMediaToLocalStorage(file, type) {
-		const fileReader = new FileReader();
-		fileReader.onload = function(event) {
-			const fileData = {
-				name: file.name,
-				type: file.type,
-				data: event.target.result,
-				timestamp: new Date().toISOString(),
-				sent: type === 'sent'
-			};
-
-			let mediaHistory = JSON.parse(localStorage.getItem('mediaHistory')) || [];
-			mediaHistory.push(fileData);
-			localStorage.setItem('mediaHistory', JSON.stringify(mediaHistory));
-		};
-		fileReader.readAsDataURL(file);
-	}
-
-	document.addEventListener('DOMContentLoaded', function() {
-
-		document.addEventListener('DOMContentLoaded', initializeChat);
-
-		document.getElementById('sendButton').addEventListener('click', sendMessage);
-
-		document.getElementById('likeButton').addEventListener('click', handleLikeButton);
-
-		document.getElementById('chatInput').addEventListener('input', function() {
-			document.getElementById('sendButton').disabled = this.value.trim() === '';
-		});
-
-		document.getElementById('chatInput').addEventListener('keydown', function(event) {
-			if (event.key === 'Enter') {
-				event.preventDefault();
-				if (!document.getElementById('sendButton').disabled) {
-					sendMessage();
-				}
-			}
-		});
-
-		document.querySelector('.chat-icon-button').addEventListener('click', function() {
-			var chatbotContainer = document.querySelector('.chatbot-container');
-			if (chatbotContainer.style.display === 'block') {
-				chatbotContainer.style.display = 'none';
-				this.classList.remove('close-icon');
-				this.classList.add('envelope-icon');
-			} else {
-				chatbotContainer.style.display = 'block';
-				this.classList.remove('envelope-icon');
-				this.classList.add('close-icon');
-			}
-		});
-
-		document.getElementById('chatBody').addEventListener('scroll', function() {
-			const chatIntro = document.getElementById('chatIntro');
-			if (this.scrollTop > 20) {
-				chatIntro.style.opacity = '0';
-			} else {
-				chatIntro.style.opacity = '1';
-			}
-		});
-
-		document.querySelector('.burger-menu-icon').addEventListener('click', function() {
-			const dropdown = document.querySelector('.burger-menu-dropdown');
-			dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
-		});
-
-		document.getElementById('clearChat').addEventListener('click', function() {
-			const confirmClear = window.confirm("Clear all messages? This can't be undone.");
-
-			if (confirmClear) {
-				const chatBody = document.getElementById('chatBody');
-				const chatIntro = document.getElementById('chatIntro');
-				chatBody.innerHTML = '';
-				chatBody.appendChild(chatIntro);
-				localStorage.removeItem('chatHistory');
-				localStorage.removeItem('mediaHistory');
-			}
-			document.querySelector('.burger-menu-dropdown').style.display = 'none';
-		});
-
-		document.getElementById('closeSupport').addEventListener('click', function() {
-			document.querySelector('.chatbot-container').style.display = 'none';
-			document.querySelector('.chat-icon-button').classList.remove('close-icon');
-			document.querySelector('.chat-icon-button').classList.add('envelope-icon');
-			document.querySelector('.burger-menu-dropdown').style.display = 'none';
-		});
-
-		document.getElementById('saveTranscript').addEventListener('click', function() {
-			alert('The transcript will not include media files.');
-
-			const history = JSON.parse(localStorage.getItem('chatHistory')) || [];
-
-			let transcript = '';
-			history.forEach(chat => {
-				let prefix = '';
-				let timeFormatted = new Date(chat.time).toLocaleTimeString([], {
-					hour: '2-digit',
-					minute: '2-digit'
-				});
-
-				if (chat.type === 'sent') {
-					prefix = 'You: ';
-				} else if (chat.type === 'received') {
-					prefix = `${botParameters.widgetName}: `;
-				}
-				transcript += `${prefix}${chat.message} (${timeFormatted})\n`;
-			});
-
-			const blob = new Blob([transcript], {
-				type: 'text/plain'
-			});
-			const url = URL.createObjectURL(blob);
-			const a = document.createElement('a');
-			a.href = url;
-			a.download = 'chat-transcript.txt';
-			document.body.appendChild(a);
-			a.click();
-			document.body.removeChild(a);
-
-			document.querySelector('.burger-menu-dropdown').style.display = 'none';
-		});
-
-	});
-
-	initializeChat();
+   document.querySelector('#sendButton').addEventListener('click', sendMessage);
+   document.querySelector('#mediaButton').addEventListener('click', () => {
+      document.querySelector('#mediaInput').click();
+   });
+   document.querySelector('#mediaInput').addEventListener('change', handleMediaUpload);
+
+   function initializeChat() {
+      document.getElementById('botName').textContent = botParameters.botname;
+      populateChatHistory();
+
+      if (botParameters.autoPop === 0) {
+
+      } else if (botParameters.autoPop === 1) {
+         setTimeout(function () {
+            document.querySelector('.chatbot-container').style.display = 'block';
+            toggleChatIcon();
+         }, 1000);
+      } else if (botParameters.autoPop > 1) {
+         setTimeout(function () {
+            document.querySelector('.chatbot-container').style.display = 'block';
+            toggleChatIcon();
+         }, botParameters.autoPop * 1000);
+      }
+   }
+   const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+   if (SpeechRecognition) {
+      const recognition = new SpeechRecognition();
+      recognition.lang = 'en-US';
+      recognition.interimResults = false;
+      recognition.maxAlternatives = 1;
+      let recognizing = false;
+
+      const voiceButton = document.getElementById('voiceButton');
+      const chatInput = document.getElementById('chatInput');
+      const notification = document.getElementById('recordingNotification');
+      const sendButton = document.getElementById('sendButton');
+
+      voiceButton.addEventListener('click', () => {
+         if (recognizing) {
+            recognition.stop();
+         } else {
+            recognition.start();
+         }
+      });
+
+      recognition.addEventListener('result', (event) => {
+         const transcript = event.results[0][0].transcript;
+         console.log('Transcript received:', transcript);
+         chatInput.value = transcript;
+         notification.style.display = 'none';
+         chatInput.focus();
+      });
+
+      recognition.addEventListener('error', (event) => {
+         console.error('Speech recognition error:', event.error);
+         if (recognizing) {
+            recognition.stop();
+         }
+      });
+
+      recognition.addEventListener('start', () => {
+         recognizing = true;
+         voiceButton.classList.add('recording');
+         notification.style.display = 'block';
+         notification.style.opacity = '1';
+      });
+
+      recognition.addEventListener('end', () => {
+         recognizing = false;
+         voiceButton.classList.remove('recording');
+      });
+
+      notification.addEventListener('click', () => {
+         notification.style.opacity = '0';
+         setTimeout(() => {
+            notification.style.display = 'none';
+         }, 500);
+      });
+      document.addEventListener('DOMContentLoaded', () => {
+         const chatInput = document.getElementById('chatInput');
+         const sendButton = document.getElementById('sendButton');
+
+         function sendMessage() {
+
+            setTimeout(() => {
+               const message = chatInput.value.trim();
+               if (message) {
+                  console.log('Attempting to send message:', message);
+
+                  saveChatHistory(message, 'sent');
+                  const chatBody = document.getElementById('chatBody');
+                  const messageDiv = document.createElement('div');
+                  messageDiv.className = 'message-sent';
+                  messageDiv.textContent = message;
+                  chatBody.appendChild(messageDiv);
+                  chatInput.value = '';
+                  chatInput.focus();
+                  chatBody.scrollTop = chatBody.scrollHeight;
+
+                  handleBotResponse(message);
+               } else {
+                  console.log('No message to send');
+               }
+            }, 100);
+         }
+
+         sendButton.addEventListener('click', () => {
+            console.log('Send button clicked');
+            sendMessage();
+         });
+
+         chatInput.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter') {
+               event.preventDefault();
+               if (!sendButton.disabled) {
+                  console.log('Enter key pressed');
+                  sendMessage();
+               }
+            }
+         });
+
+         function handleBotResponse(message) {
+
+            setTimeout(() => {
+               const chatBody = document.getElementById('chatBody');
+               const responseDiv = document.createElement('div');
+               responseDiv.className = 'message-received';
+               responseDiv.textContent = 'Bot response to: ' + message;
+               chatBody.appendChild(responseDiv);
+               chatBody.scrollTop = chatBody.scrollHeight;
+            }, 1000);
+         }
+      });
+
+   } else {
+      console.error('SpeechRecognition API is not supported in this browser.');
+   }
+
+   function showNotification() {
+      var notification = document.getElementById('notification');
+      notification.style.display = 'block';
+      notification.style.opacity = '1';
+
+      setTimeout(function () {
+         notification.style.opacity = '0';
+         setTimeout(function () {
+            notification.style.display = 'none';
+         }, 500);
+      }, 3000);
+   }
+
+   function copyMessageToClipboard(message) {
+      navigator.clipboard.writeText(message).then(() => {
+         showNotification();
+      }).catch(err => {
+         console.error('Failed to copy message: ', err);
+      });
+   }
+
+   function toggleChatIcon() {
+      var chatIcon = document.querySelector('.chat-icon-button');
+      chatIcon.classList.remove('envelope-icon');
+      chatIcon.classList.add('close-icon');
+   }
+
+   function populateChatHistory() {
+      const chatBody = document.getElementById('chatBody');
+      // Use botParameters.history directly if the local storage is empty
+      const textHistory = JSON.parse(localStorage.getItem('chatHistory')) || botParameters.history;
+
+      textHistory.forEach(item => {
+         const messageDiv = document.createElement('div');
+         messageDiv.className = item.type === 'sent' ? 'message-sent' : 'message-received';
+
+         const messageContent = document.createElement('div');
+         messageContent.className = 'message';
+         messageContent.textContent = item.message;
+         messageDiv.appendChild(messageContent);
+
+         const messageTime = document.createElement('div');
+         messageTime.className = 'message-time';
+         messageTime.textContent = new Date().toLocaleTimeString([], {
+            hour: '2-digit',
+            minute: '2-digit'
+         });
+         messageDiv.appendChild(messageTime);
+
+         chatBody.appendChild(messageDiv);
+      });
+
+      chatBody.scrollTop = chatBody.scrollHeight;
+   }
+
+   function initializeChat() {
+      document.getElementById('botName').textContent = botParameters.botname;
+      populateChatHistory();
+
+      if (botParameters.autoPop === 0) {
+         // Do nothing, auto pop is disabled
+      } else if (botParameters.autoPop === 1) {
+         setTimeout(function () {
+            document.querySelector('.chatbot-container').style.display = 'block';
+            toggleChatIcon();
+         }, 1000);
+      } else if (botParameters.autoPop > 1) {
+         setTimeout(function () {
+            document.querySelector('.chatbot-container').style.display = 'block';
+            toggleChatIcon();
+         }, botParameters.autoPop * 1000);
+      }
+   }
+
+
+   function sendMessage() {
+      var inputField = document.getElementById('chatInput');
+      var userMessage = inputField.value;
+      if (userMessage.trim() === '') return;
+
+      var now = new Date();
+      var timeString = now.toLocaleTimeString([], {
+         hour: '2-digit',
+         minute: '2-digit'
+      });
+
+      var userMessageDiv = document.createElement('div');
+      userMessageDiv.className = 'message-sent';
+      var userMessageContent = document.createElement('div');
+      userMessageContent.className = 'message';
+      userMessageContent.textContent = userMessage;
+      userMessageDiv.appendChild(userMessageContent);
+
+      var userMessageTime = document.createElement('div');
+      userMessageTime.className = 'message-time';
+      userMessageTime.textContent = timeString;
+
+      var copyIcon = document.createElement('img');
+      copyIcon.src = 'https://img.icons8.com/?size=100&id=15047&format=png&color=737373';
+      copyIcon.alt = 'copy';
+      copyIcon.style.cursor = 'pointer';
+      copyIcon.style.width = '20px';
+      copyIcon.style.height = '20px';
+      copyIcon.className = 'copy-icon';
+      copyIcon.addEventListener('click', () => copyMessageToClipboard(userMessage));
+
+      var timeAndIconDiv = document.createElement('div');
+      timeAndIconDiv.className = 'message-time-container';
+      timeAndIconDiv.appendChild(userMessageTime);
+      timeAndIconDiv.appendChild(copyIcon);
+
+      userMessageDiv.appendChild(timeAndIconDiv);
+
+      document.getElementById('chatBody').appendChild(userMessageDiv);
+
+      saveChatHistory(userMessage, 'sent');
+
+      inputField.value = '';
+      document.getElementById('sendButton').disabled = false;
+
+      var botMessageDiv = document.createElement('div');
+      botMessageDiv.className = 'message-received';
+
+      var typingIndicatorContainer = document.createElement('div');
+      typingIndicatorContainer.className = 'typing-indicator-container';
+      var typingIndicator = document.createElement('div');
+      typingIndicator.className = 'typing-indicator';
+      typingIndicator.innerHTML = '<span></span><span></span><span></span>';
+      typingIndicatorContainer.appendChild(typingIndicator);
+      botMessageDiv.appendChild(typingIndicatorContainer);
+      document.getElementById('chatBody').appendChild(botMessageDiv);
+
+      document.getElementById('chatBody').scrollTop = document.getElementById('chatBody').scrollHeight;
+
+      setTimeout(() => {
+
+         typingIndicatorContainer.remove();
+
+         var botMessageContent = document.createElement('div');
+         botMessageContent.className = 'message';
+         botMessageContent.textContent = userMessage;
+         botMessageDiv.appendChild(botMessageContent);
+         document.getElementById('chatInput').addEventListener('keydown', (event) => {
+
+         });
+
+         var botMessageTime = document.createElement('div');
+         botMessageTime.className = 'message-time';
+         botMessageTime.textContent = timeString;
+
+         var copyIcon = document.createElement('img');
+         copyIcon.src = 'https://img.icons8.com/?size=100&id=15047&format=png&color=737373';
+         copyIcon.alt = 'copy';
+         copyIcon.style.cursor = 'pointer';
+         copyIcon.style.width = '20px';
+         copyIcon.style.height = '20px';
+         copyIcon.className = 'copy-icon';
+         copyIcon.addEventListener('click', () => copyMessageToClipboard(userMessage));
+
+         var timeAndIconDiv = document.createElement('div');
+         timeAndIconDiv.className = 'message-time-container';
+         timeAndIconDiv.appendChild(botMessageTime);
+         timeAndIconDiv.appendChild(copyIcon);
+
+         botMessageDiv.appendChild(timeAndIconDiv);
+
+         saveChatHistory(botMessageContent.textContent, 'received');
+
+         document.getElementById('chatBody').scrollTop = document.getElementById('chatBody').scrollHeight;
+      }, 1500);
+   }
+
+   function handleMediaUpload(event) {
+      const file = event.target.files[0];
+      if (file) {
+         const reader = new FileReader();
+         reader.onload = function (e) {
+            const mediaUrl = e.target.result;
+            const chatBody = document.getElementById('chatBody');
+
+            const mediaContainer = document.createElement('div');
+            mediaContainer.className = 'media-container';
+
+            const now = new Date();
+            const options = {
+               hour: '2-digit',
+               minute: '2-digit'
+            };
+            const timestamp = now.toLocaleTimeString([], options);
+
+            if (file.type.startsWith('image/')) {
+
+               const mediaImg = document.createElement('img');
+               mediaImg.src = mediaUrl;
+               mediaImg.className = 'media-img';
+               mediaContainer.appendChild(mediaImg);
+            } else if (file.type.startsWith('application/')) {
+
+               const mediaLink = document.createElement('a');
+               mediaLink.href = mediaUrl;
+               mediaLink.download = file.name;
+               mediaLink.textContent = 'Download ' + file.name;
+               mediaLink.className = 'media-link';
+               mediaContainer.appendChild(mediaLink);
+            } else {
+               alert('Unsupported file type.');
+               return;
+            }
+
+            const timeStampElement = document.createElement('div');
+            timeStampElement.textContent = `${timestamp}`;
+            timeStampElement.className = 'media-timestamp';
+            mediaContainer.appendChild(timeStampElement);
+
+            chatBody.appendChild(mediaContainer);
+
+            saveMediaToLocalStorage(file, 'sent');
+
+            chatBody.scrollTop = chatBody.scrollHeight;
+         };
+         reader.readAsDataURL(file);
+      }
+   }
+
+   function saveChatHistory(message, type) {
+      var history = JSON.parse(localStorage.getItem('chatHistory')) || [];
+      var now = new Date();
+      var timeString = now.toISOString();
+
+      history.push({
+         message: message,
+         type: type,
+         time: timeString
+      });
+      localStorage.setItem('chatHistory', JSON.stringify(history));
+   }
+
+   function saveMediaToLocalStorage(file, type) {
+      const fileReader = new FileReader();
+      fileReader.onload = function (event) {
+         const fileData = {
+            name: file.name,
+            type: file.type,
+            data: event.target.result,
+            timestamp: new Date().toISOString(),
+            sent: type === 'sent'
+         };
+
+         let mediaHistory = JSON.parse(localStorage.getItem('mediaHistory')) || [];
+         mediaHistory.push(fileData);
+         localStorage.setItem('mediaHistory', JSON.stringify(mediaHistory));
+      };
+      fileReader.readAsDataURL(file);
+   }
+
+   document.addEventListener('DOMContentLoaded', function () {
+
+      document.addEventListener('DOMContentLoaded', initializeChat);
+
+      document.getElementById('sendButton').addEventListener('click', sendMessage);
+
+      document.getElementById('likeButton').addEventListener('click', handleLikeButton);
+
+      document.getElementById('chatInput').addEventListener('input', function () {
+         document.getElementById('sendButton').disabled = this.value.trim() === '';
+      });
+
+      document.getElementById('chatInput').addEventListener('keydown', function (event) {
+         if (event.key === 'Enter') {
+            event.preventDefault();
+            if (!document.getElementById('sendButton').disabled) {
+               sendMessage();
+            }
+         }
+      });
+
+      document.querySelector('.chat-icon-button').addEventListener('click', function () {
+         var chatbotContainer = document.querySelector('.chatbot-container');
+         if (chatbotContainer.style.display === 'block') {
+            chatbotContainer.style.display = 'none';
+            this.classList.remove('close-icon');
+            this.classList.add('envelope-icon');
+         } else {
+            chatbotContainer.style.display = 'block';
+            this.classList.remove('envelope-icon');
+            this.classList.add('close-icon');
+         }
+      });
+
+      document.getElementById('chatBody').addEventListener('scroll', function () {
+         const chatIntro = document.getElementById('chatIntro');
+         if (this.scrollTop > 20) {
+            chatIntro.style.opacity = '0';
+         } else {
+            chatIntro.style.opacity = '1';
+         }
+      });
+
+      document.querySelector('.burger-menu-icon').addEventListener('click', function () {
+         const dropdown = document.querySelector('.burger-menu-dropdown');
+         dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+      });
+
+      document.getElementById('clearChat').addEventListener('click', function () {
+         const confirmClear = window.confirm("Clear all messages? This can't be undone.");
+
+         if (confirmClear) {
+            const chatBody = document.getElementById('chatBody');
+            const chatIntro = document.getElementById('chatIntro');
+            chatBody.innerHTML = '';
+            chatBody.appendChild(chatIntro);
+            localStorage.removeItem('chatHistory');
+            localStorage.removeItem('mediaHistory');
+         }
+         document.querySelector('.burger-menu-dropdown').style.display = 'none';
+      });
+
+      document.getElementById('closeSupport').addEventListener('click', function () {
+         document.querySelector('.chatbot-container').style.display = 'none';
+         document.querySelector('.chat-icon-button').classList.remove('close-icon');
+         document.querySelector('.chat-icon-button').classList.add('envelope-icon');
+         document.querySelector('.burger-menu-dropdown').style.display = 'none';
+      });
+
+      document.getElementById('saveTranscript').addEventListener('click', function () {
+         alert('The transcript will not include media files.');
+
+         const history = JSON.parse(localStorage.getItem('chatHistory')) || [];
+
+         let transcript = '';
+         history.forEach(chat => {
+            let prefix = '';
+            let timeFormatted = new Date(chat.time).toLocaleTimeString([], {
+               hour: '2-digit',
+               minute: '2-digit'
+            });
+
+            if (chat.type === 'sent') {
+               prefix = 'You: ';
+            } else if (chat.type === 'received') {
+               prefix = `${botParameters.widgetName}: `;
+            }
+            transcript += `${prefix}${chat.message} (${timeFormatted})\n`;
+         });
+
+         const blob = new Blob([transcript], {
+            type: 'text/plain'
+         });
+         const url = URL.createObjectURL(blob);
+         const a = document.createElement('a');
+         a.href = url;
+         a.download = 'chat-transcript.txt';
+         document.body.appendChild(a);
+         a.click();
+         document.body.removeChild(a);
+
+         document.querySelector('.burger-menu-dropdown').style.display = 'none';
+      });
+
+   });
+
+   initializeChat();
 }
 
 createHtml();
 createCss();
-addFunctionality(); 
+addFunctionality();
 </script> 
 </html>
