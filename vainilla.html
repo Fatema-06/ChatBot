@@ -475,7 +475,32 @@
                 text-align: left;
                 margin-top: 4px;
             }
+            /* styles.css */
 
+/* Container for media and timestamp */
+.media-container {
+    margin-bottom: 10px; /* Adds spacing between media items */
+    position: relative; /* Allows absolute positioning of the timestamp */
+}
+
+/* Style for images */
+.media-img {
+    max-width: 100%; /* Adjust size as needed */
+    border-radius: 5px; /* Adjust corners as needed */
+    display: block; /* Ensures the image is displayed correctly */
+}
+
+/* Style for document links */
+.media-link {
+    display: block; /* Ensures the link is displayed correctly */
+}
+
+/* Style for timestamps */
+.media-timestamp {
+    font-size: 0.9em;
+    color: gray;
+    margin-top: 5px; /* Adds spacing between media and timestamp */
+}
 
         `;
       
@@ -637,7 +662,7 @@
     }, 1500); // Adjust delay to simulate typing duration
 }
 
-        function handleMediaUpload(event) {
+function handleMediaUpload(event) {
     const file = event.target.files[0];
     if (file) {
         const reader = new FileReader();
@@ -645,25 +670,42 @@
             const mediaUrl = e.target.result;
             const chatBody = document.getElementById('chatBody');
 
+            // Create a container for media and timestamp
+            const mediaContainer = document.createElement('div');
+            mediaContainer.className = 'media-container'; // Apply CSS class for container
+
+            // Get the current timestamp in hr:mn format
+            const now = new Date();
+            const options = { hour: '2-digit', minute: '2-digit' };
+            const timestamp = now.toLocaleTimeString([], options);
+
             if (file.type.startsWith('image/')) {
                 // Handle images
                 const mediaImg = document.createElement('img');
                 mediaImg.src = mediaUrl;
-                mediaImg.style.maxWidth = '100%'; // Adjust size as needed
-                mediaImg.style.borderRadius = '5px'; // Adjust corners as needed
-                mediaImg.style.display = 'block'; // Ensures the image is displayed correctly
-                chatBody.appendChild(mediaImg);
+                mediaImg.className = 'media-img'; // Apply CSS class for image
+                mediaContainer.appendChild(mediaImg);
             } else if (file.type.startsWith('application/')) {
                 // Handle documents
                 const mediaLink = document.createElement('a');
                 mediaLink.href = mediaUrl;
                 mediaLink.download = file.name;
                 mediaLink.textContent = 'Download ' + file.name;
-                mediaLink.style.display = 'block'; // Ensures the link is displayed correctly
-                chatBody.appendChild(mediaLink);
+                mediaLink.className = 'media-link'; // Apply CSS class for link
+                mediaContainer.appendChild(mediaLink);
             } else {
                 alert('Unsupported file type.');
+                return; // Exit the function if the file type is unsupported
             }
+
+            // Create and append the timestamp
+            const timeStampElement = document.createElement('div');
+            timeStampElement.textContent = `${timestamp}`;
+            timeStampElement.className = 'media-timestamp'; // Apply CSS class for timestamp
+            mediaContainer.appendChild(timeStampElement);
+
+            // Append the media container to chatBody
+            chatBody.appendChild(mediaContainer);
 
             // Optionally save chat history here
             saveChatHistory(mediaUrl, 'sent');
@@ -674,7 +716,6 @@
         reader.readAsDataURL(file);
     }
 }
-
 
 
         // Attach event listeners after DOM is ready
