@@ -14,7 +14,7 @@
         "imgUrl": "https://i.imgur.com/Iqf1qVH.jpg",
         "welcome": "I am Kitti Kovács, your chameleoni assistant!",
         "widgetName": "ChameleonI Bot",
-        "autoPop": 15,
+        "autoPop": 10,
         "history": [
             {"message": "hello", "type": "sent"},
             {"message": "Hello! How can I assist you today? Are you looking for a recruitment solution to streamline your hiring process?", "type": "received"},
@@ -29,6 +29,7 @@
         chatbotContainer.innerHTML = `
         <!-- Notification element -->
 <div id="notification" class="notification">Message copied to clipboard successfully!</div>
+<div id="recordingNotification" class="notification">Tap here when you're done recording</div>
             <div class="chatbot-header">
                 <div class="header-left">
                     <span id="botName">${botParameters.botname}</span>
@@ -610,21 +611,23 @@
         }, botParameters.autoPop * 1000);
     }
 }
-// Check if the browser supports the SpeechRecognition API
 const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 
 if (SpeechRecognition) {
     const recognition = new SpeechRecognition();
-    recognition.lang = 'en-US'; // Set language for recognition
-    recognition.interimResults = false; // Get final result only
-    recognition.maxAlternatives = 1; // Get one alternative result
+    recognition.lang = 'en-US';
+    recognition.interimResults = false;
+    recognition.maxAlternatives = 1;
+    let recognizing = false;
 
     const voiceButton = document.getElementById('voiceButton');
     const chatInput = document.getElementById('chatInput');
+    const notification = document.getElementById('recordingNotification');
+    const sendButton = document.getElementById('sendButton');
 
     // Start or stop voice recognition when button is clicked
     voiceButton.addEventListener('click', () => {
-        if (recognition.recognizing) {
+        if (recognizing) {
             recognition.stop();
         } else {
             recognition.start();
@@ -634,27 +637,107 @@ if (SpeechRecognition) {
     // Event handler for when speech recognition result is available
     recognition.addEventListener('result', (event) => {
         const transcript = event.results[0][0].transcript;
+        console.log('Transcript received:', transcript);
         chatInput.value = transcript;
+        notification.style.display = 'none'; // Hide the notification when text is converted
+        chatInput.focus(); // Focus back on chatInput
     });
 
     // Event handler for errors
     recognition.addEventListener('error', (event) => {
         console.error('Speech recognition error:', event.error);
+        if (recognizing) {
+            recognition.stop();
+        }
     });
 
     // Event handler for when recognition starts
     recognition.addEventListener('start', () => {
-        voiceButton.classList.add('recording'); // Optional: add a class to indicate recording
+        recognizing = true;
+        voiceButton.classList.add('recording');
+        notification.style.display = 'block';
+        notification.style.opacity = '1';
     });
 
     // Event handler for when recognition ends
     recognition.addEventListener('end', () => {
-        voiceButton.classList.remove('recording'); // Optional: remove the class
+        recognizing = false;
+        voiceButton.classList.remove('recording');
     });
+
+    // Event handler for when the notification is clicked
+    notification.addEventListener('click', () => {
+        notification.style.opacity = '0';
+        setTimeout(() => {
+            notification.style.display = 'none';
+        }, 500);
+    });
+    document.addEventListener('DOMContentLoaded', () => {
+    const chatInput = document.getElementById('chatInput');
+    const sendButton = document.getElementById('sendButton');
+
+    function sendMessage() {
+        // Add a short delay to ensure input value is updated
+        setTimeout(() => {
+            const message = chatInput.value.trim();
+            if (message) {
+                console.log('Attempting to send message:', message);
+                // Update chat history and interface here
+                saveChatHistory(message, 'sent');
+                const chatBody = document.getElementById('chatBody');
+                const messageDiv = document.createElement('div');
+                messageDiv.className = 'message-sent';
+                messageDiv.textContent = message;
+                chatBody.appendChild(messageDiv);
+                chatInput.value = ''; // Clear input
+                chatInput.focus(); // Refocus on chatInput
+                chatBody.scrollTop = chatBody.scrollHeight; // Scroll to bottom
+                // Handle bot response here
+                handleBotResponse(message);
+            } else {
+                console.log('No message to send');
+            }
+        }, 100); // 100ms delay
+    }
+
+    // Send button event listener
+    sendButton.addEventListener('click', () => {
+        console.log('Send button clicked');
+        sendMessage();
+    });
+
+    // Enter key event listener
+    chatInput.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter') {
+            event.preventDefault(); // Prevent default Enter key action (e.g., form submission)
+            if (!sendButton.disabled) {
+                console.log('Enter key pressed');
+                sendMessage();
+            }
+        }
+    });
+
+    // Define the bot response function
+    function handleBotResponse(message) {
+        // Simulate bot reply
+        setTimeout(() => {
+            const chatBody = document.getElementById('chatBody');
+            const responseDiv = document.createElement('div');
+            responseDiv.className = 'message-received';
+            responseDiv.textContent = 'Bot response to: ' + message;
+            chatBody.appendChild(responseDiv);
+            chatBody.scrollTop = chatBody.scrollHeight; // Scroll to bottom
+        }, 1000); // Simulated delay for bot response
+    }
+});
+
+
 
 } else {
     console.error('SpeechRecognition API is not supported in this browser.');
 }
+
+
 function showNotification() {
     var notification = document.getElementById('notification');
     notification.style.display = 'block'; // Show the notification
@@ -779,7 +862,7 @@ function sendMessage() {
     saveChatHistory(userMessage, 'sent');
 
     inputField.value = '';
-    document.getElementById('sendButton').disabled = true;
+    document.getElementById('sendButton').disabled = false;
 
     // Create a container for the bot's response
     var botMessageDiv = document.createElement('div');
@@ -807,7 +890,9 @@ function sendMessage() {
         botMessageContent.className = 'message';
         botMessageContent.textContent = userMessage; // Echoing the user message
         botMessageDiv.appendChild(botMessageContent);
-
+        document.getElementById('chatInput').addEventListener('keydown', (event) => {
+   
+});
         // Add timestamp and copy icon
         var botMessageTime = document.createElement('div');
         botMessageTime.className = 'message-time';
