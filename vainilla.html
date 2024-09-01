@@ -58,10 +58,13 @@
                 <button id="mediaButton" class="media-button">
                     <img width="30" height="30" src="https://img.icons8.com/?size=100&id=i1PiQepbTYbk&format=png&color=203878" alt="thumb-up"/>
                 </button>
+                <button id="voiceButton" class="voice-button">
+                    <img width="30" height="30" src="https://img.icons8.com/?size=100&id=85796&format=png&color=203878" alt="thumb-up"/>
+                </button>
                 <input type="file" id="mediaInput" style="display: none;" />
                 <input type="text" id="chatInput" placeholder="Write a reply..." />
                 <button id="likeButton" class="like-button">
-                    <img width="35" height="35" src="https://img.icons8.com/?size=100&id=83997&format=png&color=203878" alt="thumb-up"/>
+                    <img width="30" height="30" src="https://img.icons8.com/?size=100&id=83997&format=png&color=203878" alt="thumb-up"/>
                 </button>
                 <button id="sendButton" class="send-button">
                     <img width="20" height="20" src="https://img.icons8.com/?size=100&id=12628&format=png&color=FFFFFF" alt="Send"/>
@@ -135,16 +138,16 @@
     padding: 10px;
     margin-left: 5px;
     cursor: pointer;
-    width: 35px; /* Adjust size as needed */
-    height: 35px; /* Adjust size as needed */
+    width: 30px; /* Adjust size as needed */
+    height: 30x; /* Adjust size as needed */
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
 .chatbot-footer button.send-button img {
-    width: 20px; /* Icon size */
-    height: 20px; /* Icon size */
+    width: 17px; /* Icon size */
+    height: 17px; /* Icon size */
 }
 
             .online-status {
@@ -214,12 +217,14 @@
             }
 
             .chatbot-footer input[type="text"] {
-                flex: 1;
-                padding: 10px;
-                border-radius: 20px;
-                border: 1px solid #ddd;
-                outline: none;
-            }
+    width: 80%; /* Adjusts the width of the input field */
+    padding: 8px; /* Reduces the padding inside the input field */
+    border-radius: 15px; /* Adjusts the border radius to make it less rounded */
+    border: 1px solid #ddd; /* Keeps the border style */
+    outline: none; /* Removes the default outline */
+    font-size: 14px; /* Adjusts font size to fit the smaller input */
+}
+
 
          /* CSS for the like button */
 .chatbot-footer button#likeButton {
@@ -233,8 +238,8 @@
 }
 
 .chatbot-footer button#likeButton img {
-    width: 35px;
-    height: 35px;
+    width: 30px;
+    height: 30px;
     /* Additional styles if needed */
 }
 
@@ -243,13 +248,28 @@
     border-radius: 50%;
     border: none;
     background: none;
-    padding: 0;
+    padding: 15px;
     margin-left: -10px;
     cursor: pointer;
     background-color: transparent; /* Ensure the button is transparent */
 }
 
 .chatbot-footer button#mediaButton img {
+    width: 30px;
+    height: 30px;
+    /* Additional styles if needed */
+}
+    .chatbot-footer button#voiceButton {
+    border-radius: 50%;
+    border: none;
+    background: none;
+    padding: 10px;
+    margin-left: -10px;
+    cursor: pointer;
+    background-color: transparent; /* Ensure the button is transparent */
+}
+
+.chatbot-footer button#voiceButton img {
     width: 30px;
     height: 30px;
     /* Additional styles if needed */
