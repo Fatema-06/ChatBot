@@ -695,51 +695,66 @@ function addFunctionality() {
    }
 
    function populateChatHistory() {
-      const chatBody = document.getElementById('chatBody');
-      // Use botParameters.history directly if the local storage is empty
-      const textHistory = JSON.parse(localStorage.getItem('chatHistory')) || botParameters.history;
+    const chatBody = document.getElementById('chatBody');
+    const textHistory = JSON.parse(localStorage.getItem('chatHistory')) || botParameters.history;
+    const mediaHistory = JSON.parse(localStorage.getItem('mediaHistory')) || [];
 
-      textHistory.forEach(item => {
-         const messageDiv = document.createElement('div');
-         messageDiv.className = item.type === 'sent' ? 'message-sent' : 'message-received';
+    const combinedHistory = [...textHistory, ...mediaHistory];
 
-         const messageContent = document.createElement('div');
-         messageContent.className = 'message';
-         messageContent.textContent = item.message;
-         messageDiv.appendChild(messageContent);
+    // Sort combined history by time
+    combinedHistory.sort((a, b) => new Date(a.time || a.timestamp) - new Date(b.time || b.timestamp));
 
-         const messageTime = document.createElement('div');
-         messageTime.className = 'message-time';
-         messageTime.textContent = new Date().toLocaleTimeString([], {
-            hour: '2-digit',
-            minute: '2-digit'
-         });
-         messageDiv.appendChild(messageTime);
+    combinedHistory.forEach(item => {
+        const messageDiv = document.createElement('div');
 
-         chatBody.appendChild(messageDiv);
-      });
+        if (item.message) {
+            // Handle text messages
+            messageDiv.className = item.type === 'sent' ? 'message-sent' : 'message-received';
 
-      chatBody.scrollTop = chatBody.scrollHeight;
-   }
+            const messageContent = document.createElement('div');
+            messageContent.className = 'message';
+            messageContent.textContent = item.message;
+            messageDiv.appendChild(messageContent);
 
-   function initializeChat() {
-      document.getElementById('botName').textContent = botParameters.botname;
-      populateChatHistory();
+            const messageTime = document.createElement('div');
+            messageTime.className = 'message-time';
+            messageTime.textContent = new Date().toLocaleTimeString([], {
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+            messageDiv.appendChild(messageTime);
+        } else if (item.data) {
+            // Handle media messages
+            messageDiv.className = 'media-container';
 
-      if (botParameters.autoPop === 0) {
-         // Do nothing, auto pop is disabled
-      } else if (botParameters.autoPop === 1) {
-         setTimeout(function () {
-            document.querySelector('.chatbot-container').style.display = 'block';
-            toggleChatIcon();
-         }, 1000);
-      } else if (botParameters.autoPop > 1) {
-         setTimeout(function () {
-            document.querySelector('.chatbot-container').style.display = 'block';
-            toggleChatIcon();
-         }, botParameters.autoPop * 1000);
-      }
-   }
+            if (item.type.startsWith('image/')) {
+                const mediaImg = document.createElement('img');
+                mediaImg.src = item.data;
+                mediaImg.className = 'media-img';
+                messageDiv.appendChild(mediaImg);
+            } else if (item.type.startsWith('application/')) {
+                const mediaLink = document.createElement('a');
+                mediaLink.href = item.data;
+                mediaLink.download = item.name;
+                mediaLink.textContent = 'Download ' + item.name;
+                mediaLink.className = 'media-link';
+                messageDiv.appendChild(mediaLink);
+            }
+
+            const mediaTimestamp = document.createElement('div');
+            mediaTimestamp.className = 'media-timestamp';
+            mediaTimestamp.textContent = new Date().toLocaleTimeString([], {
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+            messageDiv.appendChild(mediaTimestamp);
+        }
+
+        chatBody.appendChild(messageDiv);
+    });
+
+    chatBody.scrollTop = chatBody.scrollHeight;
+}
 
 
    function sendMessage() {
