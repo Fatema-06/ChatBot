@@ -462,6 +462,21 @@
                     transform: translateY(-8px);
                 }
             }
+            .message-sent .message-time {
+                font-size: 0.75em;
+                color: grey;
+                text-align: right;
+                margin-top: 4px;
+            }
+
+            .message-received .message-time {
+                font-size: 0.75em;
+                color: grey;
+                text-align: left;
+                margin-top: 4px;
+            }
+
+
         `;
       
         document.head.appendChild(style);
@@ -518,83 +533,109 @@
         }
 
         function populateChatHistory() {
-            var chatBody = document.getElementById('chatBody');
-            var history = JSON.parse(localStorage.getItem('chatHistory')) || [];
+    var chatBody = document.getElementById('chatBody');
+    var history = JSON.parse(localStorage.getItem('chatHistory')) || [];
 
-            history.forEach(function(chat) {
-                var messageDiv = document.createElement('div');
-                messageDiv.className = chat.type === 'sent' ? 'message-sent' : 'message-received';
+    history.forEach(function(chat) {
+        var messageDiv = document.createElement('div');
+        messageDiv.className = chat.type === 'sent' ? 'message-sent' : 'message-received';
 
-                var messageContent = document.createElement('div');
-                messageContent.className = 'message';
-                messageContent.textContent = chat.message;
+        var messageContent = document.createElement('div');
+        messageContent.className = 'message';
+        messageContent.textContent = chat.message;
 
-                messageDiv.appendChild(messageContent);
-                chatBody.appendChild(messageDiv);
-            });
-            chatBody.scrollTop = chatBody.scrollHeight;
-        }
+        var messageTime = document.createElement('div');
+        messageTime.className = 'message-time';
+        messageTime.textContent = chat.time;
+
+        messageDiv.appendChild(messageContent);
+        messageDiv.appendChild(messageTime);
+        chatBody.appendChild(messageDiv);
+    });
+    chatBody.scrollTop = chatBody.scrollHeight;
+}
+
 
         function saveChatHistory(message, type) {
-            var history = JSON.parse(localStorage.getItem('chatHistory')) || [];
-            history.push({ message: message, type: type });
-            localStorage.setItem('chatHistory', JSON.stringify(history));
-        }
+    var history = JSON.parse(localStorage.getItem('chatHistory')) || [];
+    var now = new Date();
+    var timeString = now.toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'});
+
+    history.push({ message: message, type: type, time: timeString });
+    localStorage.setItem('chatHistory', JSON.stringify(history));
+}
 
         function sendMessage() {
-            var inputField = document.getElementById('chatInput');
-            var userMessage = inputField.value;
-            if (userMessage.trim() === '') return;
+    var inputField = document.getElementById('chatInput');
+    var userMessage = inputField.value;
+    if (userMessage.trim() === '') return;
 
-            // Add user's message
-            var userMessageDiv = document.createElement('div');
-            userMessageDiv.className = 'message-sent';
-            var userMessageContent = document.createElement('div');
-            userMessageContent.className = 'message';
-            userMessageContent.textContent = userMessage;
-            userMessageDiv.appendChild(userMessageContent);
-            document.getElementById('chatBody').appendChild(userMessageDiv);
+    // Get the current time
+    var now = new Date();
+    var timeString = now.toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'});
 
-            // Save user's message to chat history
-            saveChatHistory(userMessage, 'sent');
+    // Add user's message
+    var userMessageDiv = document.createElement('div');
+    userMessageDiv.className = 'message-sent';
+    var userMessageContent = document.createElement('div');
+    userMessageContent.className = 'message';
+    userMessageContent.textContent = userMessage;
+    userMessageDiv.appendChild(userMessageContent);
 
-            inputField.value = '';
-            document.getElementById('sendButton').disabled = true;
+    // Add timestamp
+    var userMessageTime = document.createElement('div');
+    userMessageTime.className = 'message-time';
+    userMessageTime.textContent = timeString;
+    userMessageDiv.appendChild(userMessageTime);
 
-            // Create a container for the bot's response
-            var botMessageDiv = document.createElement('div');
-            botMessageDiv.className = 'message-received';
+    document.getElementById('chatBody').appendChild(userMessageDiv);
 
-            // Add typing indicator inside bot's response container
-            var typingIndicatorContainer = document.createElement('div');
-            typingIndicatorContainer.className = 'typing-indicator-container';
-            var typingIndicator = document.createElement('div');
-            typingIndicator.className = 'typing-indicator';
-            typingIndicator.innerHTML = '<span></span><span></span><span></span>';
-            typingIndicatorContainer.appendChild(typingIndicator);
-            botMessageDiv.appendChild(typingIndicatorContainer);
-            document.getElementById('chatBody').appendChild(botMessageDiv);
+    // Save user's message to chat history
+    saveChatHistory(userMessage, 'sent');
 
-            // Scroll to the bottom to show new messages
-            document.getElementById('chatBody').scrollTop = document.getElementById('chatBody').scrollHeight;
+    inputField.value = '';
+    document.getElementById('sendButton').disabled = true;
 
-            // Simulate typing delay before bot responds
-            setTimeout(() => {
-                // Remove typing indicator and add bot's response
-                typingIndicatorContainer.remove();
+    // Create a container for the bot's response
+    var botMessageDiv = document.createElement('div');
+    botMessageDiv.className = 'message-received';
 
-                var botMessageContent = document.createElement('div');
-            botMessageContent.className = 'message';
-            botMessageContent.textContent = userMessage; // Echoing the user message
-            botMessageDiv.appendChild(botMessageContent);
+    // Add typing indicator inside bot's response container
+    var typingIndicatorContainer = document.createElement('div');
+    typingIndicatorContainer.className = 'typing-indicator-container';
+    var typingIndicator = document.createElement('div');
+    typingIndicator.className = 'typing-indicator';
+    typingIndicator.innerHTML = '<span></span><span></span><span></span>';
+    typingIndicatorContainer.appendChild(typingIndicator);
+    botMessageDiv.appendChild(typingIndicatorContainer);
+    document.getElementById('chatBody').appendChild(botMessageDiv);
 
-                // Save bot's message to chat history
-                saveChatHistory(botMessageContent.textContent, 'received');
+    // Scroll to the bottom to show new messages
+    document.getElementById('chatBody').scrollTop = document.getElementById('chatBody').scrollHeight;
 
-                // Scroll to the bottom to show the bot's message
-                document.getElementById('chatBody').scrollTop = document.getElementById('chatBody').scrollHeight;
-            }, 1500); // Adjust delay to simulate typing duration
-        }
+    // Simulate typing delay before bot responds
+    setTimeout(() => {
+        // Remove typing indicator and add bot's response
+        typingIndicatorContainer.remove();
+
+        var botMessageContent = document.createElement('div');
+        botMessageContent.className = 'message';
+        botMessageContent.textContent = userMessage; // Echoing the user message
+        botMessageDiv.appendChild(botMessageContent);
+
+        // Add timestamp
+        var botMessageTime = document.createElement('div');
+        botMessageTime.className = 'message-time';
+        botMessageTime.textContent = timeString;
+        botMessageDiv.appendChild(botMessageTime);
+
+        // Save bot's message to chat history
+        saveChatHistory(botMessageContent.textContent, 'received');
+
+        // Scroll to the bottom to show the bot's message
+        document.getElementById('chatBody').scrollTop = document.getElementById('chatBody').scrollHeight;
+    }, 1500); // Adjust delay to simulate typing duration
+}
 
         function handleMediaUpload(event) {
     const file = event.target.files[0];
@@ -714,19 +755,37 @@
                 document.querySelector('.burger-menu-dropdown').style.display = 'none';
             });
 
-            // Save Transcript
             document.getElementById('saveTranscript').addEventListener('click', function() {
-                const transcript = document.getElementById('chatBody').innerText;
-                const blob = new Blob([transcript], { type: 'text/plain' });
-                const url = URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = 'chat-transcript.txt';
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
-                document.querySelector('.burger-menu-dropdown').style.display = 'none';
-            });
+    alert('The transcript will not include media files.');
+
+    // Retrieve chat history from local storage
+    const history = JSON.parse(localStorage.getItem('chatHistory')) || [];
+
+    let transcript = '';
+history.forEach(chat => {
+    let prefix = '';
+    if (chat.type === 'sent') {
+        prefix = 'You: ';
+    } else if (chat.type === 'received') {
+        prefix = `${botParameters.widgetName}: `; // Use template literals here
+    }
+    transcript += `${prefix}${chat.message} (${chat.time})\n`;
+});
+
+    // Create a Blob with the transcript content
+    const blob = new Blob([transcript], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'chat-transcript.txt';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+
+    // Hide the burger menu dropdown
+    document.querySelector('.burger-menu-dropdown').style.display = 'none';
+});
+
         });
 
         initializeChat();
