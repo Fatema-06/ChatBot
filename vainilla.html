@@ -132,8 +132,8 @@
     border-radius: 50%;
     border: none;
     background-color: #203878; /* Circle color */
-    padding: 5px;
-    margin-left: 10px;
+    padding: 10px;
+    margin-left: 5px;
     cursor: pointer;
     width: 35px; /* Adjust size as needed */
     height: 35px; /* Adjust size as needed */
@@ -479,13 +479,16 @@
 
 /* Container for media and timestamp */
 .media-container {
+    display: flex; /* Use flexbox layout */
+    flex-direction: column; /* Stack media and timestamp vertically */
+    align-items: flex-end; /* Align children (media and timestamp) to the right */
     margin-bottom: 10px; /* Adds spacing between media items */
     position: relative; /* Allows absolute positioning of the timestamp */
 }
 
 /* Style for images */
 .media-img {
-    max-width: 100%; /* Adjust size as needed */
+    max-width: 60%; /* Adjust size as needed */
     border-radius: 5px; /* Adjust corners as needed */
     display: block; /* Ensures the image is displayed correctly */
 }
@@ -493,6 +496,7 @@
 /* Style for document links */
 .media-link {
     display: block; /* Ensures the link is displayed correctly */
+    text-align: right;
 }
 
 /* Style for timestamps */
@@ -501,6 +505,7 @@
     color: gray;
     margin-top: 5px; /* Adds spacing between media and timestamp */
 }
+
 
         `;
       
@@ -532,24 +537,26 @@
         document.querySelector('#mediaInput').click();
     });
     document.querySelector('#mediaInput').addEventListener('change', handleMediaUpload);
-        function initializeChat() {
-            document.getElementById('botName').textContent = botParameters.botname;
-            populateChatHistory();
+    function initializeChat() {
+    document.getElementById('botName').textContent = botParameters.botname;
+    populateChatHistory();
+    restoreMediaFromLocalStorage(); // Restore media from local storage
 
-            if (botParameters.autoPop === 0) {
-                // No auto-pop behavior
-            } else if (botParameters.autoPop === 1) {
-                setTimeout(function() {
-                    document.querySelector('.chatbot-container').style.display = 'block';
-                    toggleChatIcon();
-                }, 1000);
-            } else if (botParameters.autoPop > 1) {
-                setTimeout(function() {
-                    document.querySelector('.chatbot-container').style.display = 'block';
-                    toggleChatIcon();
-                }, botParameters.autoPop * 1000);
-            }
-        }
+    if (botParameters.autoPop === 0) {
+        // No auto-pop behavior
+    } else if (botParameters.autoPop === 1) {
+        setTimeout(function() {
+            document.querySelector('.chatbot-container').style.display = 'block';
+            toggleChatIcon();
+        }, 1000);
+    } else if (botParameters.autoPop > 1) {
+        setTimeout(function() {
+            document.querySelector('.chatbot-container').style.display = 'block';
+            toggleChatIcon();
+        }, botParameters.autoPop * 1000);
+    }
+}
+
 
         function toggleChatIcon() {
             var chatIcon = document.querySelector('.chat-icon-button');
@@ -707,8 +714,8 @@ function handleMediaUpload(event) {
             // Append the media container to chatBody
             chatBody.appendChild(mediaContainer);
 
-            // Optionally save chat history here
-            saveChatHistory(mediaUrl, 'sent');
+            // Save media to local storage
+            saveMediaToLocalStorage(file, 'sent');
 
             // Scroll to the bottom of the chat
             chatBody.scrollTop = chatBody.scrollHeight;
@@ -716,6 +723,61 @@ function handleMediaUpload(event) {
         reader.readAsDataURL(file);
     }
 }
+
+function saveMediaToLocalStorage(file, type) {
+    const fileReader = new FileReader();
+    fileReader.onload = function(event) {
+        const fileData = {
+            name: file.name,
+            type: file.type,
+            data: event.target.result,
+            timestamp: new Date().toISOString(),
+            sent: type === 'sent'
+        };
+
+        let mediaHistory = JSON.parse(localStorage.getItem('mediaHistory')) || [];
+        mediaHistory.push(fileData);
+        localStorage.setItem('mediaHistory', JSON.stringify(mediaHistory));
+    };
+    fileReader.readAsDataURL(file);
+}
+function restoreMediaFromLocalStorage() {
+    const mediaHistory = JSON.parse(localStorage.getItem('mediaHistory')) || [];
+    const chatBody = document.getElementById('chatBody');
+
+    mediaHistory.forEach(media => {
+        const mediaContainer = document.createElement('div');
+        mediaContainer.className = 'media-container'; // Apply CSS class for container
+
+        const timestamp = new Date(media.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+        if (media.type.startsWith('image/')) {
+            // Handle images
+            const mediaImg = document.createElement('img');
+            mediaImg.src = media.data;
+            mediaImg.className = 'media-img'; // Apply CSS class for image
+            mediaContainer.appendChild(mediaImg);
+        } else if (media.type.startsWith('application/')) {
+            // Handle documents
+            const mediaLink = document.createElement('a');
+            mediaLink.href = media.data;
+            mediaLink.download = media.name;
+            mediaLink.textContent = 'Download ' + media.name;
+            mediaLink.className = 'media-link'; // Apply CSS class for link
+            mediaContainer.appendChild(mediaLink);
+        }
+
+        // Create and append the timestamp
+        const timeStampElement = document.createElement('div');
+        timeStampElement.textContent = `${timestamp}`;
+        timeStampElement.className = 'media-timestamp'; // Apply CSS class for timestamp
+        mediaContainer.appendChild(timeStampElement);
+
+        // Append the media container to chatBody
+        chatBody.appendChild(mediaContainer);
+    });
+}
+
 
 
         // Attach event listeners after DOM is ready
