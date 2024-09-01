@@ -522,7 +522,12 @@
     margin-bottom: 10px; /* Adds spacing between media items */
     position: relative; /* Allows absolute positioning of the timestamp */
 }
-
+.media-timestamp {
+    font-size: 0.75em; /* Smaller font size for timestamp */
+    color: grey; /* Timestamp color */
+    margin-top: 5px; /* Space between media and timestamp */
+    text-align: right; /* Align timestamp to the right */
+}
 /* Style for images */
 .media-img {
     max-width: 60%; /* Adjust size as needed */
@@ -595,7 +600,6 @@
     function initializeChat() {
     document.getElementById('botName').textContent = botParameters.botname;
     populateChatHistory();
-    restoreMediaFromLocalStorage(); // Restore media from local storage
 
     if (botParameters.autoPop === 0) {
         // No auto-pop behavior
@@ -769,54 +773,59 @@ function copyMessageToClipboard(message) {
         }
 
         function populateChatHistory() {
-    var chatBody = document.getElementById('chatBody');
-    var history = JSON.parse(localStorage.getItem('chatHistory')) || [];
+    const chatBody = document.getElementById('chatBody');
+    const textHistory = JSON.parse(localStorage.getItem('chatHistory')) || [];
+    const mediaHistory = JSON.parse(localStorage.getItem('mediaHistory')) || [];
 
-    history.forEach(function(chat) {
-        var messageDiv = document.createElement('div');
-        messageDiv.className = chat.type === 'sent' ? 'message-sent' : 'message-received';
+    // Combine both histories
+    const combinedHistory = [...textHistory, ...mediaHistory];
 
-        var messageContent = document.createElement('div');
-        messageContent.className = 'message';
-        messageContent.textContent = chat.message;
+    // Sort combined history by timestamp
+    combinedHistory.sort((a, b) => new Date(a.time || a.timestamp) - new Date(b.time || b.timestamp));
 
-        var messageTime = document.createElement('div');
-        messageTime.className = 'message-time';
-        messageTime.textContent = chat.time;
+    combinedHistory.forEach(item => {
+        const messageDiv = document.createElement('div');
+        if (item.message) {
+            // Handle text message
+            messageDiv.className = item.type === 'sent' ? 'message-sent' : 'message-received';
+            const messageContent = document.createElement('div');
+            messageContent.className = 'message';
+            messageContent.textContent = item.message;
+            messageDiv.appendChild(messageContent);
+        } else if (item.data) {
+            // Handle media
+            messageDiv.className = 'media-container';
+            const mediaTimestamp = document.createElement('div');
+            mediaTimestamp.className = 'media-timestamp';
+            mediaTimestamp.textContent = new Date(item.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            messageDiv.appendChild(mediaTimestamp);
 
-        // Create and append the copy icon
-        var copyIcon = document.createElement('img');
-        copyIcon.src = 'https://img.icons8.com/?size=100&id=15047&format=png&color=737373';
-        copyIcon.alt = 'copy';
-        copyIcon.style.cursor = 'pointer';
-        copyIcon.style.width = '20px';
-        copyIcon.style.height = '20px';
-        copyIcon.className = 'copy-icon';
-        copyIcon.addEventListener('click', () => copyMessageToClipboard(chat.message));
+            if (item.type.startsWith('image/')) {
+                const mediaImg = document.createElement('img');
+                mediaImg.src = item.data;
+                mediaImg.className = 'media-img';
+                messageDiv.appendChild(mediaImg);
+            } else if (item.type.startsWith('application/')) {
+                const mediaLink = document.createElement('a');
+                mediaLink.href = item.data;
+                mediaLink.download = item.name;
+                mediaLink.textContent = 'Download ' + item.name;
+                mediaLink.className = 'media-link';
+                messageDiv.appendChild(mediaLink);
+            }
+        }
 
-        // Append timestamp and copy icon to the message div
-        var timeAndIconDiv = document.createElement('div');
-        timeAndIconDiv.className = 'message-time-container';
-        timeAndIconDiv.appendChild(messageTime);
-        timeAndIconDiv.appendChild(copyIcon);
-
-        messageDiv.appendChild(messageContent);
-        messageDiv.appendChild(timeAndIconDiv);
         chatBody.appendChild(messageDiv);
     });
+
     chatBody.scrollTop = chatBody.scrollHeight;
 }
 
 
+       
 
-        function saveChatHistory(message, type) {
-    var history = JSON.parse(localStorage.getItem('chatHistory')) || [];
-    var now = new Date();
-    var timeString = now.toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'});
 
-    history.push({ message: message, type: type, time: timeString });
-    localStorage.setItem('chatHistory', JSON.stringify(history));
-}
+     
 
 function sendMessage() {
     var inputField = document.getElementById('chatInput');
@@ -978,6 +987,15 @@ function handleMediaUpload(event) {
     }
 }
 
+function saveChatHistory(message, type) {
+    var history = JSON.parse(localStorage.getItem('chatHistory')) || [];
+    var now = new Date();
+    var timeString = now.toISOString(); // Use ISO string for sorting
+
+    history.push({ message: message, type: type, time: timeString });
+    localStorage.setItem('chatHistory', JSON.stringify(history));
+}
+
 function saveMediaToLocalStorage(file, type) {
     const fileReader = new FileReader();
     fileReader.onload = function(event) {
@@ -985,7 +1003,7 @@ function saveMediaToLocalStorage(file, type) {
             name: file.name,
             type: file.type,
             data: event.target.result,
-            timestamp: new Date().toISOString(),
+            timestamp: new Date().toISOString(), // Use ISO string for sorting
             sent: type === 'sent'
         };
 
@@ -994,42 +1012,6 @@ function saveMediaToLocalStorage(file, type) {
         localStorage.setItem('mediaHistory', JSON.stringify(mediaHistory));
     };
     fileReader.readAsDataURL(file);
-}
-function restoreMediaFromLocalStorage() {
-    const mediaHistory = JSON.parse(localStorage.getItem('mediaHistory')) || [];
-    const chatBody = document.getElementById('chatBody');
-
-    mediaHistory.forEach(media => {
-        const mediaContainer = document.createElement('div');
-        mediaContainer.className = 'media-container'; // Apply CSS class for container
-
-        const timestamp = new Date(media.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-
-        if (media.type.startsWith('image/')) {
-            // Handle images
-            const mediaImg = document.createElement('img');
-            mediaImg.src = media.data;
-            mediaImg.className = 'media-img'; // Apply CSS class for image
-            mediaContainer.appendChild(mediaImg);
-        } else if (media.type.startsWith('application/')) {
-            // Handle documents
-            const mediaLink = document.createElement('a');
-            mediaLink.href = media.data;
-            mediaLink.download = media.name;
-            mediaLink.textContent = 'Download ' + media.name;
-            mediaLink.className = 'media-link'; // Apply CSS class for link
-            mediaContainer.appendChild(mediaLink);
-        }
-
-        // Create and append the timestamp
-        const timeStampElement = document.createElement('div');
-        timeStampElement.textContent = `${timestamp}`;
-        timeStampElement.className = 'media-timestamp'; // Apply CSS class for timestamp
-        mediaContainer.appendChild(timeStampElement);
-
-        // Append the media container to chatBody
-        chatBody.appendChild(mediaContainer);
-    });
 }
 
 
