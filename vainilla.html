@@ -27,6 +27,8 @@
         const chatbotContainer = document.createElement('div');
         chatbotContainer.className = 'chatbot-container';
         chatbotContainer.innerHTML = `
+        <!-- Notification element -->
+<div id="notification" class="notification">Message copied to clipboard successfully!</div>
             <div class="chatbot-header">
                 <div class="header-left">
                     <span id="botName">${botParameters.botname}</span>
@@ -54,6 +56,7 @@
                 </div>
                 <!-- Chat messages will appear here -->
             </div>
+        
             <div class="chatbot-footer">
                 <button id="mediaButton" class="media-button">
                     <img width="30" height="30" src="https://img.icons8.com/?size=100&id=i1PiQepbTYbk&format=png&color=203878" alt="thumb-up"/>
@@ -482,20 +485,33 @@
                     transform: translateY(-8px);
                 }
             }
-            .message-sent .message-time {
-                font-size: 0.75em;
-                color: grey;
-                text-align: right;
-                margin-top: 4px;
-            }
+         .message-time-container {
+    display: flex; /* Align children horizontally */
+    align-items: center; /* Center vertically */
+    margin-top: 4px; /* Space between message content and timestamp */
+}
 
-            .message-received .message-time {
-                font-size: 0.75em;
-                color: grey;
-                text-align: left;
-                margin-top: 4px;
-            }
-            /* styles.css */
+.message-time {
+    font-size: 0.75em; /* Smaller font size for timestamp */
+    color: grey; /* Timestamp color */
+    margin-right: 10px; /* Space between timestamp and copy icon */
+}
+
+.copy-icon {
+    cursor: pointer;
+    width: 20px; /* Adjust size if needed */
+    height: 20px;
+}
+
+/* Style adjustments for message types */
+.message-sent .message-time-container {
+    justify-content: flex-end; /* Align timestamp and copy icon to the right */
+}
+
+.message-received .message-time-container {
+    justify-content: flex-start; /* Align timestamp and copy icon to the left */
+}
+
 
 /* Container for media and timestamp */
 .media-container {
@@ -519,18 +535,36 @@
     text-align: right;
 }
 
-/* Style for timestamps */
-.media-timestamp {
-    font-size: 0.9em;
-    color: gray;
-    margin-top: 5px; /* Adds spacing between media and timestamp */
+.message-container {
+    display: flex; /* Use flexbox for horizontal layout */
+    align-items: center; /* Vertically align items */
+    margin-bottom: 10px; /* Space between messages */
 }
 
+.message-content {
+    flex: 1; /* Allow message to take available space */
+}
+
+.notification {
+    position: fixed;
+    top: 160px; /* Adjust as needed */
+    right: 60px;  /* Adjust as needed */
+    background-color: #333;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    display: none; /* Hide by default */
+    z-index: 1000; /* Ensure it appears above other elements */
+    opacity: 0; /* Start hidden for fading effect */
+    transition: opacity 0.5s ease-out; /* Smooth fade-out transition */
+}
 
         `;
       
         document.head.appendChild(style);
     }
+
+    
     function handleLikeButton() {
     const chatBody = document.getElementById('chatBody');
     const likeIcon = '<img width="35" height="35" src="https://img.icons8.com/?size=100&id=83997&format=png&color=203878" alt="thumb-up"/>';
@@ -576,6 +610,73 @@
         }, botParameters.autoPop * 1000);
     }
 }
+// Check if the browser supports the SpeechRecognition API
+const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+if (SpeechRecognition) {
+    const recognition = new SpeechRecognition();
+    recognition.lang = 'en-US'; // Set language for recognition
+    recognition.interimResults = false; // Get final result only
+    recognition.maxAlternatives = 1; // Get one alternative result
+
+    const voiceButton = document.getElementById('voiceButton');
+    const chatInput = document.getElementById('chatInput');
+
+    // Start or stop voice recognition when button is clicked
+    voiceButton.addEventListener('click', () => {
+        if (recognition.recognizing) {
+            recognition.stop();
+        } else {
+            recognition.start();
+        }
+    });
+
+    // Event handler for when speech recognition result is available
+    recognition.addEventListener('result', (event) => {
+        const transcript = event.results[0][0].transcript;
+        chatInput.value = transcript;
+    });
+
+    // Event handler for errors
+    recognition.addEventListener('error', (event) => {
+        console.error('Speech recognition error:', event.error);
+    });
+
+    // Event handler for when recognition starts
+    recognition.addEventListener('start', () => {
+        voiceButton.classList.add('recording'); // Optional: add a class to indicate recording
+    });
+
+    // Event handler for when recognition ends
+    recognition.addEventListener('end', () => {
+        voiceButton.classList.remove('recording'); // Optional: remove the class
+    });
+
+} else {
+    console.error('SpeechRecognition API is not supported in this browser.');
+}
+function showNotification() {
+    var notification = document.getElementById('notification');
+    notification.style.display = 'block'; // Show the notification
+    notification.style.opacity = '1'; // Make it visible
+
+    setTimeout(function() {
+        notification.style.opacity = '0'; // Start fading out
+        setTimeout(function() {
+            notification.style.display = 'none'; // Hide the notification after fading out
+        }, 500); // Match this time with the CSS transition duration
+    }, 3000); // Display for 3 seconds
+}
+
+// Example usage: call this function when the copy action is successful
+
+function copyMessageToClipboard(message) {
+    navigator.clipboard.writeText(message).then(() => {
+        showNotification();
+    }).catch(err => {
+        console.error('Failed to copy message: ', err);
+    });
+}
 
 
         function toggleChatIcon() {
@@ -600,12 +701,29 @@
         messageTime.className = 'message-time';
         messageTime.textContent = chat.time;
 
+        // Create and append the copy icon
+        var copyIcon = document.createElement('img');
+        copyIcon.src = 'https://img.icons8.com/?size=100&id=15047&format=png&color=737373';
+        copyIcon.alt = 'copy';
+        copyIcon.style.cursor = 'pointer';
+        copyIcon.style.width = '20px';
+        copyIcon.style.height = '20px';
+        copyIcon.className = 'copy-icon';
+        copyIcon.addEventListener('click', () => copyMessageToClipboard(chat.message));
+
+        // Append timestamp and copy icon to the message div
+        var timeAndIconDiv = document.createElement('div');
+        timeAndIconDiv.className = 'message-time-container';
+        timeAndIconDiv.appendChild(messageTime);
+        timeAndIconDiv.appendChild(copyIcon);
+
         messageDiv.appendChild(messageContent);
-        messageDiv.appendChild(messageTime);
+        messageDiv.appendChild(timeAndIconDiv);
         chatBody.appendChild(messageDiv);
     });
     chatBody.scrollTop = chatBody.scrollHeight;
 }
+
 
 
         function saveChatHistory(message, type) {
@@ -617,7 +735,7 @@
     localStorage.setItem('chatHistory', JSON.stringify(history));
 }
 
-        function sendMessage() {
+function sendMessage() {
     var inputField = document.getElementById('chatInput');
     var userMessage = inputField.value;
     if (userMessage.trim() === '') return;
@@ -634,11 +752,26 @@
     userMessageContent.textContent = userMessage;
     userMessageDiv.appendChild(userMessageContent);
 
-    // Add timestamp
+    // Add timestamp and copy icon
     var userMessageTime = document.createElement('div');
     userMessageTime.className = 'message-time';
     userMessageTime.textContent = timeString;
-    userMessageDiv.appendChild(userMessageTime);
+
+    var copyIcon = document.createElement('img');
+    copyIcon.src = 'https://img.icons8.com/?size=100&id=15047&format=png&color=737373';
+    copyIcon.alt = 'copy';
+    copyIcon.style.cursor = 'pointer';
+    copyIcon.style.width = '20px';
+    copyIcon.style.height = '20px';
+    copyIcon.className = 'copy-icon';
+    copyIcon.addEventListener('click', () => copyMessageToClipboard(userMessage));
+
+    var timeAndIconDiv = document.createElement('div');
+    timeAndIconDiv.className = 'message-time-container';
+    timeAndIconDiv.appendChild(userMessageTime);
+    timeAndIconDiv.appendChild(copyIcon);
+
+    userMessageDiv.appendChild(timeAndIconDiv);
 
     document.getElementById('chatBody').appendChild(userMessageDiv);
 
@@ -675,11 +808,26 @@
         botMessageContent.textContent = userMessage; // Echoing the user message
         botMessageDiv.appendChild(botMessageContent);
 
-        // Add timestamp
+        // Add timestamp and copy icon
         var botMessageTime = document.createElement('div');
         botMessageTime.className = 'message-time';
         botMessageTime.textContent = timeString;
-        botMessageDiv.appendChild(botMessageTime);
+
+        var copyIcon = document.createElement('img');
+        copyIcon.src = 'https://img.icons8.com/?size=100&id=15047&format=png&color=737373';
+        copyIcon.alt = 'copy';
+        copyIcon.style.cursor = 'pointer';
+        copyIcon.style.width = '20px';
+        copyIcon.style.height = '20px';
+        copyIcon.className = 'copy-icon';
+        copyIcon.addEventListener('click', () => copyMessageToClipboard(userMessage));
+
+        var timeAndIconDiv = document.createElement('div');
+        timeAndIconDiv.className = 'message-time-container';
+        timeAndIconDiv.appendChild(botMessageTime);
+        timeAndIconDiv.appendChild(copyIcon);
+
+        botMessageDiv.appendChild(timeAndIconDiv);
 
         // Save bot's message to chat history
         saveChatHistory(botMessageContent.textContent, 'received');
@@ -688,6 +836,7 @@
         document.getElementById('chatBody').scrollTop = document.getElementById('chatBody').scrollHeight;
     }, 1500); // Adjust delay to simulate typing duration
 }
+
 
 function handleMediaUpload(event) {
     const file = event.target.files[0];
@@ -866,6 +1015,7 @@ function restoreMediaFromLocalStorage() {
                     chatBody.innerHTML = '';
                     chatBody.appendChild(chatIntro);
                     localStorage.removeItem('chatHistory');
+                    localStorage.removeItem('mediaHistory');
                 }
                 document.querySelector('.burger-menu-dropdown').style.display = 'none';
             });
