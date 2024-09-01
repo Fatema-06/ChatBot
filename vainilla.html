@@ -56,8 +56,10 @@
             </div>
             <div class="chatbot-footer">
                 <input type="text" id="chatInput" placeholder="Write a reply..." />
-                <button id="likeButton">👍🏻</button> 
-                <button id="sendButton" disabled>&#9658;</button>
+                <button id="likeButton" class="like-button">
+                    <img width="35" height="35" src="https://img.icons8.com/?size=100&id=83997&format=png&color=203878" alt="thumb-up"/>
+                </button>
+             <button id="sendButton" disabled>&#9658;</button>
             </div>
         `;
         document.body.appendChild(chatbotContainer);
@@ -194,19 +196,24 @@
                 outline: none;
             }
 
-            .chatbot-footer button#likeButton {
-                font-size: 20px;
-                border-radius: 50%;
-                color: white;
-                border: none;
-                cursor: pointer;
-                width: 35px;
-                height: 35px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                margin-left: 10px;
-            }
+         /* CSS for the like button */
+.chatbot-footer button#likeButton {
+    border-radius: 50%;
+    border: none;
+    background: none;
+    padding: 0;
+    margin-left: 10px;
+    cursor: pointer;
+    background-color: transparent; /* Ensure the button is transparent */
+}
+
+.chatbot-footer button#likeButton img {
+    width: 35px;
+    height: 35px;
+    /* Additional styles if needed */
+}
+
+
 
             .chatbot-footer button {
                 background-color: #203878; /* Send button color */
@@ -419,6 +426,23 @@
       
         document.head.appendChild(style);
     }
+    function handleLikeButton() {
+    const chatBody = document.getElementById('chatBody');
+    const likeIcon = '<img width="35" height="35" src="https://img.icons8.com/?size=100&id=83997&format=png&color=203878" alt="thumb-up"/>';
+
+    // Add the like icon message directly
+    const likeIconDiv = document.createElement('div');
+    likeIconDiv.className = 'message-sent'; // Still use this class for alignment
+    likeIconDiv.innerHTML = likeIcon; // Ensure HTML content is added
+    chatBody.appendChild(likeIconDiv);
+
+    // Save the like icon message to chat history
+    saveChatHistory(likeIcon, 'sent');
+
+    // Scroll to the bottom to show new messages
+    chatBody.scrollTop = chatBody.scrollHeight;
+}
+
 
     function addFunctionality() {
         document.querySelector('#sendButton').addEventListener('click', sendMessage);
@@ -527,29 +551,13 @@
             }, 1500); // Adjust delay to simulate typing duration
         }
 
-        function handleLikeButton() {
-            const quickReply = '👍🏻';
-            
-            // Append the quick reply to chat
-            const chatBody = document.querySelector('#chatBody');
-            const messageElement = document.createElement('div');
-            messageElement.className = 'message-sent';
-            messageElement.innerHTML = `<div class="message">${quickReply}</div>`;
-            chatBody.appendChild(messageElement);
-            
-            // Scroll to the bottom
-            chatBody.scrollTop = chatBody.scrollHeight;
-            
-            // Save to chat history
-            saveChatHistory(quickReply, 'sent');
-        }
+        
 
         // Attach event listeners after DOM is ready
         document.addEventListener('DOMContentLoaded', function() {
             // Send button
             document.getElementById('sendButton').addEventListener('click', sendMessage);
 
-            // Like button
             document.getElementById('likeButton').addEventListener('click', handleLikeButton);
 
             // Input field
