@@ -1101,22 +1101,24 @@ function saveMediaToLocalStorage(file, type) {
                 document.querySelector('.burger-menu-dropdown').style.display = 'none';
             });
 
-            document.getElementById('saveTranscript').addEventListener('click', function() {
+         document.getElementById('saveTranscript').addEventListener('click', function() {
     alert('The transcript will not include media files.');
 
     // Retrieve chat history from local storage
     const history = JSON.parse(localStorage.getItem('chatHistory')) || [];
 
     let transcript = '';
-history.forEach(chat => {
-    let prefix = '';
-    if (chat.type === 'sent') {
-        prefix = 'You: ';
-    } else if (chat.type === 'received') {
-        prefix = `${botParameters.widgetName}: `; // Use template literals here
-    }
-    transcript += `${prefix}${chat.message} (${chat.time})\n`;
-});
+    history.forEach(chat => {
+        let prefix = '';
+        let timeFormatted = new Date(chat.time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        
+        if (chat.type === 'sent') {
+            prefix = 'You: ';
+        } else if (chat.type === 'received') {
+            prefix = `${botParameters.widgetName}: `;
+        }
+        transcript += `${prefix}${chat.message} (${timeFormatted})\n`;
+    });
 
     // Create a Blob with the transcript content
     const blob = new Blob([transcript], { type: 'text/plain' });
