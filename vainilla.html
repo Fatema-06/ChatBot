@@ -518,16 +518,18 @@
 .media-container {
     display: flex; /* Use flexbox layout */
     flex-direction: column; /* Stack media and timestamp vertically */
-    align-items: flex-end; /* Align children (media and timestamp) to the right */
-    margin-bottom: 10px; /* Adds spacing between media items */
-    position: relative; /* Allows absolute positioning of the timestamp */
+    align-items: flex-end; /* Align children to the right */
+    margin-bottom: 10px; /* Space between media items */
+    position: relative; /* Allows absolute positioning if needed */
 }
+
 .media-timestamp {
     font-size: 0.75em; /* Smaller font size for timestamp */
     color: grey; /* Timestamp color */
     margin-top: 5px; /* Space between media and timestamp */
     text-align: right; /* Align timestamp to the right */
 }
+
 /* Style for images */
 .media-img {
     max-width: 60%; /* Adjust size as needed */
@@ -785,6 +787,7 @@ function copyMessageToClipboard(message) {
 
     combinedHistory.forEach(item => {
         const messageDiv = document.createElement('div');
+
         if (item.message) {
             // Handle text message
             messageDiv.className = item.type === 'sent' ? 'message-sent' : 'message-received';
@@ -792,13 +795,15 @@ function copyMessageToClipboard(message) {
             messageContent.className = 'message';
             messageContent.textContent = item.message;
             messageDiv.appendChild(messageContent);
+
+            // Add timestamp
+            const messageTime = document.createElement('div');
+            messageTime.className = 'message-time';
+            messageTime.textContent = new Date(item.time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            messageDiv.appendChild(messageTime);
         } else if (item.data) {
             // Handle media
             messageDiv.className = 'media-container';
-            const mediaTimestamp = document.createElement('div');
-            mediaTimestamp.className = 'media-timestamp';
-            mediaTimestamp.textContent = new Date(item.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-            messageDiv.appendChild(mediaTimestamp);
 
             if (item.type.startsWith('image/')) {
                 const mediaImg = document.createElement('img');
@@ -813,6 +818,12 @@ function copyMessageToClipboard(message) {
                 mediaLink.className = 'media-link';
                 messageDiv.appendChild(mediaLink);
             }
+
+            // Add timestamp below the media
+            const mediaTimestamp = document.createElement('div');
+            mediaTimestamp.className = 'media-timestamp';
+            mediaTimestamp.textContent = new Date(item.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            messageDiv.appendChild(mediaTimestamp);
         }
 
         chatBody.appendChild(messageDiv);
@@ -820,12 +831,6 @@ function copyMessageToClipboard(message) {
 
     chatBody.scrollTop = chatBody.scrollHeight;
 }
-
-
-       
-
-
-     
 
 function sendMessage() {
     var inputField = document.getElementById('chatInput');
@@ -990,11 +995,12 @@ function handleMediaUpload(event) {
 function saveChatHistory(message, type) {
     var history = JSON.parse(localStorage.getItem('chatHistory')) || [];
     var now = new Date();
-    var timeString = now.toISOString(); // Use ISO string for sorting
+    var timeString = now.toISOString(); // Use ISO string for precise timestamps
 
     history.push({ message: message, type: type, time: timeString });
     localStorage.setItem('chatHistory', JSON.stringify(history));
 }
+
 
 function saveMediaToLocalStorage(file, type) {
     const fileReader = new FileReader();
