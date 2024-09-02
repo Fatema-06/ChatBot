@@ -714,7 +714,7 @@ function showNotification() {
 
     const combinedHistory = [...textHistory, ...mediaHistory];
 
-    // Sort history in case you still want to maintain order
+    // Sort history to maintain order
     combinedHistory.sort((a, b) => new Date(a.time || a.timestamp) - new Date(b.time || b.timestamp));
 
     combinedHistory.forEach(item => {
@@ -731,9 +731,12 @@ function showNotification() {
             const messageTime = document.createElement('div');
             messageTime.className = 'message-time';
 
-            // Use the current time instead of stored time
-            const currentTime = new Date();
-            messageTime.textContent = currentTime.toLocaleTimeString([], {
+            // Use stored time or current time depending on source
+            const messageTimestamp = item.time 
+                ? new Date(item.time)
+                : new Date();
+
+            messageTime.textContent = messageTimestamp.toLocaleTimeString([], {
                 hour: '2-digit',
                 minute: '2-digit'
             });
@@ -774,9 +777,12 @@ function showNotification() {
             const mediaTimestamp = document.createElement('div');
             mediaTimestamp.className = 'media-timestamp';
 
-            // Use the current time instead of stored timestamp
-            const currentTime = new Date();
-            mediaTimestamp.textContent = currentTime.toLocaleTimeString([], {
+            // Use stored timestamp or current time depending on source
+            const mediaTimestampDate = item.timestamp 
+                ? new Date(item.timestamp)
+                : new Date();
+
+            mediaTimestamp.textContent = mediaTimestampDate.toLocaleTimeString([], {
                 hour: '2-digit',
                 minute: '2-digit'
             });
