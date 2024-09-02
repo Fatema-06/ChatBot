@@ -647,17 +647,58 @@ function addFunctionality() {
       }, 3000);
    }
 
-function copyMessageToClipboard(message) {
+   function copyMessageToClipboard(message) {
     if (navigator.clipboard && navigator.clipboard.writeText) {
         navigator.clipboard.writeText(message).then(() => {
             showNotification();
         }).catch(err => {
-            alert('Failed to copy message: ', err);
+            console.error('Failed to copy using clipboard API: ', err);
+            fallbackCopyTextToClipboard(message);
         });
     } else {
-        alert('Copy to clipboard not supported on this browser.');
+        fallbackCopyTextToClipboard(message);
     }
 }
+
+function fallbackCopyTextToClipboard(message) {
+    const textArea = document.createElement('textarea');
+    textArea.value = message;
+    
+    // Position the textarea off-screen
+    textArea.style.position = 'fixed';
+    textArea.style.top = '0';
+    textArea.style.left = '0';
+    textArea.style.width = '2em';
+    textArea.style.height = '2em';
+    textArea.style.padding = '0';
+    textArea.style.border = 'none';
+    textArea.style.outline = 'none';
+    textArea.style.boxShadow = 'none';
+    textArea.style.background = 'transparent';
+
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+
+    try {
+        const successful = document.execCommand('copy');
+        if (successful) {
+            showNotification();
+        } else {
+            alert('Failed to copy message using fallback method.');
+        }
+    } catch (err) {
+        alert('Failed to copy message: ', err);
+    }
+
+    document.body.removeChild(textArea);
+}
+
+function showNotification() {
+    // Implement your notification logic here
+    alert('Message copied to clipboard!');
+}
+
 
 
    function toggleChatIcon() {
