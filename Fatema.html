@@ -617,45 +617,6 @@ function addFunctionality() {
          const chatInput = document.getElementById('chatInput');
          const sendButton = document.getElementById('sendButton');
 
-         function sendMessage() {
-
-            setTimeout(() => {
-               const message = chatInput.value.trim();
-               if (message) {
-                  console.log('Attempting to send message:', message);
-
-                  saveChatHistory(message, 'sent');
-                  const chatBody = document.getElementById('chatBody');
-                  const messageDiv = document.createElement('div');
-                  messageDiv.className = 'message-sent';
-                  messageDiv.textContent = message;
-                  chatBody.appendChild(messageDiv);
-                  chatInput.value = '';
-                  chatInput.focus();
-                  chatBody.scrollTop = chatBody.scrollHeight;
-
-                  handleBotResponse(message);
-               } else {
-                  console.log('No message to send');
-               }
-            }, 100);
-         }
-
-         sendButton.addEventListener('click', () => {
-            console.log('Send button clicked');
-            sendMessage();
-         });
-
-         chatInput.addEventListener('keydown', (event) => {
-            if (event.key === 'Enter') {
-               event.preventDefault();
-               if (!sendButton.disabled) {
-                  console.log('Enter key pressed');
-                  sendMessage();
-               }
-            }
-         });
-
          function handleBotResponse(message) {
 
             setTimeout(() => {
@@ -712,14 +673,13 @@ function copyMessageToClipboard(message) {
 
     const combinedHistory = [...textHistory, ...mediaHistory];
 
-    // Sort combined history by time
+    // Sort history in case you still want to maintain order
     combinedHistory.sort((a, b) => new Date(a.time || a.timestamp) - new Date(b.time || b.timestamp));
 
     combinedHistory.forEach(item => {
         const messageDiv = document.createElement('div');
 
         if (item.message) {
-            // Handle text messages
             messageDiv.className = item.type === 'sent' ? 'message-sent' : 'message-received';
 
             const messageContent = document.createElement('div');
@@ -729,12 +689,14 @@ function copyMessageToClipboard(message) {
 
             const messageTime = document.createElement('div');
             messageTime.className = 'message-time';
-            messageTime.textContent = new Date(item.time).toLocaleTimeString([], {
+
+            // Use the current time instead of stored time
+            const currentTime = new Date();
+            messageTime.textContent = currentTime.toLocaleTimeString([], {
                 hour: '2-digit',
                 minute: '2-digit'
             });
 
-            // Create the copy icon element
             const copyIcon = document.createElement('img');
             copyIcon.src = 'https://img.icons8.com/?size=100&id=15047&format=png&color=737373';
             copyIcon.alt = 'copy';
@@ -744,17 +706,14 @@ function copyMessageToClipboard(message) {
             copyIcon.className = 'copy-icon';
             copyIcon.addEventListener('click', () => copyMessageToClipboard(item.message));
 
-            // Create a container for time and icon
             const timeAndIconDiv = document.createElement('div');
             timeAndIconDiv.className = 'message-time-container';
             timeAndIconDiv.appendChild(messageTime);
             timeAndIconDiv.appendChild(copyIcon);
 
-            // Append time and icon container to the message div
             messageDiv.appendChild(timeAndIconDiv);
 
         } else if (item.data) {
-            // Handle media messages
             messageDiv.className = 'media-container';
 
             if (item.type.startsWith('image/')) {
@@ -773,10 +732,14 @@ function copyMessageToClipboard(message) {
 
             const mediaTimestamp = document.createElement('div');
             mediaTimestamp.className = 'media-timestamp';
-            mediaTimestamp.textContent = new Date(item.timestamp).toLocaleTimeString([], {
+
+            // Use the current time instead of stored timestamp
+            const currentTime = new Date();
+            mediaTimestamp.textContent = currentTime.toLocaleTimeString([], {
                 hour: '2-digit',
                 minute: '2-digit'
             });
+
             messageDiv.appendChild(mediaTimestamp);
         }
 
@@ -785,6 +748,7 @@ function copyMessageToClipboard(message) {
 
     chatBody.scrollTop = chatBody.scrollHeight;
 }
+
 
 
    function sendMessage() {
