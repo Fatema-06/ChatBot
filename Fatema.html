@@ -695,7 +695,6 @@ function fallbackCopyTextToClipboard(message) {
 }
 
 function showNotification() {
-    // Implement your notification logic here
     alert('Message copied to clipboard!');
 }
 
@@ -714,7 +713,6 @@ function showNotification() {
 
     const combinedHistory = [...textHistory, ...mediaHistory];
 
-    // Sort history to maintain order
     combinedHistory.sort((a, b) => new Date(a.time || a.timestamp) - new Date(b.time || b.timestamp));
 
     combinedHistory.forEach(item => {
@@ -731,7 +729,6 @@ function showNotification() {
             const messageTime = document.createElement('div');
             messageTime.className = 'message-time';
 
-            // Use stored time or current time depending on source
             const messageTimestamp = item.time 
                 ? new Date(item.time)
                 : new Date();
@@ -777,7 +774,6 @@ function showNotification() {
             const mediaTimestamp = document.createElement('div');
             mediaTimestamp.className = 'media-timestamp';
 
-            // Use stored timestamp or current time depending on source
             const mediaTimestampDate = item.timestamp 
                 ? new Date(item.timestamp)
                 : new Date();
