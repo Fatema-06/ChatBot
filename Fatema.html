@@ -607,6 +607,12 @@ function addFunctionality() {
             notification.style.display = 'none';
          }, 500);
       });
+      notification.addEventListener('touchstart', () => {
+       notification.style.opacity = '0';
+      setTimeout(() => {
+        notification.style.display = 'none';
+       }, 500);
+   });
       document.addEventListener('DOMContentLoaded', () => {
          const chatInput = document.getElementById('chatInput');
          const sendButton = document.getElementById('sendButton');
@@ -680,13 +686,18 @@ function addFunctionality() {
       }, 3000);
    }
 
-   function copyMessageToClipboard(message) {
-      navigator.clipboard.writeText(message).then(() => {
-         showNotification();
-      }).catch(err => {
-         console.error('Failed to copy message: ', err);
-      });
-   }
+function copyMessageToClipboard(message) {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(message).then(() => {
+            showNotification();
+        }).catch(err => {
+            alert('Failed to copy message: ', err);
+        });
+    } else {
+        alert('Copy to clipboard not supported on this browser.');
+    }
+}
+
 
    function toggleChatIcon() {
       var chatIcon = document.querySelector('.chat-icon-button');
@@ -718,11 +729,30 @@ function addFunctionality() {
 
             const messageTime = document.createElement('div');
             messageTime.className = 'message-time';
-            messageTime.textContent = new Date().toLocaleTimeString([], {
+            messageTime.textContent = new Date(item.time).toLocaleTimeString([], {
                 hour: '2-digit',
                 minute: '2-digit'
             });
-            messageDiv.appendChild(messageTime);
+
+            // Create the copy icon element
+            const copyIcon = document.createElement('img');
+            copyIcon.src = 'https://img.icons8.com/?size=100&id=15047&format=png&color=737373';
+            copyIcon.alt = 'copy';
+            copyIcon.style.cursor = 'pointer';
+            copyIcon.style.width = '20px';
+            copyIcon.style.height = '20px';
+            copyIcon.className = 'copy-icon';
+            copyIcon.addEventListener('click', () => copyMessageToClipboard(item.message));
+
+            // Create a container for time and icon
+            const timeAndIconDiv = document.createElement('div');
+            timeAndIconDiv.className = 'message-time-container';
+            timeAndIconDiv.appendChild(messageTime);
+            timeAndIconDiv.appendChild(copyIcon);
+
+            // Append time and icon container to the message div
+            messageDiv.appendChild(timeAndIconDiv);
+
         } else if (item.data) {
             // Handle media messages
             messageDiv.className = 'media-container';
@@ -743,7 +773,7 @@ function addFunctionality() {
 
             const mediaTimestamp = document.createElement('div');
             mediaTimestamp.className = 'media-timestamp';
-            mediaTimestamp.textContent = new Date().toLocaleTimeString([], {
+            mediaTimestamp.textContent = new Date(item.timestamp).toLocaleTimeString([], {
                 hour: '2-digit',
                 minute: '2-digit'
             });
